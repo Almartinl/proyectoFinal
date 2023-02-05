@@ -50,9 +50,13 @@ export default function Home() {
                 <p>
                   Some representative placeholder content for the first slide.
                 </p>
-                <a href="#" className="btn btn-primary">
-                  Comprar
-                </a>
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{ backgroundColor: "green" }}
+                >
+                  Ver
+                </Button>
               </div>
             </div>
             <div className="carousel-item">
