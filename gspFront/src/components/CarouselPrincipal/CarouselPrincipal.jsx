@@ -38,7 +38,7 @@ export default function CarouselPrincipal() {
           />
           <div className="carousel-caption carousel-text">
             <h3 className="shadow-text display-2 fw-bold">BIENVENIDO</h3>
-            <h4 className="shadow-text fw-bold">tu bungalow a medida</h4>
+            <h4 className="shadow-text fw-bold">Tu Bungalow a Medida</h4>
             <Button
               variant="contained"
               color="success"
@@ -56,7 +56,7 @@ export default function CarouselPrincipal() {
           />
           <div className="carousel-caption carousel-text">
             <h3 className="shadow-text display-2 fw-bold">BIENVENIDO</h3>
-            <h4 className="shadow-text fw-bold">tu bungalow a medida</h4>
+            <h4 className="shadow-text fw-bold">Tu Bungalow a Medida</h4>
             <Button
               variant="contained"
               color="success"
@@ -74,7 +74,7 @@ export default function CarouselPrincipal() {
           />
           <div className="carousel-caption carousel-text">
             <h3 className="shadow-text display-2 fw-bold">BIENVENIDO</h3>
-            <h4 className="shadow-text fw-bold">tu bungalow a medida</h4>
+            <h4 className="shadow-text fw-bold">Tu Bungalow a Medida</h4>
             <Button
               variant="contained"
               color="success"
