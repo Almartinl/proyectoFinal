@@ -31,11 +31,7 @@ export default function CarouselPrincipal() {
       </div>
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img
-            src="../../public/22.jpg"
-            className="d-block w-100"
-            alt="carrusel"
-          />
+          <img src="../../22.jpg" className="d-block w-100" alt="carrusel" />
           <div className="carousel-caption carousel-text">
             <h3 className="shadow-text display-2 fw-bold">BIENVENIDO</h3>
             <h4 className="shadow-text fw-bold">Tu Bungalow a Medida</h4>
@@ -49,11 +45,7 @@ export default function CarouselPrincipal() {
           </div>
         </div>
         <div className="carousel-item">
-          <img
-            src="../../public/44.jpg"
-            className="d-block w-100 "
-            alt="carrusel"
-          />
+          <img src="../../44.jpg" className="d-block w-100 " alt="carrusel" />
           <div className="carousel-caption carousel-text">
             <h3 className="shadow-text display-2 fw-bold">BIENVENIDO</h3>
             <h4 className="shadow-text fw-bold">Tu Bungalow a Medida</h4>
@@ -67,11 +59,7 @@ export default function CarouselPrincipal() {
           </div>
         </div>
         <div className="carousel-item">
-          <img
-            src="../../public/16box.jpg"
-            className="d-block w-100"
-            alt="carrusel"
-          />
+          <img src="../../16box.jpg" className="d-block w-100" alt="carrusel" />
           <div className="carousel-caption carousel-text">
             <h3 className="shadow-text display-2 fw-bold">BIENVENIDO</h3>
             <h4 className="shadow-text fw-bold">Tu Bungalow a Medida</h4>

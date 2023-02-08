@@ -54,7 +54,7 @@ export default function Home() {
             </Typography>
           </Grid>
           <Grid item md={4}>
-            <img src="../../44.JPG" width="100%" alt="img" />
+            <img src="../../44.jpg" width="100%" alt="img" />
           </Grid>
           <Grid
             container

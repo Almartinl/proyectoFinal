@@ -15,7 +15,7 @@ export default function Header() {
             position: { xs: "absolute", md: "relative" },
           }}
         >
-          <img src="../../public/logo.png" alt="foto" />
+          <img src="../../logo.png" alt="foto" />
         </Grid>
         <Grid
           sx={{
@@ -23,7 +23,7 @@ export default function Header() {
             position: { xs: "absolute", md: "relative" },
           }}
         >
-          <img src="../../public/logo.png" width="200px" alt="foto" />
+          <img src="../../logo.png" width="200px" alt="foto" />
         </Grid>
       </Grid>
       <AppBarMenu />
