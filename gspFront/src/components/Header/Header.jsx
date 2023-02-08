@@ -8,7 +8,7 @@ import AppBarMenu from "./AppBarMenu/AppBarMenu";
 export default function Header() {
   return (
     <>
-      <Grid container wrap="wrap" justifyContent="center">
+      <Grid container justifyContent="center">
         <Grid
           sx={{
             display: { xs: "none", md: "flex" },

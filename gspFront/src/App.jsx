@@ -5,6 +5,7 @@ import Layout from "./components/Layout/Layout";
 import Home from "./views/Home/Home";
 import "bootstrap";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import Configurador from "./views/Configurador/configurador";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="configurador" element={<Configurador />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,6 @@
 import "./home.css";
 import { Button, Container, Divider, Grid, Typography } from "@mui/material";
 import CarouselPrincipal from "../../components/CarouselPrincipal/CarouselPrincipal";
-import { textAlign } from "@mui/system";
 
 export default function Home() {
   return (

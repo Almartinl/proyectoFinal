@@ -11,14 +11,15 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import { Link } from "react-router-dom";
 
 const pages = [
-  "Inicio",
-  "Productos",
-  "configurador",
-  "Servicios",
-  "Sobre Nosotros",
-  "Contacto",
+  { nombre: "Inicio", ruta: "/" },
+  { nombre: "Productos", ruta: "productos" },
+  { nombre: "Configurador", ruta: "configurador" },
+  { nombre: "Nuestros Proyectos", ruta: "proyectos" },
+  { nombre: "Sobre Nosotros", ruta: "nosotros" },
+  { nombre: "Contacto", ruta: "contacto" },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -79,10 +80,18 @@ export default function AppBarMenu() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
+              {pages.map((page, index) => (
+                <Link
+                  key={index}
+                  to={page.ruta}
+                  style={{ textDecoration: "none" }}
+                >
+                  <MenuItem key={index} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center" color="green">
+                      {page.nombre}
+                    </Typography>
+                  </MenuItem>
+                </Link>
               ))}
               <MenuItem key={7} onClick={handleCloseNavMenu}>
                 <Typography textAlign="center">Login</Typography>
@@ -96,14 +105,21 @@ export default function AppBarMenu() {
               display: { xs: "none", md: "flex" },
             }}
           >
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "green", display: "block" }}
+            {pages.map((page, index) => (
+              <Link
+                key={index}
+                to={page.ruta}
+                style={{ textDecoration: "none" }}
               >
-                {page}
-              </Button>
+                <Button
+                  variant="text"
+                  key={index}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "green", display: "block" }}
+                >
+                  {page.nombre}
+                </Button>
+              </Link>
             ))}
           </Box>
           <Box
