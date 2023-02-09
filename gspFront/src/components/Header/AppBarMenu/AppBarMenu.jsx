@@ -93,9 +93,13 @@ export default function AppBarMenu() {
                   </MenuItem>
                 </Link>
               ))}
-              <MenuItem key={7} onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Login</Typography>
-              </MenuItem>
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <MenuItem key={7} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center" color="green">
+                    Login
+                  </Typography>
+                </MenuItem>
+              </Link>
             </Menu>
           </Box>
 
@@ -128,18 +132,20 @@ export default function AppBarMenu() {
               display: { xs: "none", md: "flex" },
             }}
           >
-            <Button
-              key={7}
-              onClick={handleCloseNavMenu}
-              sx={{
-                my: 2,
-                display: "block",
-                border: 1,
-                color: "green",
-              }}
-            >
-              Login
-            </Button>
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <Button
+                key={7}
+                onClick={handleCloseNavMenu}
+                sx={{
+                  my: 2,
+                  display: "block",
+                  border: 1,
+                  color: "green",
+                }}
+              >
+                Login
+              </Button>
+            </Link>
             {/* <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
