@@ -34,7 +34,7 @@ export default function Configurador() {
         >
           <Typography
             variant="h1"
-            color="green"
+            color="darkgreen"
             sx={{ my: "48px", fontWeight: "bold" }}
           >
             Crea tu Bungalow en un Click
@@ -50,7 +50,7 @@ export default function Configurador() {
         >
           <Typography
             variant="h3"
-            color="green"
+            color="darkgreen"
             sx={{ my: "48px", fontWeight: "bold" }}
           >
             Crea tu Bungalow en un Click
@@ -59,12 +59,12 @@ export default function Configurador() {
         <Grid item xs={4}>
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Disposicion</InputLabel>
+              <InputLabel id="disposicion">Elige tu disposicion</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={disposicion}
-                label="Disposicion"
+                label="demo-simple-select-label"
                 onChange={handleChange}
               >
                 <MenuItem value={"../../box1.png"}>1 Bungalow</MenuItem>
