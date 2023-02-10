@@ -49,7 +49,11 @@ export default function Home() {
             <img src="../../boxVerde.jpg" width="100%" alt="img" />
           </Grid>
           <Grid container item md={4} textAlign="center" alignItems="center">
-            <Typography variant="h2" color="gold" sx={{ fontWeight: "bold" }}>
+            <Typography
+              variant="h2"
+              color="#d3b73d"
+              sx={{ fontWeight: "bold" }}
+            >
               Diseña tu bungalow
             </Typography>
           </Grid>
@@ -63,7 +67,11 @@ export default function Home() {
             alignItems="center"
             justifyContent="center"
           >
-            <Typography variant="h2" color="gold" sx={{ fontWeight: "bold" }}>
+            <Typography
+              variant="h2"
+              color="#d3b73d"
+              sx={{ fontWeight: "bold" }}
+            >
               Productos
             </Typography>
           </Grid>
@@ -72,7 +80,11 @@ export default function Home() {
           </Grid>
 
           <Grid container item md={4} textAlign="center" alignItems="center">
-            <Typography variant="h2" color="gold" sx={{ fontWeight: "bold" }}>
+            <Typography
+              variant="h2"
+              color="#d3b73d"
+              sx={{ fontWeight: "bold" }}
+            >
               Nuestros trabajos
             </Typography>
           </Grid>
