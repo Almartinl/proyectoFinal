@@ -74,7 +74,11 @@ export default function Configurador() {
             </FormControl>
           </Box>
         </Grid>
-        <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid
+          item
+          xs={8}
+          sx={{ display: "flex", justifyContent: "center", height: "100vh" }}
+        >
           <img
             src={disposicion}
             alt="foto"

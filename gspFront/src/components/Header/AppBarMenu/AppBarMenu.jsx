@@ -12,18 +12,21 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 const pages = [
   { nombre: "Inicio", ruta: "/" },
-  { nombre: "Productos", ruta: "productos" },
-  { nombre: "Configurador", ruta: "configurador" },
-  { nombre: "Nuestros Proyectos", ruta: "proyectos" },
-  { nombre: "Sobre Nosotros", ruta: "nosotros" },
-  { nombre: "Contacto", ruta: "contacto" },
+  { nombre: "Productos", ruta: "/productos" },
+  { nombre: "Configurador", ruta: "/configurador" },
+  { nombre: "Nuestros Proyectos", ruta: "/proyectos" },
+  { nombre: "Sobre Nosotros", ruta: "/nosotros" },
+  { nombre: "Contacto", ruta: "/contacto" },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Account", "Dashboard"];
 
 export default function AppBarMenu() {
+  const { authorization, dataToken, logout } = useAuthContext();
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -41,6 +44,11 @@ export default function AppBarMenu() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  function handleLogout() {
+    logout();
+    setAnchorElUser(null);
+  }
 
   return (
     <AppBar position="static" sx={{ background: "none", boxShadow: "none" }}>
@@ -93,13 +101,15 @@ export default function AppBarMenu() {
                   </MenuItem>
                 </Link>
               ))}
-              <Link to="/login" style={{ textDecoration: "none" }}>
-                <MenuItem key={7} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" color="green">
-                    Login
-                  </Typography>
-                </MenuItem>
-              </Link>
+              {!authorization && (
+                <Link to="/login" style={{ textDecoration: "none" }}>
+                  <MenuItem key={7} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center" color="green">
+                      Login
+                    </Typography>
+                  </MenuItem>
+                </Link>
+              )}
             </Menu>
           </Box>
 
@@ -126,12 +136,41 @@ export default function AppBarMenu() {
               </Link>
             ))}
           </Box>
-          <Box
-            sx={{
-              flexGrow: 0,
-              display: { xs: "none", md: "flex" },
-            }}
-          >
+
+          {authorization ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt={dataToken.email.toUpperCase()} src={"/"} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+                <MenuItem key="Logout" onClick={handleLogout}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          ) : (
             <Link to="/login" style={{ textDecoration: "none" }}>
               <Button
                 key={7}
@@ -143,37 +182,10 @@ export default function AppBarMenu() {
                   color: "green",
                 }}
               >
-                Login
+                Login / Register
               </Button>
             </Link>
-            {/* <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu> */}
-          </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

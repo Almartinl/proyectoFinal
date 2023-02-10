@@ -37,7 +37,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function FormLogin() {
+export default function FormLogin({ estado, vista }) {
   const navigate = useNavigate();
   const { login, authorization } = useAuthContext();
   const [user, setUser] = useState({
@@ -55,6 +55,10 @@ export default function FormLogin() {
     }
   }, [authorization]);
 
+  function handleChange() {
+    estado(!vista);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -71,7 +75,7 @@ export default function FormLogin() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Iniciar Sesion
           </Typography>
           <Box
             component="form"
@@ -84,7 +88,7 @@ export default function FormLogin() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Email"
               name="email"
               autoComplete="email"
               autoFocus
@@ -105,7 +109,7 @@ export default function FormLogin() {
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="Recuerdame"
             />
             <Button
               type="submit"
@@ -113,16 +117,20 @@ export default function FormLogin() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Iniciar Sesion
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  ¿Has perdido la contraseña?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link
+                  variant="body2"
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => handleChange()}
+                >
                   {"¿No tienes Cuenta? Registrate"}
                 </Link>
               </Grid>
