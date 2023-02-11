@@ -9,13 +9,27 @@ import {
   Select,
   Button,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import { useLoader } from "@react-three/fiber";
+import { Environment, OrbitControls } from "@react-three/drei";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 export default function Configurador() {
   document.title = "configurador";
   let bungalowFinal;
+  let bungalow3d = "";
   let disableButton = true;
 
+  const Model = () => {
+    const gltf = useLoader(GLTFLoader, bungalow3d);
+    return (
+      <>
+        <primitive object={gltf.scene} scale={2} />
+      </>
+    );
+  };
+  const [button3d, setButton3d] = useState(false);
   const [disposicion, setDisposicion] = useState("");
   const [eleccionForma, setEleccionForma] = useState("");
   const [eleccionModelo, setEleccionModelo] = useState("");
@@ -58,6 +72,9 @@ export default function Configurador() {
     setEleccionB("");
     setEleccionC("");
   }
+  function handleView3d() {
+    setButton3d(!button3d);
+  }
 
   useEffect(() => {
     setEleccionForma("");
@@ -86,12 +103,14 @@ export default function Configurador() {
   if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 1) {
     bungalowFinal = "../../Diafano.png";
     disableButton = false;
+    bungalow3d = "../../box-de-punta.glb";
   } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 2) {
     bungalowFinal = "../../duchasSimple.png";
     disableButton = false;
   } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 3) {
     bungalowFinal = "../../mixtoSimple.png";
     disableButton = false;
+    bungalow3d = "../../box-de-punta.glb";
   } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 4) {
     bungalowFinal = "../../vaterSimple.png";
     disableButton = false;
@@ -720,6 +739,15 @@ export default function Configurador() {
             >
               Guardar
             </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ backgroundColor: "darkgreen" }}
+              disabled={disableButton}
+              onClick={handleView3d}
+            >
+              vista 3d
+            </Button>
           </Grid>
           {bungalowFinal ? (
             <Grid
@@ -760,6 +788,21 @@ export default function Configurador() {
                   objectFit: "cover",
                 }}
               />
+            </Grid>
+          )}
+          {button3d && (
+            <Grid item xs={12} width="100%" height="80vh">
+              <Typography variant="h2" sx={{ textAlign: "center" }}>
+                Vista 3d
+              </Typography>
+
+              <Canvas>
+                <Suspense fallback={null}>
+                  <Environment preset="warehouse" />
+                  <Model />
+                  <OrbitControls />
+                </Suspense>
+              </Canvas>
             </Grid>
           )}
         </Grid>
