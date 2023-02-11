@@ -3,6 +3,7 @@ import { Button, Container, Divider, Grid, Typography } from "@mui/material";
 import CarouselPrincipal from "../../components/CarouselPrincipal/CarouselPrincipal";
 
 export default function Home() {
+  document.title = "Inicio";
   return (
     <>
       <CarouselPrincipal />
