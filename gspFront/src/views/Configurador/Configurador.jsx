@@ -8,11 +8,12 @@ import {
   FormControl,
   Select,
   Button,
+  tableFooterClasses,
 } from "@mui/material";
 import { useEffect, useState, Suspense } from "react";
 import { Canvas, render, useThree } from "@react-three/fiber";
 import { useLoader } from "@react-three/fiber";
-import { Environment, OrbitControls } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 export default function Configurador() {
@@ -21,8 +22,7 @@ export default function Configurador() {
   let disableButton = true;
   let model3d = "";
 
-  const [rerender, setRerender] = useState(false);
-  const [button3d, setButton3d] = useState(false);
+  const [button3d, setButton3d] = useState(true);
   const [disposicion, setDisposicion] = useState("");
   const [eleccionForma, setEleccionForma] = useState("");
   const [eleccionModelo, setEleccionModelo] = useState("");
@@ -110,17 +110,14 @@ export default function Configurador() {
     };
 
     return (
-      <>
-        {rerender && (
-          <Canvas>
-            <Suspense fallback={null}>
-              <Environment preset="warehouse" />
-              <Model />
-              <OrbitControls />
-            </Suspense>
-          </Canvas>
-        )}
-      </>
+      <Canvas>
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} intensity={0.4} />
+        <Suspense fallback={null}>
+          <Model />
+          <OrbitControls />
+        </Suspense>
+      </Canvas>
     );
   }
 
@@ -142,6 +139,7 @@ export default function Configurador() {
     bungalowFinal = "../../almacenSimple.png";
     disableButton = false;
   }
+
   return (
     <Container
       maxWidth="xl"
@@ -824,13 +822,6 @@ export default function Configurador() {
                 Vista 3d
               </Typography>
               <View3d />
-              {/* <Canvas>
-                <Suspense fallback={null}>
-                  <Model />
-                  <OrbitControls />
-                  <Environment preset="warehouse" />
-                </Suspense>
-              </Canvas> */}
             </Grid>
           )}
         </Grid>
