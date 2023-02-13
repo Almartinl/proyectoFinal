@@ -10,7 +10,7 @@ import {
   Button,
 } from "@mui/material";
 import { useEffect, useState, Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, render, useThree } from "@react-three/fiber";
 import { useLoader } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -18,17 +18,10 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 export default function Configurador() {
   document.title = "configurador";
   let bungalowFinal;
-  let bungalow3d = "";
   let disableButton = true;
+  let model3d = "";
 
-  const Model = () => {
-    const gltf = useLoader(GLTFLoader, bungalow3d);
-    return (
-      <>
-        <primitive object={gltf.scene} scale={2} />
-      </>
-    );
-  };
+  const [rerender, setRerender] = useState(false);
   const [button3d, setButton3d] = useState(false);
   const [disposicion, setDisposicion] = useState("");
   const [eleccionForma, setEleccionForma] = useState("");
@@ -71,46 +64,77 @@ export default function Configurador() {
     setEleccionA("");
     setEleccionB("");
     setEleccionC("");
+    setButton3d(false);
   }
   function handleView3d() {
-    setButton3d(!button3d);
+    setButton3d(true);
   }
 
   useEffect(() => {
     setEleccionForma("");
     setEleccionTipo("");
     setEleccionA("");
+    setButton3d(false);
   }, [disposicion]);
 
   useEffect(() => {
     setEleccionTipo("");
+    setButton3d(false);
   }, [eleccionModelo]);
 
   useEffect(() => {
     setEleccionTipo("");
     setEleccionModelo("");
+    setButton3d(false);
   }, [eleccionForma]);
 
   useEffect(() => {
     setEleccionB("");
     setEleccionC("");
+    setButton3d(false);
   }, [eleccionA]);
 
   useEffect(() => {
     setEleccionC("");
+    setButton3d(false);
   }, [eleccionB]);
+
+  function View3d() {
+    const Model = () => {
+      const gltf = useLoader(GLTFLoader, model3d);
+      return (
+        <>
+          <primitive object={gltf.scene} scale={1.5} />
+        </>
+      );
+    };
+
+    return (
+      <>
+        {rerender && (
+          <Canvas>
+            <Suspense fallback={null}>
+              <Environment preset="warehouse" />
+              <Model />
+              <OrbitControls />
+            </Suspense>
+          </Canvas>
+        )}
+      </>
+    );
+  }
 
   if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 1) {
     bungalowFinal = "../../Diafano.png";
     disableButton = false;
-    bungalow3d = "../../box-de-punta.glb";
+    model3d = "../../box-de-punta.glb";
   } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 2) {
     bungalowFinal = "../../duchasSimple.png";
     disableButton = false;
   } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 3) {
     bungalowFinal = "../../mixtoSimple.png";
     disableButton = false;
-    bungalow3d = "../../box-de-punta.glb";
+    model3d = "../../box-mixto.glb";
   } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 4) {
     bungalowFinal = "../../vaterSimple.png";
     disableButton = false;
@@ -792,17 +816,21 @@ export default function Configurador() {
           )}
           {button3d && (
             <Grid item xs={12} width="100%" height="80vh">
-              <Typography variant="h2" sx={{ textAlign: "center" }}>
+              <Typography
+                variant="h2"
+                fontWeight="bold"
+                sx={{ textAlign: "center", color: "darkgreen" }}
+              >
                 Vista 3d
               </Typography>
-
-              <Canvas>
+              <View3d />
+              {/* <Canvas>
                 <Suspense fallback={null}>
-                  <Environment preset="warehouse" />
                   <Model />
                   <OrbitControls />
+                  <Environment preset="warehouse" />
                 </Suspense>
-              </Canvas>
+              </Canvas> */}
             </Grid>
           )}
         </Grid>
