@@ -27,10 +27,7 @@ export default function Configurador() {
     disposicion: "",
   });
   const [eleccionForma, setEleccionForma] = useState([
-    {
-      orientacion: "",
-      bungalowa: "",
-    },
+    { orientacion: "", bungalowa: "" },
   ]);
   const [eleccionModelo, setEleccionModelo] = useState("");
   const [eleccionTipo, setEleccionTipo] = useState("");
@@ -39,7 +36,7 @@ export default function Configurador() {
   const [eleccionC, setEleccionC] = useState("");
 
   useEffect(() => {
-    if (disposicion.disposicion != "") {
+    if (disposicion.disposicion !== "") {
       async function fetchSelecto2() {
         const response = await fetch(`http://localhost:3000/config`, {
           method: "POST",
@@ -53,7 +50,7 @@ export default function Configurador() {
     }
   }, [disposicion]);
 
-  console.log(eleccionForma);
+  console.log(eleccionForma, "eleccionforma");
   console.log(disposicion);
   const handleChange = (event) => {
     setDisposicion({ disposicion: event.target.value });
@@ -224,7 +221,7 @@ export default function Configurador() {
                 </FormControl>
               </Box>
             </Grid>
-            {eleccionForma.orientacion !== "" && (
+            {eleccionForma && eleccionForma.orientacion !== "" && (
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
@@ -238,7 +235,7 @@ export default function Configurador() {
                       label="demo-simple-select-label"
                       onChange={handleChangeForma}
                     >
-                      {eleccionForma?.map((item) => (
+                      {eleccionForma.map((item) => (
                         <MenuItem value={item.orientacion}>
                           {item.orientacion}
                         </MenuItem>

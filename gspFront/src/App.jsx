@@ -5,7 +5,7 @@ import Layout from "./components/Layout/Layout";
 import Home from "./views/Home/Home";
 import "bootstrap";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import Configurador from "./views/Configurador/configurador";
+import Configurador from "./views/Configurador/Configurador";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import Login from "./views/login/Login";
 
