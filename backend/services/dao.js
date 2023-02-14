@@ -1,3 +1,4 @@
+import configQueries from "./mysql_queries/config_queries.js";
 import productQueries from "./mysql_queries/product_queries.js";
 import userQueries from "./mysql_queries/user_queries.js";
 
@@ -35,5 +36,8 @@ dao.getProductByRef = async (ref) => await productQueries.getProductByRef(ref);
 //Añadir un producto a bbdd
 dao.addProduct = async (productData) =>
   await productQueries.addProduct(productData);
+
+dao.getConfig = async (disposicion) =>
+  await configQueries.getConfigBungalowByDisposicion(disposicion);
 
 export default dao;

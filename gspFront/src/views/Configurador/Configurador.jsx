@@ -23,16 +23,40 @@ export default function Configurador() {
   let model3d = "";
 
   const [button3d, setButton3d] = useState(true);
-  const [disposicion, setDisposicion] = useState("");
-  const [eleccionForma, setEleccionForma] = useState("");
+  const [disposicion, setDisposicion] = useState({
+    disposicion: "",
+  });
+  const [eleccionForma, setEleccionForma] = useState([
+    {
+      orientacion: "",
+      bungalowa: "",
+    },
+  ]);
   const [eleccionModelo, setEleccionModelo] = useState("");
   const [eleccionTipo, setEleccionTipo] = useState("");
   const [eleccionA, setEleccionA] = useState("");
   const [eleccionB, setEleccionB] = useState("");
   const [eleccionC, setEleccionC] = useState("");
 
+  useEffect(() => {
+    if (disposicion.disposicion != "") {
+      async function fetchSelecto2() {
+        const response = await fetch(`http://localhost:3000/config`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(disposicion),
+        });
+        const selector2 = await response.json();
+        setEleccionForma(selector2);
+      }
+      fetchSelecto2();
+    }
+  }, [disposicion]);
+
+  console.log(eleccionForma);
+  console.log(disposicion);
   const handleChange = (event) => {
-    setDisposicion(event.target.value);
+    setDisposicion({ disposicion: event.target.value });
   };
 
   const handleChangeForma = (event) => {
@@ -121,24 +145,24 @@ export default function Configurador() {
     );
   }
 
-  if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 1) {
-    bungalowFinal = "../../Diafano.png";
-    disableButton = false;
-    model3d = "../../box-de-punta.glb";
-  } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 2) {
-    bungalowFinal = "../../duchasSimple.png";
-    disableButton = false;
-  } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 3) {
-    bungalowFinal = "../../mixtoSimple.png";
-    disableButton = false;
-    model3d = "../../box-mixto.glb";
-  } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 4) {
-    bungalowFinal = "../../vaterSimple.png";
-    disableButton = false;
-  } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 5) {
-    bungalowFinal = "../../almacenSimple.png";
-    disableButton = false;
-  }
+  // if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 1) {
+  //   bungalowFinal = "../../Diafano.png";
+  //   disableButton = false;
+  //   model3d = "../../box-de-punta.glb";
+  // } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 2) {
+  //   bungalowFinal = "../../duchasSimple.png";
+  //   disableButton = false;
+  // } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 3) {
+  //   bungalowFinal = "../../mixtoSimple.png";
+  //   disableButton = false;
+  //   model3d = "../../box-mixto.glb";
+  // } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 4) {
+  //   bungalowFinal = "../../vaterSimple.png";
+  //   disableButton = false;
+  // } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 5) {
+  //   bungalowFinal = "../../almacenSimple.png";
+  //   disableButton = false;
+  // }
 
   return (
     <Container
@@ -189,7 +213,7 @@ export default function Configurador() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={disposicion}
+                    value={disposicion.disposicion}
                     label="demo-simple-select-label"
                     onChange={handleChange}
                   >
@@ -200,556 +224,52 @@ export default function Configurador() {
                 </FormControl>
               </Box>
             </Grid>
-            {disposicion == 1 && (
+            {eleccionForma.orientacion !== "" && (
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="eleccionforma">
-                      orientacion del bungalow
+                    <InputLabel id="orientacion">
+                      Elige la orientacion
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
-                      id="text-eleccion"
-                      value={eleccionForma}
+                      id="demo-simple-select"
+                      value={eleccionForma.orientacion}
                       label="demo-simple-select-label"
                       onChange={handleChangeForma}
                     >
-                      <MenuItem value={"1"}>Vertical</MenuItem>
-                      <MenuItem value={"2"}>Horizontal</MenuItem>
+                      {eleccionForma?.map((item) => (
+                        <MenuItem value={item.orientacion}>
+                          {item.orientacion}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                 </Box>
               </Grid>
             )}
-            {eleccionForma == 1 && (
+            {eleccionForma.bungalowa && (
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="elecciontipo">Tipo de bungalow</InputLabel>
+                    <InputLabel id="disposicion">
+                      Elige tu disposicion
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
-                      id="text-eleccion"
-                      value={eleccionTipo}
+                      id="demo-simple-select"
+                      value={eleccionForma.bungalowa}
                       label="demo-simple-select-label"
-                      onChange={handleChangeTipo}
+                      onChange={handleChange}
                     >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Duchas</MenuItem>
-                      <MenuItem value={"3"}>Mixto</MenuItem>
-                      <MenuItem value={"4"}>Vater</MenuItem>
-                      <MenuItem value={"5"}>Almacen</MenuItem>
+                      <MenuItem value={"1"}>1 Bungalow</MenuItem>
+                      <MenuItem value={"2"}>2 Bungalows</MenuItem>
+                      <MenuItem value={"3"}>3 Bungalows</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
               </Grid>
             )}
-            {eleccionForma == 2 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccionmodelo">Elige un modelo</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion"
-                      value={eleccionModelo}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeModelo}
-                    >
-                      <MenuItem value={"1"}>1 Puerta y 1 Ventana</MenuItem>
-                      <MenuItem value={"2"}>1 Puerta y 2 Ventanas</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {eleccionModelo == 1 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="elecciontipo">Tipo de bungalow</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion"
-                      value={eleccionTipo}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeTipo}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Duchas</MenuItem>
-                      <MenuItem value={"3"}>Mixto</MenuItem>
-                      <MenuItem value={"4"}>Vater</MenuItem>
-                      <MenuItem value={"5"}>Almacen</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {eleccionModelo == 2 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="elecciontipo1">Tipo de bungalow</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion1"
-                      value={eleccionTipo}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeTipo}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Duchas</MenuItem>
-                      <MenuItem value={"3"}>Mixto</MenuItem>
-                      <MenuItem value={"4"}>Vater</MenuItem>
-                      <MenuItem value={"5"}>Almacen</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 2 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-a">Bungalow A</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-a"
-                      value={eleccionA}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeA}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Duchas</MenuItem>
-                      <MenuItem value={"3"}>Mixto</MenuItem>
-                      <MenuItem value={"4"}>Vestuario</MenuItem>
-                      <MenuItem value={"5"}>Almacen</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 2 && eleccionA == 1 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-b">Bungalow B</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-b"
-                      value={eleccionB}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeB}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Duchas</MenuItem>
-                      <MenuItem value={"3"}>Mixto</MenuItem>
-                      <MenuItem value={"4"}>Vestuario</MenuItem>
-                      <MenuItem value={"5"}>Almacen</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 2 && eleccionA == 2 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-b">Bungalow B</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-b"
-                      value={eleccionB}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeB}
-                    >
-                      <MenuItem value={"1"}>Vestuario</MenuItem>
-                      <MenuItem value={"2"}>Diafano</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 2 && eleccionA == 3 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-b">Bungalow B</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-b"
-                      value={eleccionB}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeB}
-                    >
-                      <MenuItem value={"1"}>Vestuario</MenuItem>
-                      <MenuItem value={"2"}>Diafano</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 2 && eleccionA == 4 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-b">Bungalow B</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-b"
-                      value={eleccionB}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeB}
-                    >
-                      <MenuItem value={"1"}>Duchas</MenuItem>
-                      <MenuItem value={"2"}>Mixtos</MenuItem>
-                      <MenuItem value={"3"}>Diafano</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 2 && eleccionA == 5 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-b">Bungalow B</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-b"
-                      value={eleccionB}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeB}
-                    >
-                      <MenuItem value={"1"}>Almacen</MenuItem>
-                      <MenuItem value={"2"}>Diafano</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-a">Bungalow A</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-a"
-                      value={eleccionA}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeA}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Duchas</MenuItem>
-                      <MenuItem value={"3"}>Mixto</MenuItem>
-                      <MenuItem value={"4"}>Vestuario</MenuItem>
-                      <MenuItem value={"5"}>Almacen</MenuItem>
-                      <MenuItem value={"6"}>Oficina</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 1 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-b">Bungalow B</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-b"
-                      value={eleccionB}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeB}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Vestuario</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 1 && eleccionB == 1 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-c">Bungalow C</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-c"
-                      value={eleccionC}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeC}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Oficina</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 1 && eleccionB == 2 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-c">Bungalow C</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-c"
-                      value={eleccionC}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeC}
-                    >
-                      <MenuItem value={"1"}>Vestuario</MenuItem>
-                      <MenuItem value={"2"}>Duchas</MenuItem>
-                      <MenuItem value={"3"}>Mixto</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 2 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-b">Bungalow B</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-b"
-                      value={eleccionB}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeB}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Vestuario</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 2 && eleccionB == 1 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-c">Bungalow C</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-c"
-                      value={eleccionC}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeC}
-                    >
-                      <MenuItem value={"1"}>Vestuario</MenuItem>
-                      <MenuItem value={"2"}>Diafano</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 2 && eleccionB == 2 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-c">Bungalow C</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-c"
-                      value={eleccionC}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeC}
-                    >
-                      <MenuItem value={"1"}>Vestuario</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 3 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-b">Bungalow B</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-b"
-                      value={eleccionB}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeB}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Vestuario</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 3 && eleccionB == 1 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-c">Bungalow C</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-c"
-                      value={eleccionC}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeC}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Vestuario</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 3 && eleccionB == 2 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-c">Bungalow C</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-c"
-                      value={eleccionC}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeC}
-                    >
-                      <MenuItem value={"1"}>Vestuario</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 4 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-b">Bungalow B</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-b"
-                      value={eleccionB}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeB}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                      <MenuItem value={"2"}>Vestuario</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 4 && eleccionB == 1 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-c">Bungalow C</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-c"
-                      value={eleccionC}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeC}
-                    >
-                      <MenuItem value={"1"}>Duchas</MenuItem>
-                      <MenuItem value={"2"}>Mixto</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 4 && eleccionB == 2 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-c">Bungalow C</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-c"
-                      value={eleccionC}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeC}
-                    >
-                      <MenuItem value={"1"}>Duchas</MenuItem>
-                      <MenuItem value={"2"}>Mixto</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 5 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-b">Bungalow B</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-b"
-                      value={eleccionB}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeB}
-                    >
-                      <MenuItem value={"1"}>Almacen</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 5 && eleccionB == 1 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-c">Bungalow C</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-c"
-                      value={eleccionC}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeC}
-                    >
-                      <MenuItem value={"1"}>Almacen</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 6 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-b">Bungalow B</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-b"
-                      value={eleccionB}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeB}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-            {disposicion == 3 && eleccionA == 6 && eleccionB == 1 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="eleccion-c">Bungalow C</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="text-eleccion-c"
-                      value={eleccionC}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeC}
-                    >
-                      <MenuItem value={"1"}>Diafano</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-
             <Button onClick={reset} variant="contained" color="error">
               Reset
             </Button>

@@ -9,6 +9,7 @@ import productRouter from "./routes/product_router.js";
 import fileUpload from "express-fileupload";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import configRouter from "./routes/config_router.js";
 
 dotenv.config();
 
@@ -45,6 +46,8 @@ app.use(
 app.use("/user", userRouter);
 
 app.use("/product", productRouter);
+
+app.use("/config", configRouter);
 
 await db.createConnection();
 
