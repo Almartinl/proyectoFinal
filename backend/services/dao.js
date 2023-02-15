@@ -1,3 +1,4 @@
+import bungalowsQueries from "./mysql_queries/bungalows_queries.js";
 import configQueries from "./mysql_queries/config_queries.js";
 import productQueries from "./mysql_queries/product_queries.js";
 import userQueries from "./mysql_queries/user_queries.js";
@@ -39,5 +40,8 @@ dao.addProduct = async (productData) =>
 
 dao.getConfig = async (disposicion) =>
   await configQueries.getConfigBungalowByDisposicion(disposicion);
+
+dao.addBungalow = async (bungalowData) =>
+  await bungalowsQueries.addBungalows(bungalowData);
 
 export default dao;

@@ -6,6 +6,7 @@ const AuthContext = createContext({
   dataToken: {
     email: null,
     role: null,
+    id: null,
   },
   login: () => {},
   logout: () => {},
@@ -25,6 +26,7 @@ export function AuthContextProvider({ children }) {
     JSON.parse(window.localStorage.getItem(MY_AUTH_APP_DATA)) ?? {
       email: null,
       role: null,
+      id: null,
     }
   );
   async function login(e, user) {
@@ -68,6 +70,7 @@ export function AuthContextProvider({ children }) {
     setDataToken({
       email: null,
       role: null,
+      id: null,
     });
   }
 

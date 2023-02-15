@@ -15,13 +15,17 @@ import { Canvas, render, useThree } from "@react-three/fiber";
 import { useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Configurador() {
   document.title = "configurador";
   let bungalowFinal;
   let disableButton = true;
   let model3d = "";
+  const navigate = useNavigate();
 
+  const { authorization, dataToken } = useAuthContext();
   const [button3d, setButton3d] = useState(true);
   const [disposicion, setDisposicion] = useState("");
   const [eleccionForma, setEleccionForma] = useState("");
@@ -70,6 +74,25 @@ export default function Configurador() {
     setButton3d(true);
   }
 
+  function saveBungalowFinal() {
+    if (authorization) {
+      function fetchSelecto2() {
+        fetch(`http://localhost:3000/bungalows/save`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            usuario: dataToken.id,
+            nombre: "fadsf",
+            planta: "adsf",
+          }),
+        });
+      }
+      fetchSelecto2();
+    } else {
+      navigate("/login");
+    }
+  }
+
   useEffect(() => {
     setEleccionForma("");
     setEleccionTipo("");
@@ -98,6 +121,10 @@ export default function Configurador() {
     setEleccionC("");
     setButton3d(false);
   }, [eleccionB]);
+
+  useEffect(() => {
+    setButton3d(false);
+  }, [eleccionTipo]);
 
   function View3d() {
     const Model = () => {
@@ -758,6 +785,7 @@ export default function Configurador() {
               color="success"
               sx={{ backgroundColor: "darkgreen" }}
               disabled={disableButton}
+              onClick={saveBungalowFinal}
             >
               Guardar
             </Button>
@@ -778,7 +806,7 @@ export default function Configurador() {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                height: "100vh",
+                height: "60vh",
               }}
             >
               <img
@@ -786,7 +814,7 @@ export default function Configurador() {
                 alt="foto"
                 style={{
                   maxWidth: "100%",
-                  maxHeight: "50%",
+                  maxHeight: "100%",
                   objectFit: "cover",
                 }}
               />
@@ -813,7 +841,13 @@ export default function Configurador() {
             </Grid>
           )}
           {button3d && (
-            <Grid item xs={12} width="100%" height="80vh">
+            <Grid
+              item
+              xs={12}
+              width="100%"
+              height="80vh"
+              sx={{ marginTop: "32px" }}
+            >
               <Typography
                 variant="h2"
                 fontWeight="bold"

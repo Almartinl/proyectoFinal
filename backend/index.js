@@ -10,6 +10,7 @@ import fileUpload from "express-fileupload";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import configRouter from "./routes/config_router.js";
+import bungalowsRouter from "./routes/bungalows_router.js";
 
 dotenv.config();
 
@@ -48,6 +49,8 @@ app.use("/user", userRouter);
 app.use("/product", productRouter);
 
 app.use("/config", configRouter);
+
+app.use("/bungalows", bungalowsRouter);
 
 await db.createConnection();
 

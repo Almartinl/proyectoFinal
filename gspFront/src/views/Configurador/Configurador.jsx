@@ -50,14 +50,17 @@ export default function Configurador() {
     }
   }, [disposicion]);
 
-  console.log(eleccionForma, "eleccionforma");
   console.log(disposicion);
   const handleChange = (event) => {
     setDisposicion({ disposicion: event.target.value });
   };
 
   const handleChangeForma = (event) => {
-    setEleccionForma(event.target.value);
+    setEleccionForma({
+      orientacion: event.target.value,
+      bungalowa: "",
+    });
+    console.log(eleccionForma);
   };
 
   const handleChangeModelo = (event) => {
@@ -221,52 +224,54 @@ export default function Configurador() {
                 </FormControl>
               </Box>
             </Grid>
-            {eleccionForma && eleccionForma.orientacion !== "" && (
+            {eleccionForma &&
+              (eleccionForma.orientacion !== "" ||
+                eleccionForma.orientacion !== null) && (
+                <Grid item xs={12}>
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <InputLabel id="orientacion">
+                        Elige la orientacion
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={eleccionForma.orientacion}
+                        label="demo-simple-select-label"
+                        onChange={handleChangeForma}
+                      >
+                        {eleccionForma.map((item) => (
+                          <MenuItem value={item.orientacion}>
+                            {item.orientacion}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </Grid>
+              )}
+            {/* {eleccionForma.bungalowa !== "" && (
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="orientacion">
-                      Elige la orientacion
-                    </InputLabel>
+                    <InputLabel id="disposicion">Bungalow A</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={eleccionForma.orientacion}
+                      value={eleccionForma.bungalowa}
                       label="demo-simple-select-label"
                       onChange={handleChangeForma}
                     >
                       {eleccionForma.map((item) => (
-                        <MenuItem value={item.orientacion}>
-                          {item.orientacion}
+                        <MenuItem value={item.bungalowa}>
+                          {item.bungalowa}
                         </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
                 </Box>
               </Grid>
-            )}
-            {eleccionForma.bungalowa && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="disposicion">
-                      Elige tu disposicion
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={eleccionForma.bungalowa}
-                      label="demo-simple-select-label"
-                      onChange={handleChange}
-                    >
-                      <MenuItem value={"1"}>1 Bungalow</MenuItem>
-                      <MenuItem value={"2"}>2 Bungalows</MenuItem>
-                      <MenuItem value={"3"}>3 Bungalows</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
+            )} */}
             <Button onClick={reset} variant="contained" color="error">
               Reset
             </Button>
