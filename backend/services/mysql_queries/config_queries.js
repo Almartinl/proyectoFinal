@@ -2,13 +2,13 @@ import db from "../mysql.js";
 
 const configQueries = {};
 
-configQueries.getConfigBungalowByDisposicion = async (disposicion) => {
+configQueries.getConfig = async () => {
   let conn = null;
   try {
     conn = await db.createConnection();
     return await db.query(
-      "select orientacion, bungalowa from configurador where disposicion = ? group by orientacion, bungalowa",
-      disposicion,
+      "select * from configurador",
+      [],
       "select",
       conn
     );

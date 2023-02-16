@@ -23,63 +23,52 @@ export default function Configurador() {
   let model3d = "";
 
   const [button3d, setButton3d] = useState(true);
-  const [disposicion, setDisposicion] = useState({
-    disposicion: "",
-  });
-  const [eleccionForma, setEleccionForma] = useState([
-    { orientacion: "", bungalowa: "" },
-  ]);
-  const [eleccionModelo, setEleccionModelo] = useState("");
-  const [eleccionTipo, setEleccionTipo] = useState("");
-  const [eleccionA, setEleccionA] = useState("");
-  const [eleccionB, setEleccionB] = useState("");
-  const [eleccionC, setEleccionC] = useState("");
+  const [disposicion, setDisposicion] = useState("");
+  const [allTable, setAllTable] = useState([]);
+  const [orientacion, setOrientacion] = useState("");
+  const [orientacionObject, setOrientacionObject] = useState([]);
 
   useEffect(() => {
-    if (disposicion.disposicion !== "") {
-      async function fetchSelecto2() {
-        const response = await fetch(`http://localhost:3000/config`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(disposicion),
-        });
-        const selector2 = await response.json();
-        setEleccionForma(selector2);
-      }
-      fetchSelecto2();
+    async function fetchSelecto2() {
+      const response = await fetch(`http://localhost:3000/config`);
+      const selector = await response.json();
+      setAllTable(
+        selector.filter((item) => {
+          return item.disposicion == disposicion;
+        })
+      );
     }
+    fetchSelecto2();
   }, [disposicion]);
 
-  console.log(disposicion);
+  useEffect(() => {
+    async function fetchSelecto2() {
+      const response = await fetch(`http://localhost:3000/config`);
+      const selector = await response.json();
+      setOrientacionObject(
+        selector.filter((item) => item.orientacion == orientacion)
+      );
+    }
+    fetchSelecto2();
+  }, [orientacion]);
+
+  console.log(allTable);
+  console.log(orientacionObject);
+
   const handleChange = (event) => {
-    setDisposicion({ disposicion: event.target.value });
+    setDisposicion(event.target.value);
   };
 
-  const handleChangeForma = (event) => {
-    setEleccionForma({
-      orientacion: event.target.value,
-      bungalowa: "",
-    });
-    console.log(eleccionForma);
-  };
+  function handleChangeOrientacion(event) {
+    setOrientacion(event.target.value);
+  }
 
-  const handleChangeModelo = (event) => {
-    setEleccionModelo(event.target.value);
-  };
+  useEffect(() => {
+    setOrientacion("");
+    setAllTable([]);
+    setButton3d(false);
+  }, [disposicion]);
 
-  const handleChangeTipo = (event) => {
-    setEleccionTipo(event.target.value);
-  };
-
-  const handleChangeA = (event) => {
-    setEleccionA(event.target.value);
-  };
-  const handleChangeB = (event) => {
-    setEleccionB(event.target.value);
-  };
-  const handleChangeC = (event) => {
-    setEleccionC(event.target.value);
-  };
   function reset() {
     setDisposicion("");
     setEleccionForma("");
@@ -93,36 +82,6 @@ export default function Configurador() {
   function handleView3d() {
     setButton3d(true);
   }
-
-  useEffect(() => {
-    setEleccionForma("");
-    setEleccionTipo("");
-    setEleccionA("");
-    setButton3d(false);
-  }, [disposicion]);
-
-  useEffect(() => {
-    setEleccionTipo("");
-    setButton3d(false);
-  }, [eleccionModelo]);
-
-  useEffect(() => {
-    setEleccionTipo("");
-    setEleccionModelo("");
-    setButton3d(false);
-  }, [eleccionForma]);
-
-  useEffect(() => {
-    setEleccionB("");
-    setEleccionC("");
-    setButton3d(false);
-  }, [eleccionA]);
-
-  useEffect(() => {
-    setEleccionC("");
-    setButton3d(false);
-  }, [eleccionB]);
-
   function View3d() {
     const Model = () => {
       const gltf = useLoader(GLTFLoader, model3d);
@@ -144,25 +103,6 @@ export default function Configurador() {
       </Canvas>
     );
   }
-
-  // if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 1) {
-  //   bungalowFinal = "../../Diafano.png";
-  //   disableButton = false;
-  //   model3d = "../../box-de-punta.glb";
-  // } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 2) {
-  //   bungalowFinal = "../../duchasSimple.png";
-  //   disableButton = false;
-  // } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 3) {
-  //   bungalowFinal = "../../mixtoSimple.png";
-  //   disableButton = false;
-  //   model3d = "../../box-mixto.glb";
-  // } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 4) {
-  //   bungalowFinal = "../../vaterSimple.png";
-  //   disableButton = false;
-  // } else if (disposicion == 1 && eleccionForma == 1 && eleccionTipo == 5) {
-  //   bungalowFinal = "../../almacenSimple.png";
-  //   disableButton = false;
-  // }
 
   return (
     <Container
@@ -213,7 +153,7 @@ export default function Configurador() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={disposicion.disposicion}
+                    value={disposicion}
                     label="demo-simple-select-label"
                     onChange={handleChange}
                   >
@@ -224,32 +164,31 @@ export default function Configurador() {
                 </FormControl>
               </Box>
             </Grid>
-            {eleccionForma &&
-              (eleccionForma.orientacion !== "" ||
-                eleccionForma.orientacion !== null) && (
-                <Grid item xs={12}>
-                  <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                      <InputLabel id="orientacion">
-                        Elige la orientacion
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={eleccionForma.orientacion}
-                        label="demo-simple-select-label"
-                        onChange={handleChangeForma}
-                      >
-                        {eleccionForma.map((item) => (
-                          <MenuItem value={item.orientacion}>
-                            {item.orientacion}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Box>
-                </Grid>
-              )}
+            {disposicion == 1 && (
+              <Grid item xs={12}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="orientacion">
+                      Elige la orientacion
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={orientacion}
+                      label="demo-simple-select-label"
+                      onChange={handleChangeOrientacion}
+                    >
+                      {allTable.map((item) => (
+                        <MenuItem key={item.id} value={item.orientacion}>
+                          {item.orientacion}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Grid>
+            )}
+
             {/* {eleccionForma.bungalowa !== "" && (
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>

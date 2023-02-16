@@ -3,6 +3,6 @@ import configController from "../controller/configurador_controller.js";
 
 const configRouter = express.Router();
 
-configRouter.post("/", configController.getConfig);
+configRouter.get("/", configController.getConfig);
 
 export default configRouter;

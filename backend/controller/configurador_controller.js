@@ -7,9 +7,9 @@ const __dirname = currentDir().__dirname;
 const controller = {};
 
 controller.getConfig = async (req, res) => {
-  const { disposicion } = req.body;
+  const {} = req.body;
   try {
-    const config = await dao.getConfig(disposicion);
+    const config = await dao.getConfig();
     // Si no existe devolvemos un 404 (not found)
     if (config.length <= 0) return res.status(404).send("productos no existe");
 
