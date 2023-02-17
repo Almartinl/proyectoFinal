@@ -47,6 +47,7 @@ controller.getProductById = async (req, res) => {
 
 // controlador para subir una imagen a nuestro servidor y guardar el path en la base de datos.
 controller.uploadImage = async (req, res) => {
+  console.log(req.files);
   try {
     // Controlamos cuando el objeto files sea null
     if (req.files === null) return;

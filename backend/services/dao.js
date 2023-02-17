@@ -38,8 +38,15 @@ dao.getProductByRef = async (ref) => await productQueries.getProductByRef(ref);
 dao.addProduct = async (productData) =>
   await productQueries.addProduct(productData);
 
-dao.getConfig = async () =>
-  await configQueries.getConfig();
+dao.getConfig = async () => await configQueries.getConfig();
+
+dao.getDisposicion = async () => await configQueries.getDisposicion();
+
+dao.getOrientacion = async (disposicion) =>
+  await configQueries.getOrientacion(disposicion);
+
+dao.getModelo = async (orientacion) =>
+  await configQueries.getModelo(orientacion);
 
 dao.addBungalow = async (bungalowData) =>
   await bungalowsQueries.addBungalows(bungalowData);

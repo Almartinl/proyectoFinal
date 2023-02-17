@@ -18,69 +18,86 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 export default function Configurador() {
   document.title = "configurador";
-  let bungalowFinal;
+  //let bungalowFinal;
   let disableButton = true;
   let model3d = "";
 
-  const [button3d, setButton3d] = useState(true);
-  const [disposicion, setDisposicion] = useState("");
-  const [allTable, setAllTable] = useState([]);
-  const [orientacion, setOrientacion] = useState("");
-  const [orientacionObject, setOrientacionObject] = useState([]);
+  //const [button3d, setButton3d] = useState(false);
+  const [disposicion, setDisposicion] = useState([]);
+  const [disposicionValue, setDisposicionValue] = useState("");
+  const [orientacion, setOrientacion] = useState([]);
+  const [orientacionValue, setOrientacionValue] = useState("");
+  const [modelo, setModelo] = useState([]);
+  const [modeloValue, setModeloValue] = useState("");
 
   useEffect(() => {
-    async function fetchSelecto2() {
-      const response = await fetch(`http://localhost:3000/config`);
+    async function fetchSelector() {
+      const response = await fetch(`http://localhost:3000/config/disposicion`);
       const selector = await response.json();
-      setAllTable(
-        selector.filter((item) => {
-          return item.disposicion == disposicion;
-        })
-      );
+      setDisposicion(selector);
     }
-    fetchSelecto2();
-  }, [disposicion]);
+    fetchSelector();
+  }, []);
 
   useEffect(() => {
-    async function fetchSelecto2() {
-      const response = await fetch(`http://localhost:3000/config`);
+    async function fetchSelector() {
+      const response = await fetch(`http://localhost:3000/config/orientacion`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ disposicion: disposicionValue }),
+      });
       const selector = await response.json();
-      setOrientacionObject(
-        selector.filter((item) => item.orientacion == orientacion)
-      );
+      setOrientacion(selector);
     }
-    fetchSelecto2();
-  }, [orientacion]);
+    if (disposicionValue !== "") {
+      fetchSelector();
+    }
+  }, [disposicionValue]);
 
-  console.log(allTable);
-  console.log(orientacionObject);
+  useEffect(() => {
+    async function fetchSelector() {
+      const response = await fetch(`http://localhost:3000/config/modelo`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orientacion: orientacionValue }),
+      });
+      const selector = await response.json();
+      setModelo(selector);
+    }
+    if (orientacionValue !== "") {
+      fetchSelector();
+    }
+  }, [orientacionValue]);
 
-  const handleChange = (event) => {
-    setDisposicion(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setDisposicion(event.target.value);
+  // };
+
+  function handleChangeDisposicion(event) {
+    setDisposicionValue(event.target.value);
+  }
 
   function handleChangeOrientacion(event) {
-    setOrientacion(event.target.value);
+    setOrientacionValue(event.target.value);
   }
 
-  useEffect(() => {
-    setOrientacion("");
-    setAllTable([]);
-    setButton3d(false);
-  }, [disposicion]);
+  function handleChangeModelo(event) {
+    setModeloValue(event.target.value);
+  }
+
+  // useEffect(() => {
+  //   setOrientacion("");
+  //   setAllTable([]);
+  //   setButton3d(false);
+  // }, [disposicion]);
 
   function reset() {
-    setDisposicion("");
-    setEleccionForma("");
-    setEleccionTipo("");
-    setEleccionModelo("");
-    setEleccionA("");
-    setEleccionB("");
-    setEleccionC("");
-    setButton3d(false);
+    setDisposicion([]);
+
+    //setButton3d(false);
   }
   function handleView3d() {
-    setButton3d(true);
+    //setButton3d(true);
   }
   function View3d() {
     const Model = () => {
@@ -103,7 +120,7 @@ export default function Configurador() {
       </Canvas>
     );
   }
-
+  console.log(disposicion);
   return (
     <Container
       maxWidth="xl"
@@ -153,42 +170,59 @@ export default function Configurador() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={disposicion}
+                    value={disposicionValue}
                     label="demo-simple-select-label"
-                    onChange={handleChange}
+                    onChange={handleChangeDisposicion}
                   >
-                    <MenuItem value={"1"}>1 Bungalow</MenuItem>
-                    <MenuItem value={"2"}>2 Bungalows</MenuItem>
-                    <MenuItem value={"3"}>3 Bungalows</MenuItem>
+                    {disposicion.map((item) => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.disposicion}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Box>
             </Grid>
-            {disposicion == 1 && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="orientacion">
-                      Elige la orientacion
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={orientacion}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeOrientacion}
-                    >
-                      {allTable.map((item) => (
-                        <MenuItem key={item.id} value={item.orientacion}>
-                          {item.orientacion}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )}
-
+            <Grid item xs={12}>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="orientacion">Elige la orientacion</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={orientacionValue}
+                    label="demo-simple-select-label"
+                    onChange={handleChangeOrientacion}
+                  >
+                    {orientacion.map((item) => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.orientacion}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="orientacion">Elige El Modelo</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={modeloValue}
+                    label="demo-simple-select-label"
+                    onChange={handleChangeModelo}
+                  >
+                    {modelo.map((item) => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.modelo}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
             {/* {eleccionForma.bungalowa !== "" && (
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>
@@ -211,18 +245,18 @@ export default function Configurador() {
                 </Box>
               </Grid>
             )} */}
-            <Button onClick={reset} variant="contained" color="error">
+            {/* <Button onClick={reset} variant="contained" color="error">
               Reset
-            </Button>
-            <Button
+            </Button> */}
+            {/* <Button
               variant="contained"
               color="success"
               sx={{ backgroundColor: "darkgreen" }}
               disabled={disableButton}
             >
               Guardar
-            </Button>
-            <Button
+            </Button> */}
+            {/* <Button
               variant="contained"
               color="primary"
               sx={{ backgroundColor: "darkgreen" }}
@@ -230,9 +264,9 @@ export default function Configurador() {
               onClick={handleView3d}
             >
               vista 3d
-            </Button>
+            </Button> */}
           </Grid>
-          {bungalowFinal ? (
+          {/* {bungalowFinal ? (
             <Grid
               item
               xs={8}
@@ -272,8 +306,8 @@ export default function Configurador() {
                 }}
               />
             </Grid>
-          )}
-          {button3d && (
+          )} */}
+          {/* {button3d && (
             <Grid item xs={12} width="100%" height="80vh">
               <Typography
                 variant="h2"
@@ -284,7 +318,7 @@ export default function Configurador() {
               </Typography>
               <View3d />
             </Grid>
-          )}
+          )} */}
         </Grid>
       </Grid>
     </Container>
