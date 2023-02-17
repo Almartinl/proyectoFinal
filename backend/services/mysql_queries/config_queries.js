@@ -60,4 +60,89 @@ configQueries.getModelo = async (orientacion) => {
   }
 };
 
+configQueries.getTipo = async (modelo) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "select * from tipo where modelo = ?",
+      modelo,
+      "select",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+configQueries.getBungalowa = async (tipo) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "select * from bungalowa where tipo = ?",
+      tipo,
+      "select",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+configQueries.getBungalowb = async (bungalowa) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "select * from bungalowb where bungalowa = ?",
+      bungalowa,
+      "select",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+configQueries.getBungalowc = async (bungalowb) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "select * from bungalowc where bungalowb = ?",
+      bungalowb,
+      "select",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+configQueries.getModeloBungalowSimple = async ({disposicion,orientacion,modelo,tipo}) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "select planta from modelosbungalow where disposicion = ? and orientacion = ? and modelo = ? and tipo = ?",
+      [disposicion,orientacion,modelo,tipo],
+      "select",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
 export default configQueries;

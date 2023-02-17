@@ -1,7 +1,7 @@
 import { currentDir } from "../index.js";
 import dao from "../services/dao.js";
 
-// Definimos la constante __dirname donde obtendremos la ruta absoluta
+
 const __dirname = currentDir().__dirname;
 
 const controller = {};
@@ -11,7 +11,7 @@ controller.getConfig = async (req, res) => {
   try {
     const config = await dao.getConfig();
 
-    if (config.length <= 0) return res.status(404).send("productos no existe");
+    if (config.length <= 0) return res.status(404).send("config no existe");
 
     return res.send(config);
   } catch (e) {
@@ -25,7 +25,7 @@ controller.getDisposicion = async (req, res) => {
   try {
     const config = await dao.getDisposicion();
 
-    if (config.length <= 0) return res.status(404).send("productos no existe");
+    if (config.length <= 0) return res.status(404).send("disposicion no existe");
 
     return res.send(config);
   } catch (e) {
@@ -39,7 +39,7 @@ controller.getOrientacion = async (req, res) => {
   try {
     const config = await dao.getOrientacion(disposicion);
 
-    if (config.length <= 0) return res.status(404).send("productos no existe");
+    if (config.length <= 0) return res.status(404).send("orientacion no existe");
 
     return res.send(config);
   } catch (e) {
@@ -53,7 +53,77 @@ controller.getModelo = async (req, res) => {
   try {
     const config = await dao.getModelo(orientacion);
 
-    if (config.length <= 0) return res.status(404).send("productos no existe");
+    if (config.length <= 0) return res.status(404).send("modelo no existe");
+
+    return res.send(config);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message);
+  }
+};
+
+controller.getTipo = async (req, res) => {
+  const { modelo } = req.body;
+  try {
+    const config = await dao.getTipo(modelo);
+
+    if (config.length <= 0) return res.status(404).send("tipo no existe");
+
+    return res.send(config);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message);
+  }
+};
+
+controller.getBungalowa = async (req, res) => {
+  const { tipo } = req.body;
+  try {
+    const config = await dao.getBungalowa(tipo);
+
+    if (config.length <= 0) return res.status(404).send("bungalowa no existe");
+
+    return res.send(config);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message);
+  }
+};
+
+controller.getBungalowb = async (req, res) => {
+  const { bungalowa } = req.body;
+  try {
+    const config = await dao.getBungalowb(bungalowa);
+
+    if (config.length <= 0) return res.status(404).send("bungalowb no existe");
+
+    return res.send(config);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message);
+  }
+};
+
+controller.getBungalowc = async (req, res) => {
+  const { bungalowb } = req.body;
+  try {
+    const config = await dao.getBungalowc(bungalowb);
+
+    if (config.length <= 0) return res.status(404).send("bungalowc no existe");
+
+    return res.send(config);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message);
+  }
+};
+
+controller.getModeloBungalowSimple = async (req, res) => {
+  const { disposicion,orientacion,modelo,tipo } = req.body;
+    
+  try {
+    const config = await dao.getModeloBungalowSimple({disposicion,orientacion,modelo,tipo});
+    if (config.length <= 0) return res.status(404).send("modelo simple no existe");
 
     return res.send(config);
   } catch (e) {
