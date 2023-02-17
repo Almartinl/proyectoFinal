@@ -18,17 +18,27 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 export default function Configurador() {
   document.title = "configurador";
-  //let bungalowFinal;
+  let bungalowFinal;
   let disableButton = true;
-  let model3d = "";
+  let model3d;
 
-  //const [button3d, setButton3d] = useState(false);
+  const [button3d, setButton3d] = useState(false);
   const [disposicion, setDisposicion] = useState([]);
   const [disposicionValue, setDisposicionValue] = useState("");
   const [orientacion, setOrientacion] = useState([]);
   const [orientacionValue, setOrientacionValue] = useState("");
   const [modelo, setModelo] = useState([]);
   const [modeloValue, setModeloValue] = useState("");
+  const [tipo, setTipo] = useState([]);
+  const [tipoValue, setTipoValue] = useState("");
+  const [bungalowa, setBungalowa] = useState([]);
+  const [bungalowaValue, setBungalowaValue] = useState("");
+  const [bungalowb, setBungalowb] = useState([]);
+  const [bungalowbValue, setBungalowbValue] = useState("");
+  const [bungalowc, setBungalowc] = useState([]);
+  const [bungalowcValue, setBungalowcValue] = useState("");
+
+  const [planta, setPlanta] = useState([]);
 
   useEffect(() => {
     async function fetchSelector() {
@@ -69,9 +79,89 @@ export default function Configurador() {
     }
   }, [orientacionValue]);
 
-  // const handleChange = (event) => {
-  //   setDisposicion(event.target.value);
-  // };
+  useEffect(() => {
+    async function fetchSelector() {
+      const response = await fetch(`http://localhost:3000/config/tipo`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ modelo: modeloValue }),
+      });
+      const selector = await response.json();
+      setTipo(selector);
+    }
+    if (modeloValue !== "") {
+      fetchSelector();
+    }
+  }, [modeloValue]);
+
+  useEffect(() => {
+    async function fetchSelector() {
+      const response = await fetch(`http://localhost:3000/config/bungalowa`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tipo: tipoValue }),
+      });
+      const selector = await response.json();
+      setBungalowa(selector);
+    }
+    if (tipoValue !== "" && disposicionValue != 1) {
+      fetchSelector();
+    }
+  }, [tipoValue]);
+
+  useEffect(() => {
+    async function fetchSelector() {
+      const response = await fetch(`http://localhost:3000/config/bungalowb`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bungalowa: bungalowaValue }),
+      });
+      const selector = await response.json();
+      setBungalowb(selector);
+    }
+    if (bungalowaValue !== "") {
+      fetchSelector();
+    }
+  }, [bungalowaValue]);
+
+  useEffect(() => {
+    async function fetchSelector() {
+      const response = await fetch(`http://localhost:3000/config/bungalowc`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bungalowb: bungalowbValue }),
+      });
+      const selector = await response.json();
+      setBungalowc(selector);
+    }
+    if (bungalowbValue !== "" && disposicionValue != 2) {
+      fetchSelector();
+    }
+  }, [bungalowbValue]);
+
+  useEffect(() => {
+    async function fetchSelector() {
+      const response = await fetch(
+        `http://localhost:3000/config/modelosimple`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            disposicion: disposicionValue,
+            orientacion: orientacionValue,
+            modelo: modeloValue,
+            tipo: tipoValue,
+          }),
+        }
+      );
+      const selector = await response.json();
+      setPlanta(selector);
+      bungalowFinal = selector;
+    }
+    if (disposicionValue == 1 && tipoValue != "") {
+      fetchSelector();
+    }
+  }, [tipoValue]);
 
   function handleChangeDisposicion(event) {
     setDisposicionValue(event.target.value);
@@ -85,19 +175,58 @@ export default function Configurador() {
     setModeloValue(event.target.value);
   }
 
-  // useEffect(() => {
-  //   setOrientacion("");
-  //   setAllTable([]);
-  //   setButton3d(false);
-  // }, [disposicion]);
+  function handleChangeTipo(event) {
+    setTipoValue(event.target.value);
+  }
+
+  function handleChangeBungalowa(event) {
+    setBungalowaValue(event.target.value);
+  }
+
+  function handleChangeBungalowb(event) {
+    setBungalowbValue(event.target.value);
+  }
+
+  function handleChangeBungalowc(event) {
+    setBungalowcValue(event.target.value);
+  }
+
+  useEffect(() => {
+    setOrientacion([]);
+    setOrientacionValue("");
+    setModelo([]);
+    setModeloValue("");
+    setTipo([]);
+    setTipoValue("");
+    setBungalowa([]);
+    setBungalowaValue("");
+    setBungalowb([]);
+    setBungalowbValue("");
+    setBungalowc([]);
+    setBungalowcValue("");
+    setButton3d(false);
+  }, [disposicion]);
 
   function reset() {
-    setDisposicion([]);
+    setDisposicionValue("");
+    setOrientacion([]);
+    setOrientacionValue("");
+    setModelo([]);
+    setModeloValue("");
+    setTipo([]);
+    setTipoValue("");
+    setBungalowa([]);
+    setBungalowaValue("");
+    setBungalowb([]);
+    setBungalowbValue("");
+    setBungalowc([]);
+    setBungalowcValue("");
+    setPlanta([]);
 
-    //setButton3d(false);
+    setButton3d(false);
   }
   function handleView3d() {
-    //setButton3d(true);
+    setButton3d(true);
   }
   function View3d() {
     const Model = () => {
@@ -120,7 +249,14 @@ export default function Configurador() {
       </Canvas>
     );
   }
-  console.log(disposicion);
+  console.log(disposicionValue);
+  console.log(orientacionValue);
+  console.log(modeloValue);
+  console.log(tipoValue);
+  console.log(bungalowaValue);
+  console.log(bungalowbValue);
+  console.log(bungalowcValue);
+  console.log(planta);
   return (
     <Container
       maxWidth="xl"
@@ -206,7 +342,7 @@ export default function Configurador() {
             <Grid item xs={12}>
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                  <InputLabel id="orientacion">Elige El Modelo</InputLabel>
+                  <InputLabel id="modelo">Elige El Modelo</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -223,40 +359,98 @@ export default function Configurador() {
                 </FormControl>
               </Box>
             </Grid>
-            {/* {eleccionForma.bungalowa !== "" && (
-              <Grid item xs={12}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="disposicion">Bungalow A</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={eleccionForma.bungalowa}
-                      label="demo-simple-select-label"
-                      onChange={handleChangeForma}
-                    >
-                      {eleccionForma.map((item) => (
-                        <MenuItem value={item.bungalowa}>
-                          {item.bungalowa}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-            )} */}
-            {/* <Button onClick={reset} variant="contained" color="error">
+            <Grid item xs={12}>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="tipo">Elige El Tipo</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={tipoValue}
+                    label="demo-simple-select-label"
+                    onChange={handleChangeTipo}
+                  >
+                    {tipo.map((item) => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.tipo}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="bungalowa">Bungalow-A</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={bungalowaValue}
+                    label="demo-simple-select-label"
+                    onChange={handleChangeBungalowa}
+                  >
+                    {bungalowa.map((item) => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.bungalowa}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="bungalowb">Bungalow-B</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={bungalowbValue}
+                    label="demo-simple-select-label"
+                    onChange={handleChangeBungalowb}
+                  >
+                    {bungalowb.map((item) => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.bungalowb}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="bungalowc">Bungalow-C</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={bungalowcValue}
+                    label="demo-simple-select-label"
+                    onChange={handleChangeBungalowc}
+                  >
+                    {bungalowc.map((item) => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.bungalowc}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+            <Button onClick={reset} variant="contained" color="error">
               Reset
-            </Button> */}
-            {/* <Button
+            </Button>
+            <Button
               variant="contained"
               color="success"
               sx={{ backgroundColor: "darkgreen" }}
               disabled={disableButton}
             >
               Guardar
-            </Button> */}
-            {/* <Button
+            </Button>
+            <Button
               variant="contained"
               color="primary"
               sx={{ backgroundColor: "darkgreen" }}
@@ -264,9 +458,9 @@ export default function Configurador() {
               onClick={handleView3d}
             >
               vista 3d
-            </Button> */}
+            </Button>
           </Grid>
-          {/* {bungalowFinal ? (
+          {planta.length > 0 ? (
             <Grid
               item
               xs={8}
@@ -277,7 +471,7 @@ export default function Configurador() {
               }}
             >
               <img
-                src={bungalowFinal}
+                src={`http://localhost:3000/${planta[0].planta}`}
                 alt="foto"
                 style={{
                   maxWidth: "100%",
@@ -306,7 +500,7 @@ export default function Configurador() {
                 }}
               />
             </Grid>
-          )} */}
+          )}
           {/* {button3d && (
             <Grid item xs={12} width="100%" height="80vh">
               <Typography
