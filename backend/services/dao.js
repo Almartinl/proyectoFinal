@@ -58,6 +58,10 @@ dao.getBungalowc = async (bungalowb) => await configQueries.getBungalowc(bungalo
 
 dao.getModeloBungalowSimple = async ({disposicion,orientacion,modelo,tipo}) => await configQueries.getModeloBungalowSimple({disposicion,orientacion,modelo,tipo})
 
+dao.getModeloBungalowDoble = async ({disposicion,orientacion,modelo,tipo,bungalowa,bungalowb}) => await configQueries.getModeloBungalowDoble({disposicion,orientacion,modelo,tipo,bungalowa,bungalowb})
+
+dao.getModeloBungalowTriple = async ({disposicion,orientacion,modelo,tipo,bungalowa,bungalowb,bungalowc}) => await configQueries.getModeloBungalowTriple({disposicion,orientacion,modelo,tipo,bungalowa,bungalowb,bungalowc})
+
 dao.addBungalow = async (bungalowData) =>
   await bungalowsQueries.addBungalows(bungalowData);
 export default dao;

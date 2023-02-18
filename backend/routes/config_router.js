@@ -21,4 +21,8 @@ configRouter.post("/bungalowc", configController.getBungalowc)
 
 configRouter.post("/modelosimple", configController.getModeloBungalowSimple)
 
+configRouter.post("/modelodoble", configController.getModeloBungalowDoble)
+
+configRouter.post("/modelotriple", configController.getModeloBungalowTriple)
+
 export default configRouter;

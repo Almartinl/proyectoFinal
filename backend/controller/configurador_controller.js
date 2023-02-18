@@ -132,4 +132,32 @@ controller.getModeloBungalowSimple = async (req, res) => {
   }
 };
 
+controller.getModeloBungalowDoble = async (req, res) => {
+  const { disposicion,orientacion,modelo,tipo,bungalowa,bungalowb } = req.body;
+    
+  try {
+    const config = await dao.getModeloBungalowDoble({disposicion,orientacion,modelo,tipo,bungalowa,bungalowb});
+    if (config.length <= 0) return res.status(404).send("modelo doble no existe");
+
+    return res.send(config);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message);
+  }
+};
+
+controller.getModeloBungalowTriple = async (req, res) => {
+  const { disposicion,orientacion,modelo,tipo,bungalowa,bungalowb,bungalowc } = req.body;
+    
+  try {
+    const config = await dao.getModeloBungalowTriple({disposicion,orientacion,modelo,tipo,bungalowa,bungalowb,bungalowc});
+    if (config.length <= 0) return res.status(404).send("modelo triple no existe");
+
+    return res.send(config);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message);
+  }
+};
+
 export default controller;

@@ -133,8 +133,45 @@ configQueries.getModeloBungalowSimple = async ({disposicion,orientacion,modelo,t
   try {
     conn = await db.createConnection();
     return await db.query(
-      "select planta from modelosbungalow where disposicion = ? and orientacion = ? and modelo = ? and tipo = ?",
+      "select planta, modelo3d from modelosbungalow where disposicion = ? and orientacion = ? and modelo = ? and tipo = ?",
       [disposicion,orientacion,modelo,tipo],
+      "select",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+configQueries.getModeloBungalowDoble = async ({disposicion,orientacion,modelo,tipo,bungalowa,bungalowb}) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "select planta, modelo3d from modelosbungalow where disposicion = ? and orientacion = ? and modelo = ? and tipo = ? and bungalowa = ? and bungalowb = ?",
+
+      [disposicion,orientacion,modelo,tipo,bungalowa,bungalowb],
+      "select",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+configQueries.getModeloBungalowTriple = async ({disposicion,orientacion,modelo,tipo,bungalowa,bungalowb,bungalowc}) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "select planta, modelo3d from modelosbungalow where disposicion = ? and orientacion = ? and modelo = ? and tipo = ? and bungalowa = ? and bungalowb = ? and bungalowc = ?",
+
+
+      [disposicion,orientacion,modelo,tipo,bungalowa,bungalowb,bungalowc],
       "select",
       conn
     );
