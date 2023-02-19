@@ -4,6 +4,33 @@ import dao from "../services/dao.js";
 
 const controller = {};
 
+controller.getUsers = async (req, res) => {
+  const {} = req.body;
+  try {
+    const users = await dao.getUsers();
+
+    if (users.length <= 0) return res.status(404).send("usuarios no existe");
+
+    return res.send(users);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message);
+  }
+};
+
+controller.getUserByEmail = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await dao.getUserByEmail(email);
+    if (user.length <= 0) return res.status(404).send("usuario no registrado");
+    return res.send(user);
+  }catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message)
+  }
+
+}
+
 controller.addUser = async (req, res) => {
   const { nombre, email, password } = req.body;
   if (!nombre || !email || !password)
@@ -92,9 +119,9 @@ controller.deleteUser = async (req, res) => {
 
 // Controlador para modificar un usuario por su id
 controller.updateUser = async (req, res) => {
-  const { authorization } = req.headers;
-  // Si no existe el token enviamos un 401 (unauthorized)
-  if (!authorization) return res.sendStatus(401);
+  // const { authorization } = req.headers;
+  // // Si no existe el token enviamos un 401 (unauthorized)
+  // if (!authorization) return res.sendStatus(401);
 
   try {
     // Si no nos llega ningún campo por el body devolvemos un 400 (bad request)
@@ -122,5 +149,9 @@ controller.getCountUser = async (req, res) => {
     return res.status(400).send(e.message);
   }
 };
+
+
+
+
 
 export default controller;

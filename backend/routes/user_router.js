@@ -4,6 +4,10 @@ import validateLoginDto from "../utils/validate_login_dto.js";
 
 const userRouter = express.Router();
 
+userRouter.get("/users", userController.getUsers);
+
+userRouter.post("/email", userController.getUserByEmail);
+
 userRouter.post("/", userController.addUser);
 
 userRouter.post("/login", validateLoginDto, userController.loginUser);

@@ -2,11 +2,11 @@ import db from "../mysql.js";
 
 const configQueries = {};
 
-configQueries.getConfig = async () => {
+configQueries.getCountModels = async () => {
   let conn = null;
   try {
     conn = await db.createConnection();
-    return await db.query("select * from configurador", [], "select", conn);
+    return await db.query("select count(*) as modelos from modelosbungalow", [], "select", conn);
   } catch (e) {
     throw new Error(e);
   } finally {

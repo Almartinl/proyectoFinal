@@ -6,14 +6,14 @@ const __dirname = currentDir().__dirname;
 
 const controller = {};
 
-controller.getConfig = async (req, res) => {
+controller.getCountModels = async (req, res) => {
   const {} = req.body;
   try {
-    const config = await dao.getConfig();
+    const models = await dao.getCountModels();
 
-    if (config.length <= 0) return res.status(404).send("config no existe");
+    if (models.length <= 0) return res.status(404).send("modelos no existe");
 
-    return res.send(config);
+    return res.send(models);
   } catch (e) {
     console.log(e.message);
     return res.status(400).send(e.message);

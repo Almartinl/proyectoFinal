@@ -8,16 +8,14 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Button } from "@mui/material";
 import { useState } from "react";
-import { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -72,20 +70,12 @@ function DashboardContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
-  const [countUser, setCountUser] = useState([]);
-  const [refresh, setRefresh] = useState(true);
-
-  useEffect(() => {
-    async function fetchCount() {
-      const response = await fetch("http://localhost:3000/user/count");
-      const data = await response.json();
-      setCountUser(data);
-    }
-    fetchCount();
-  }, []);
-
-  console.log(countUser[0]);
+  const [nombrePanel, setNombrePanel] = useState("Panel");
+  const navigate = useNavigate();
+  function Linkto(ruta, nombre) {
+    navigate(ruta);
+    setNombrePanel(nombre);
+  }
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -112,12 +102,12 @@ function DashboardContent() {
             </IconButton>
             <Typography
               component="h1"
-              variant="h6"
+              variant="h5"
               color="inherit"
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Panel
+              {nombrePanel}
             </Typography>
             <img src="../../../public/logonuevo.png" height="60px" />
           </Toolbar>
@@ -146,6 +136,9 @@ function DashboardContent() {
                 sx={{
                   py: "16px",
                 }}
+                onClick={() => {
+                  Linkto("/dashboard", "Panel");
+                }}
               >
                 <DashboardIcon />
               </Button>
@@ -154,8 +147,23 @@ function DashboardContent() {
                 sx={{
                   py: "16px",
                 }}
+                onClick={() => {
+                  Linkto("/dashboard/usuarios", "Usuarios");
+                }}
               >
                 <PeopleIcon />
+              </Button>
+
+              <Button
+                color="error"
+                sx={{
+                  py: "16px",
+                }}
+                onClick={() => {
+                  Linkto("/", "Panel");
+                }}
+              >
+                <ExitToAppIcon />
               </Button>
             </>
           ) : (
@@ -169,10 +177,14 @@ function DashboardContent() {
                   gap: "20%",
                   py: "16px",
                 }}
+                onClick={() => {
+                  Linkto("/dashboard", "Panel");
+                }}
               >
                 <DashboardIcon />
                 Panel
               </Button>
+
               <Button
                 color="primary"
                 size="large"
@@ -182,9 +194,29 @@ function DashboardContent() {
                   gap: "20%",
                   py: "16px",
                 }}
+                onClick={() => {
+                  Linkto("/dashboard/usuarios", "Usuarios");
+                }}
               >
                 <PeopleIcon />
                 Usuarios
+              </Button>
+
+              <Button
+                color="error"
+                size="large"
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  gap: "20%",
+                  py: "16px",
+                }}
+                onClick={() => {
+                  Linkto("/", "Panel");
+                }}
+              >
+                <ExitToAppIcon />
+                Salir
               </Button>
             </>
           )}
@@ -202,58 +234,7 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={4}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >
-                  <Grid
-                    container
-                    textAlign="center"
-                    flexDirection="column"
-                    gap="56px"
-                  >
-                    <Typography variant="h4" color="primary">
-                      Usuarios
-                    </Typography>
-
-                    <Typography variant="h5" color="primary" gutterBottom>
-                      {countUser && countUser[0].usuarios}
-                    </Typography>
-                  </Grid>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "row",
-                    height: 240,
-                  }}
-                >
-                  <Grid>
-                    <Grid>
-                      <Typography variant="h5" color="primary">
-                        Usuarios
-                      </Typography>
-                    </Grid>
-                    <Grid>
-                      <Typography variant="h5" color="primary" gutterBottom>
-                        Productos
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Container>
+          <Outlet />
         </Box>
       </Box>
     </ThemeProvider>

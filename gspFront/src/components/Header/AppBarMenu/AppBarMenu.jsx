@@ -22,7 +22,11 @@ const pages = [
   { nombre: "Sobre Nosotros", ruta: "/nosotros" },
   { nombre: "Contacto", ruta: "/contacto" },
 ];
-const settings = ["Account", "Dashboard"];
+const settings = [{ nombre: "Account", ruta: "/account" }];
+const settingsAdmin = [
+  { nombre: "Account", ruta: "/account" },
+  { nombre: "Dashboard", ruta: "/dashboard" },
+];
 
 export default function AppBarMenu() {
   const { authorization, dataToken, logout } = useAuthContext();
@@ -144,31 +148,75 @@ export default function AppBarMenu() {
                   <Avatar alt={dataToken.email.toUpperCase()} src={"/"} />
                 </IconButton>
               </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+              {dataToken.role == 1 ? (
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                  sx={{ mt: "45px" }}
+                >
+                  {settingsAdmin.map((page, index) => (
+                    <Link
+                      key={index}
+                      to={page.ruta}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <MenuItem key={index} onClick={handleCloseUserMenu}>
+                        <Typography textAlign="center" color="text.primary">
+                          {page.nombre}
+                        </Typography>
+                      </MenuItem>
+                    </Link>
+                  ))}
+                  <MenuItem key="Logout" onClick={handleLogout}>
+                    <Typography textAlign="center">Logout</Typography>
                   </MenuItem>
-                ))}
-                <MenuItem key="Logout" onClick={handleLogout}>
-                  <Typography textAlign="center">Logout</Typography>
-                </MenuItem>
-              </Menu>
+                </Menu>
+              ) : (
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((page, index) => (
+                    <Link
+                      key={index}
+                      to={page.ruta}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <MenuItem key={index} onClick={handleCloseUserMenu}>
+                        <Typography textAlign="center" color="text.primary">
+                          {page.nombre}
+                        </Typography>
+                      </MenuItem>
+                    </Link>
+                  ))}
+                  <MenuItem key="Logout" onClick={handleLogout}>
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
+                </Menu>
+              )}
             </Box>
           ) : (
             <Link to="/login" style={{ textDecoration: "none" }}>

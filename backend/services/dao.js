@@ -5,6 +5,8 @@ import userQueries from "./mysql_queries/user_queries.js";
 
 const dao = {};
 
+dao.getUsers= async () => await userQueries.getUsers()
+
 //Buscar un usuario por el email
 dao.getUserByEmail = async (email) => await userQueries.getUserByEmail(email);
 
@@ -40,7 +42,7 @@ dao.getProductByRef = async (ref) => await productQueries.getProductByRef(ref);
 dao.addProduct = async (productData) =>
   await productQueries.addProduct(productData);
 
-dao.getConfig = async () => await configQueries.getConfig();
+dao.getCountModels = async () => await configQueries.getCountModels();
 
 dao.getDisposicion = async () => await configQueries.getDisposicion();
 

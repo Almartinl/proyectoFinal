@@ -5,6 +5,23 @@ import utils from "../../utils/utils.js";
 
 const userQueries = {};
 
+userQueries.getUsers = async () => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "SELECT * FROM usuarios",
+      [],
+      "select",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+}
+
 userQueries.getUserByEmail = async (email) => {
   let conn = null;
   try {
