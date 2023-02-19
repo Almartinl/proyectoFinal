@@ -13,4 +13,6 @@ userRouter.patch("/delete/:id", userController.deleteUser);
 // Modificar un usuario por su id
 userRouter.patch("/:id", userController.updateUser);
 
+userRouter.get("/count", userController.getCountUser);
+
 export default userRouter;

@@ -109,4 +109,18 @@ controller.updateUser = async (req, res) => {
   }
 };
 
+controller.getCountUser = async (req, res) => {
+  const {} = req.body;
+  try {
+    const users = await dao.getCountUser();
+
+    if (users.length <= 0) return res.status(404).send("usuarios no existe");
+
+    return res.send(users);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message);
+  }
+};
+
 export default controller;

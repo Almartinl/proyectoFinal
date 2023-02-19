@@ -17,6 +17,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const drawerWidth = 240;
 
@@ -71,6 +72,20 @@ function DashboardContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const [countUser, setCountUser] = useState([]);
+  const [refresh, setRefresh] = useState(true);
+
+  useEffect(() => {
+    async function fetchCount() {
+      const response = await fetch("http://localhost:3000/user/count");
+      const data = await response.json();
+      setCountUser(data);
+    }
+    fetchCount();
+  }, []);
+
+  console.log(countUser[0]);
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -187,9 +202,9 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={12}>
+              <Grid item xs={12} md={4}>
                 <Paper
                   sx={{
                     p: 2,
@@ -198,22 +213,43 @@ function DashboardContent() {
                     height: 240,
                   }}
                 >
-                  <Typography
-                    component="h1"
-                    variant="h5"
-                    color="text.primary"
-                    gutterBottom
+                  <Grid
+                    container
+                    textAlign="center"
+                    flexDirection="column"
+                    gap="56px"
                   >
-                    Dashboard
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    component="p"
-                    sx={{ mt: 2 }}
-                  >
-                    This is the dashboard page.
-                  </Typography>
+                    <Typography variant="h4" color="primary">
+                      Usuarios
+                    </Typography>
+
+                    <Typography variant="h5" color="primary" gutterBottom>
+                      {countUser && countUser[0].usuarios}
+                    </Typography>
+                  </Grid>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "row",
+                    height: 240,
+                  }}
+                >
+                  <Grid>
+                    <Grid>
+                      <Typography variant="h5" color="primary">
+                        Usuarios
+                      </Typography>
+                    </Grid>
+                    <Grid>
+                      <Typography variant="h5" color="primary" gutterBottom>
+                        Productos
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </Paper>
               </Grid>
             </Grid>
