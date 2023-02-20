@@ -45,7 +45,7 @@ export default function Footer() {
       }}
     >
       <Grid container spacing={2} justifyContent="space-evenly">
-        {footers.map((footer) => (
+        {/* {footers.map((footer) => (
           <Grid item xs={6} sm={3} key={footer.title}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               {footer.title}
@@ -60,7 +60,7 @@ export default function Footer() {
               ))}
             </ul>
           </Grid>
-        ))}
+        ))} */}
       </Grid>
       <Copyright sx={{ mt: 5 }} />
     </Container>

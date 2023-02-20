@@ -9,15 +9,25 @@ import {
   Select,
   Button,
   tableFooterClasses,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
 } from "@mui/material";
 import { useEffect, useState, Suspense } from "react";
 import { Canvas, render, useThree } from "@react-three/fiber";
 import { useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useAuthContext } from "../../contexts/AuthContext";
+import Swal from "sweetalert2";
 
 export default function Configurador() {
   document.title = "configurador";
+
+  const { dataToken } = useAuthContext();
 
   const [disableButton, setDisableButton] = useState(true);
   const [view3d, setView3d] = useState(false);
@@ -35,9 +45,19 @@ export default function Configurador() {
   const [bungalowbValue, setBungalowbValue] = useState("");
   const [bungalowc, setBungalowc] = useState([]);
   const [bungalowcValue, setBungalowcValue] = useState("");
+  const [nombreProyecto, setNombreProyecto] = useState("");
 
   const [planta, setPlanta] = useState([]);
   const [modelo3d, setModelo3d] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     async function fetchSelector() {
@@ -295,6 +315,36 @@ export default function Configurador() {
 
   function handleChangeBungalowc(event) {
     setBungalowcValue(event.target.value);
+  }
+
+  function handleSubmitGuardar(event) {
+    event.preventDefault();
+    fetch("http://localhost:3000/bungalows/save", {
+      method: "POST",
+      headers: { "content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre: nombreProyecto,
+        usuario: dataToken.id,
+        planta: planta[0].planta,
+      }),
+    }).then((response) => {
+      console.log(response.status);
+      if (response.status == 400) {
+        alert("error al recibir el body");
+      } else if (response.status == 200) {
+        // alert("Modelo guardado correctamente");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Modelo Guardado Correctamente",
+        });
+        setNombreProyecto("");
+      } else if (response.status == 409) {
+        alert("modelo ya registrado");
+      }
+    });
+
+    setOpen(false);
   }
 
   useEffect(() => {
@@ -644,9 +694,33 @@ export default function Configurador() {
               color="success"
               sx={{ backgroundColor: "darkgreen" }}
               disabled={disableButton}
+              onClick={handleClickOpen}
             >
               Guardar
             </Button>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Guardar Modelo</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Escribe el Nombre para guardar el modelo
+                </DialogContentText>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Nombre"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  value={nombreProyecto}
+                  onChange={(e) => setNombreProyecto(e.target.value)}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleSubmitGuardar}>Guardar</Button>
+              </DialogActions>
+            </Dialog>
             <Button
               variant="contained"
               color="primary"

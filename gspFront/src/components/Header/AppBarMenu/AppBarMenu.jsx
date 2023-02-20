@@ -22,9 +22,9 @@ const pages = [
   { nombre: "Sobre Nosotros", ruta: "/nosotros" },
   { nombre: "Contacto", ruta: "/contacto" },
 ];
-const settings = [{ nombre: "Account", ruta: "/account" }];
+const settings = [{ nombre: "Perfil", ruta: "/account" }];
 const settingsAdmin = [
-  { nombre: "Account", ruta: "/account" },
+  { nombre: "Perfil", ruta: "/account" },
   { nombre: "Dashboard", ruta: "/dashboard" },
 ];
 
@@ -143,7 +143,7 @@ export default function AppBarMenu() {
 
           {authorization ? (
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title="Abrir Opciones">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt={dataToken.email.toUpperCase()} src={"/"} />
                 </IconButton>

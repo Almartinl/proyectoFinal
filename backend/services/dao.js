@@ -5,7 +5,7 @@ import userQueries from "./mysql_queries/user_queries.js";
 
 const dao = {};
 
-dao.getUsers= async () => await userQueries.getUsers()
+dao.getUsers = async () => await userQueries.getUsers();
 
 //Buscar un usuario por el email
 dao.getUserByEmail = async (email) => await userQueries.getUserByEmail(email);
@@ -113,4 +113,10 @@ dao.getModeloBungalowTriple = async ({
 
 dao.addBungalow = async (bungalowData) =>
   await bungalowsQueries.addBungalows(bungalowData);
+
+dao.getAllBungalow = async (usuario) =>
+  await bungalowsQueries.getAllBungalow(usuario);
+
+dao.deleteBungalowById = async (id) =>
+  await bungalowsQueries.deleteBungalowById(id);
 export default dao;

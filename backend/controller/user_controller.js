@@ -24,12 +24,11 @@ controller.getUserByEmail = async (req, res) => {
     const user = await dao.getUserByEmail(email);
     if (user.length <= 0) return res.status(404).send("usuario no registrado");
     return res.send(user);
-  }catch (e) {
+  } catch (e) {
     console.log(e.message);
-    return res.status(400).send(e.message)
+    return res.status(400).send(e.message);
   }
-
-}
+};
 
 controller.addUser = async (req, res) => {
   const { nombre, email, password } = req.body;
@@ -89,21 +88,21 @@ controller.loginUser = async (req, res) => {
 };
 
 controller.deleteUser = async (req, res) => {
-  const { authorization } = req.headers;
+  // const { authorization } = req.headers;
 
-  if (!authorization) return res.sendStatus(401);
-  const token = authorization.split(" ")[1];
+  // if (!authorization) return res.sendStatus(401);
+  // const token = authorization.split(" ")[1];
 
   try {
-    const encoder = new TextEncoder();
+    // const encoder = new TextEncoder();
 
-    const { payload } = await jwtVerify(
-      token,
-      encoder.encode(process.env.JWT_SECRET)
-    );
+    // const { payload } = await jwtVerify(
+    //   token,
+    //   encoder.encode(process.env.JWT_SECRET)
+    // );
 
-    if (!payload.role)
-      return res.status(409).send("no tiene permiso de administrador");
+    // if (!payload.role)
+    //   return res.status(409).send("no tiene permiso de administrador");
 
     const user = await dao.getUserById(req.params.id);
 
@@ -111,7 +110,7 @@ controller.deleteUser = async (req, res) => {
 
     await dao.deleteUser(req.params.id);
 
-    return res.send(`El usuario con id ${req.params.id} eliminado`);
+    return res.send(`El usuario con id ${req.params.id} eliminado`).status(200);
   } catch (e) {
     console.log(e.message);
   }
@@ -149,9 +148,5 @@ controller.getCountUser = async (req, res) => {
     return res.status(400).send(e.message);
   }
 };
-
-
-
-
 
 export default controller;

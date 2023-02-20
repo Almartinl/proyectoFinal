@@ -7,11 +7,14 @@ import "bootstrap";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Configurador from "./views/Configurador/Configurador";
 import { AuthContextProvider } from "./contexts/AuthContext";
+import { ROLES } from "./const/roles";
 import Login from "./views/login/Login";
 import DashboardInicio from "./views/DashboardInicio/DashboardInicio";
-import Dashboard from "./components/Dashboard/Dashboard";
 import DashboardUsuarios from "./views/DashboardUsuarios/DashboardUsuarios";
 import Account from "./views/Account/Account";
+import PrivateRouteAdmin from "./components/routes/PrivatRoute/PrivateRouteAdmin";
+import PrivateRoute from "./components/routes/PrivatRoute/PrivateRoute";
+import Unauthorized from "./views/unauthorized/Unauthorized";
 
 function App() {
   return (
@@ -21,11 +24,16 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="configurador" element={<Configurador />} />
-            <Route path="account" element={<Account />} />
+            <Route path="unauthorized" element={<Unauthorized />} />
           </Route>
-          <Route path="/dashboard" element={<Dashboard />}>
-            <Route index element={<DashboardInicio />} />
-            <Route path="usuarios" element={<DashboardUsuarios />} />
+          <Route
+            element={<PrivateRoute allowedRoles={[ROLES.Admin, ROLES.User]} />}
+          >
+            <Route path="/account" element={<Account />} />
+          </Route>
+          <Route element={<PrivateRouteAdmin allowedRoles={[ROLES.Admin]} />}>
+            <Route path="/dashboard" element={<DashboardInicio />} />
+            <Route path="/dashboard/usuarios" element={<DashboardUsuarios />} />
           </Route>
           <Route path="/login" element={<Layout />}>
             <Route index element={<Login />} />

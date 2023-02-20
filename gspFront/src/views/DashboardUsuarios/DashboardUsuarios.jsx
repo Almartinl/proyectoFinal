@@ -1,10 +1,6 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import PeopleIcon from "@mui/icons-material/People";
-import ViewInArOutlinedIcon from "@mui/icons-material/ViewInArOutlined";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,6 +10,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useState } from "react";
 import { useEffect } from "react";
+import { IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,6 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function DashboardUsuarios() {
   const [users, setUsers] = useState([]);
+  const [stateChange, setStateChange] = useState(false);
 
   useEffect(() => {
     async function fetchCount() {
@@ -46,7 +46,30 @@ export default function DashboardUsuarios() {
       console.log(data);
     }
     fetchCount();
-  }, []);
+  }, [stateChange]);
+
+  function handleDeleteUser(e, id) {
+    e.preventDefault();
+    setStateChange(!stateChange);
+    fetch(`http://localhost:3000/user/delete/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      if (response.status == 400) {
+        alert("error al recibir el body");
+      } else if (response.status == 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Usuario Borrado Correctamente",
+        });
+      } else if (response.status == 409) {
+        alert("modelo ya registrado");
+      }
+    });
+  }
 
   return (
     <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
@@ -60,6 +83,7 @@ export default function DashboardUsuarios() {
               <StyledTableCell align="center">Email</StyledTableCell>
               <StyledTableCell align="center">Telefono</StyledTableCell>
               <StyledTableCell align="center">Activo</StyledTableCell>
+              <StyledTableCell align="center">Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -77,6 +101,11 @@ export default function DashboardUsuarios() {
                 <StyledTableCell align="center">{row.email}</StyledTableCell>
                 <StyledTableCell align="center">{row.telefono}</StyledTableCell>
                 <StyledTableCell align="center">{row.activo}</StyledTableCell>
+                <StyledTableCell align="left">
+                  <IconButton onClick={(e) => handleDeleteUser(e, row.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

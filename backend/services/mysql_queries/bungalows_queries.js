@@ -25,4 +25,38 @@ bungalowsQueries.addBungalows = async (bungalowsData) => {
   }
 };
 
+bungalowsQueries.getAllBungalow = async (usuario) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "SELECT * FROM bungalows where usuario = ?",
+      [usuario],
+      "select",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+bungalowsQueries.deleteBungalowById = async (id) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "DELETE FROM bungalows WHERE id =?",
+      [id],
+      "delete",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
 export default bungalowsQueries;

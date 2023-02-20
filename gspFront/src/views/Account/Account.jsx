@@ -8,7 +8,15 @@ import {
   TextField,
   Box,
   IconButton,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableBody,
+  TableCell,
+  tableCellClasses,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import BadgeIcon from "@mui/icons-material/Badge";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
@@ -20,17 +28,40 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useEffect } from "react";
 import { useState } from "react";
+import Swal from "sweetalert2";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
 export default function Account() {
   const { dataToken } = useAuthContext();
 
   const [user, setUser] = useState([]);
+  const [stateChange, setStateChange] = useState(false);
   const [editNombre, setEditNombre] = useState(false);
   const [editApellido, setEditApellido] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
   const [editPassword, setEditPassword] = useState(false);
   const [editDireccion, setEditDireccion] = useState(false);
   const [editTelefono, setEditTelefono] = useState(false);
+  const [bungalow, setBungalow] = useState([]);
 
   const [newName, setNewName] = useState({ nombre: "" });
   function handleInputName(e) {
@@ -40,7 +71,7 @@ export default function Account() {
     };
     setNewName(newRegistro);
   }
-  const [newApellido, setNewApellido] = useState({ apellido: "" });
+  const [newApellido, setNewApellido] = useState({ apellidos: "" });
   function handleInputApellido(e) {
     const newRegistro = {
       ...newApellido,
@@ -72,7 +103,6 @@ export default function Account() {
     };
     setNewDireccion(newRegistro);
   }
-
   const [newTelefono, setNewTelefono] = useState({ telefono: "" });
   function handleInputTelefono(e) {
     const newRegistro = {
@@ -81,9 +111,9 @@ export default function Account() {
     };
     setNewTelefono(newRegistro);
   }
-
   function registrarName(e) {
     e.preventDefault();
+    setStateChange(!stateChange);
 
     fetch(`http://localhost:3000/user/${dataToken.id}`, {
       method: "PATCH",
@@ -94,16 +124,20 @@ export default function Account() {
       if (response.status == 400) {
         alert("error al recibir el body");
       } else if (response.status == 200) {
-        alert("Cambio de Nombre Registrado Correctamente");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Cambio de Nombre Registrado Correctamente",
+        });
         setNewName({ nombre: "" });
       } else if (response.status == 409) {
         alert("usuario ya registrado");
       }
     });
   }
-
   function registrarApellido(e) {
     e.preventDefault();
+    setStateChange(!stateChange);
     fetch(`http://localhost:3000/user/${dataToken.id}`, {
       method: "PATCH",
       headers: { "content-Type": "application/json" },
@@ -113,16 +147,20 @@ export default function Account() {
       if (response.status == 400) {
         alert("error al recibir el body");
       } else if (response.status == 200) {
-        alert("Cambio de Apellido Registrado Correctamente");
-        setNewApellido({ apellido: "" });
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Cambio de Apellidos Registrado Correctamente",
+        });
+        setNewApellido({ apellidos: "" });
       } else if (response.status == 409) {
         alert("usuario ya registrado");
       }
     });
   }
-
   function registrarEmail(e) {
     e.preventDefault();
+    setStateChange(!stateChange);
     fetch(`http://localhost:3000/user/${dataToken.id}`, {
       method: "PATCH",
       headers: { "content-Type": "application/json" },
@@ -132,16 +170,20 @@ export default function Account() {
       if (response.status == 400) {
         alert("error al recibir el body");
       } else if (response.status == 200) {
-        alert("Cambio de Email Registrado Correctamente");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Cambio de Email Registrado Correctamente",
+        });
         setNewApellido({ apellido: "" });
       } else if (response.status == 409) {
         alert("usuario ya registrado");
       }
     });
   }
-
   function registrarPassword(e) {
     e.preventDefault();
+    setStateChange(!stateChange);
     fetch(`http://localhost:3000/user/${dataToken.id}`, {
       method: "PATCH",
       headers: { "content-Type": "application/json" },
@@ -151,16 +193,20 @@ export default function Account() {
       if (response.status == 400) {
         alert("error al recibir el body");
       } else if (response.status == 200) {
-        alert("Cambio de Password Registrado Correctamente");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Cambio de Contraseña Registrado Correctamente",
+        });
         setNewPassword({ password: "" });
       } else if (response.status == 409) {
         alert("usuario ya registrado");
       }
     });
   }
-
   function registrarDireccion(e) {
     e.preventDefault();
+    setStateChange(!stateChange);
     fetch(`http://localhost:3000/user/${dataToken.id}`, {
       method: "PATCH",
       headers: { "content-Type": "application/json" },
@@ -170,16 +216,20 @@ export default function Account() {
       if (response.status == 400) {
         alert("error al recibir el body");
       } else if (response.status == 200) {
-        alert("Cambio de Direccion Registrado Correctamente");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Cambio de Direccion Registrado Correctamente",
+        });
         setNewDireccion({ direccion: "" });
       } else if (response.status == 409) {
         alert("usuario ya registrado");
       }
     });
   }
-
   function registrarTelefono(e) {
     e.preventDefault();
+    setStateChange(!stateChange);
     fetch(`http://localhost:3000/user/${dataToken.id}`, {
       method: "PATCH",
       headers: { "content-Type": "application/json" },
@@ -189,14 +239,17 @@ export default function Account() {
       if (response.status == 400) {
         alert("error al recibir el body");
       } else if (response.status == 200) {
-        alert("Cambio de Telefono Registrado Correctamente");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Cambio de Telefono Registrado Correctamente",
+        });
         setNewTelefono({ telefono: "" });
       } else if (response.status == 409) {
         alert("usuario ya registrado");
       }
     });
   }
-
   function handleEditNombre() {
     setEditNombre(!editNombre);
   }
@@ -216,6 +269,27 @@ export default function Account() {
     setEditTelefono(!editTelefono);
   }
 
+  function handleDeleteBungalow(e, id) {
+    e.preventDefault();
+    setStateChange(!stateChange);
+    fetch(`http://localhost:3000/bungalows/delete`, {
+      method: "DELETE",
+      headers: { "content-Type": "application/json" },
+      body: JSON.stringify({ id: id }),
+    }).then((response) => {
+      console.log(response.status);
+      if (response.status == 400) {
+        alert("error al recibir el body");
+      } else if (response.status == 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Modelo Borrado Correctamente",
+        });
+      }
+    });
+  }
+
   useEffect(() => {
     async function fetchCount() {
       const response = await fetch("http://localhost:3000/user/email", {
@@ -232,7 +306,25 @@ export default function Account() {
       console.log(data);
     }
     fetchCount();
-  }, []);
+  }, [stateChange]);
+
+  useEffect(() => {
+    async function fetchCount() {
+      const response = await fetch("http://localhost:3000/bungalows", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          usuario: dataToken.id,
+        }),
+      });
+      const data = await response.json();
+      setBungalow(data);
+      console.log(data);
+    }
+    fetchCount();
+  }, [stateChange]);
 
   return (
     <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
@@ -244,6 +336,7 @@ export default function Account() {
           <Paper
             sx={{
               p: 2,
+              my: 4,
               display: "flex",
               flexDirection: "column",
               backgroundColor: "#fafafa",
@@ -337,7 +430,7 @@ export default function Account() {
                         label="Apellidos"
                         name="apellidos"
                         variant="outlined"
-                        value={newApellido.apellido}
+                        value={newApellido.apellidos}
                         onChange={handleInputApellido}
                       />
                       <IconButton color="success" type="submit">
@@ -543,6 +636,89 @@ export default function Account() {
                       </IconButton>
                     </Box>
                   )}
+                </Grid>
+              </Grid>
+            )}
+          </Paper>
+          <Paper
+            sx={{
+              p: 2,
+              my: 4,
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "#fafafa",
+            }}
+          >
+            {user.length > 0 && (
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={4}>
+                  <Typography variant="h5">
+                    Modelos del configurador y presupuestos:
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Grid container spacing={2}>
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      {bungalow.length > 0 ? (
+                        <TableContainer component={Paper}>
+                          <Table
+                            sx={{ minWidth: 200 }}
+                            aria-label="customized table"
+                          >
+                            <TableHead>
+                              <TableRow>
+                                <StyledTableCell>
+                                  Nombre del modelo
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  vista en planta
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  Acciones
+                                </StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {bungalow.map((row) => (
+                                <StyledTableRow key={row.id}>
+                                  <StyledTableCell component="th" scope="row">
+                                    {row.nombre}
+                                  </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    {row.planta}
+                                  </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    <IconButton
+                                      onClick={(e) =>
+                                        handleDeleteBungalow(e, row.id)
+                                      }
+                                    >
+                                      <DeleteIcon />
+                                    </IconButton>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                      ) : (
+                        <Grid item xs={12} md={8}>
+                          <Typography variant="h5">
+                            No Hay Modelos Guardados
+                          </Typography>
+                        </Grid>
+                      )}
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             )}

@@ -18,4 +18,26 @@ controller.addBungalow = async (req, res) => {
   }
 };
 
+controller.getAllBungalow = async (req, res) => {
+  const { usuario } = req.body;
+
+  try {
+    const getAllBungalow = await dao.getAllBungalow(usuario);
+    if (getAllBungalow) return res.send(getAllBungalow);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+controller.deleteBungalowById = async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const deleteBungalow = await dao.deleteBungalowById(id);
+    if (deleteBungalow) return res.send("Modelo borrado");
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 export default controller;
