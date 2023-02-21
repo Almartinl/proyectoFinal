@@ -63,6 +63,7 @@ export default function Account() {
   const [editDireccion, setEditDireccion] = useState(false);
   const [editTelefono, setEditTelefono] = useState(false);
   const [bungalow, setBungalow] = useState([]);
+  const [imagen, setImagen] = useState("");
 
   const [newName, setNewName] = useState({ nombre: "" });
   function handleInputName(e) {
@@ -327,6 +328,22 @@ export default function Account() {
     fetchCount();
   }, [stateChange]);
 
+  function downloadImg(e, url, nombre) {
+    e.preventDefault();
+
+    fetch(`http://localhost:3000/${url}`)
+      .then((respuesta) => respuesta.blob())
+      .then((blob) => {
+        const imagenUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = imagenUrl;
+        link.download = nombre;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+  }
+  console.log(imagen);
   return (
     <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h2" fontWeight="bold" component="h1" gutterBottom>
@@ -698,10 +715,11 @@ export default function Account() {
                                     {row.planta}
                                   </StyledTableCell>
                                   <StyledTableCell align="left">
-                                    <Grid container wrap="nowwrap">
+                                    <Grid container wrap="nowrap">
                                       <IconButton
-                                        href={`http://localhost:3000/${row.planta}`}
-                                        download={row.nombre}
+                                        onClick={(e) =>
+                                          downloadImg(e, row.planta, row.nombre)
+                                        }
                                       >
                                         <DownloadIcon />
                                       </IconButton>
