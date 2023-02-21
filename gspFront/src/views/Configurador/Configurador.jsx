@@ -723,7 +723,7 @@ export default function Configurador() {
             </Dialog>
             <Button
               variant="contained"
-              color="primary"
+              color="success"
               sx={{ backgroundColor: "darkgreen" }}
               disabled={disableButton}
               onClick={handleView3d}
