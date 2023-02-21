@@ -25,6 +25,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DownloadIcon from "@mui/icons-material/Download";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -697,13 +698,21 @@ export default function Account() {
                                     {row.planta}
                                   </StyledTableCell>
                                   <StyledTableCell align="left">
-                                    <IconButton
-                                      onClick={(e) =>
-                                        handleDeleteBungalow(e, row.id)
-                                      }
-                                    >
-                                      <DeleteIcon />
-                                    </IconButton>
+                                    <Grid container wrap="nowwrap">
+                                      <IconButton
+                                        href={`http://localhost:3000/${row.planta}`}
+                                        download={row.nombre}
+                                      >
+                                        <DownloadIcon />
+                                      </IconButton>
+                                      <IconButton
+                                        onClick={(e) =>
+                                          handleDeleteBungalow(e, row.id)
+                                        }
+                                      >
+                                        <DeleteIcon />
+                                      </IconButton>
+                                    </Grid>
                                   </StyledTableCell>
                                 </StyledTableRow>
                               ))}
