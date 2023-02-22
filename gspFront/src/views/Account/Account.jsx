@@ -15,6 +15,7 @@ import {
   TableBody,
   TableCell,
   tableCellClasses,
+  Link,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -670,6 +671,97 @@ export default function Account() {
             {user.length > 0 && (
               <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
+                  <Typography variant="h5">Solicitud de Presupuesto</Typography>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Grid container spacing={2}>
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <Box
+                        component="form"
+                        noValidate
+                        //onSubmit={}
+                        sx={{ mt: 3 }}
+                      >
+                        <Grid container spacing={2}>
+                          <Grid item xs={12}>
+                            <TextField
+                              autoComplete="given-name"
+                              name="nombre"
+                              required
+                              fullWidth
+                              id="firstName"
+                              label="Nombre"
+                              autoFocus
+                              //value={newUsuario.nombre}
+                              //onChange={handleInput}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              required
+                              fullWidth
+                              id="email"
+                              label="Email"
+                              name="email"
+                              autoComplete="email"
+                              // value={newUsuario.email}
+                              // onChange={handleInput}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              required
+                              fullWidth
+                              multiline
+                              rows={4}
+                              name="descripcion"
+                              label="Escribe tu Descripcion"
+                              type="text"
+                              id="descripcion"
+                              autoComplete="new-descripcion"
+                              // value={newUsuario.password}
+                              // onChange={handleInput}
+                            />
+                          </Grid>
+                          <Grid item xs={12}></Grid>
+                        </Grid>
+                        <Button
+                          type="submit"
+                          fullWidth
+                          variant="contained"
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          Mandar solicitud
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            )}
+          </Paper>
+
+          <Paper
+            sx={{
+              p: 2,
+              my: 4,
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "#fafafa",
+            }}
+          >
+            {user.length > 0 && (
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={4}>
                   <Typography variant="h5">
                     Modelos del configurador y presupuestos:
                   </Typography>
@@ -746,6 +838,9 @@ export default function Account() {
                       )}
                     </Grid>
                   </Grid>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Typography variant="h5">Presupuestos:</Typography>
                 </Grid>
               </Grid>
             )}
