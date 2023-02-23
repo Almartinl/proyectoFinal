@@ -11,6 +11,7 @@ bungalowsQueries.addBungalows = async (bungalowsData) => {
       nombre: bungalowsData.nombre,
       usuario: bungalowsData.usuario,
       planta: bungalowsData.planta,
+      nombrebungalow: bungalowsData.nombrebungalow,
     };
     return await db.query(
       "INSERT INTO bungalows SET ?",
@@ -30,7 +31,7 @@ bungalowsQueries.getAllBungalow = async (usuario) => {
   try {
     conn = await db.createConnection();
     return await db.query(
-      "SELECT * FROM bungalows where usuario = ?",
+      "SELECT bungalows.id, bungalows.usuario, bungalows.nombre, bungalows.planta, modelosbungalow.nombre as nombrebungalow FROM bungalows join modelosbungalow on bungalows.nombrebungalow = modelosbungalow.id where bungalows.usuario = ? ",
       [usuario],
       "select",
       conn
@@ -50,6 +51,45 @@ bungalowsQueries.deleteBungalowById = async (id) => {
       "DELETE FROM bungalows WHERE id =?",
       [id],
       "delete",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+bungalowsQueries.addPresupuesto = async (presupuestoData) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    console.log(presupuestoData);
+    let bungalowObj = {
+      usuario: presupuestoData.usuario,
+      descripcion: presupuestoData.descripcion,
+    };
+    return await db.query(
+      "INSERT INTO presupuestos SET ?",
+      bungalowObj,
+      "insert",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+bungalowsQueries.getAllPresupuesto = async () => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "SELECT presupuestos.id, usuarios.nombre, usuarios.email, presupuestos.descripcion FROM presupuestos join usuarios on presupuestos.usuario = usuarios.id",
+      [],
+      "select",
       conn
     );
   } catch (e) {

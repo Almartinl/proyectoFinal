@@ -15,6 +15,7 @@ import Account from "./views/Account/Account";
 import PrivateRouteAdmin from "./components/routes/PrivatRoute/PrivateRouteAdmin";
 import PrivateRoute from "./components/routes/PrivatRoute/PrivateRoute";
 import Unauthorized from "./views/unauthorized/Unauthorized";
+import DashboardPresupuestos from "./views/DashboardPresupuestos/DashboardPresupuestos";
 
 function App() {
   return (
@@ -34,6 +35,10 @@ function App() {
           <Route element={<PrivateRouteAdmin allowedRoles={[ROLES.Admin]} />}>
             <Route path="/dashboard" element={<DashboardInicio />} />
             <Route path="/dashboard/usuarios" element={<DashboardUsuarios />} />
+            <Route
+              path="/dashboard/presupuestos"
+              element={<DashboardPresupuestos />}
+            />
           </Route>
           <Route path="/login" element={<Layout />}>
             <Route index element={<Login />} />

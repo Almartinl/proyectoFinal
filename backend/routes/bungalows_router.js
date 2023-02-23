@@ -6,5 +6,10 @@ const bungalowsRouter = express.Router();
 bungalowsRouter.post("/save", bungalowsController.addBungalow);
 bungalowsRouter.post("/", bungalowsController.getAllBungalow);
 bungalowsRouter.delete("/delete", bungalowsController.deleteBungalowById);
+bungalowsRouter.post("/addpresupuesto", bungalowsController.addPresupuesto);
+bungalowsRouter.get(
+  "/getallpresupuesto",
+  bungalowsController.getAllPresupuesto
+);
 
 export default bungalowsRouter;

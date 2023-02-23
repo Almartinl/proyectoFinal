@@ -119,4 +119,10 @@ dao.getAllBungalow = async (usuario) =>
 
 dao.deleteBungalowById = async (id) =>
   await bungalowsQueries.deleteBungalowById(id);
+
+dao.addPresupuesto = async (presupuestoData) =>
+  await bungalowsQueries.addPresupuesto(presupuestoData);
+
+dao.getAllPresupuesto = async () => await bungalowsQueries.getAllPresupuesto();
+
 export default dao;

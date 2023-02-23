@@ -16,6 +16,11 @@ import {
   TableCell,
   tableCellClasses,
   Link,
+  Tooltip,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -27,6 +32,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -64,7 +70,11 @@ export default function Account() {
   const [editDireccion, setEditDireccion] = useState(false);
   const [editTelefono, setEditTelefono] = useState(false);
   const [bungalow, setBungalow] = useState([]);
-  const [imagen, setImagen] = useState("");
+  const [listaPresupuesto, setListaPresupuesto] = useState([]);
+  const presupuesto = {
+    usuario: dataToken.id,
+    descripcion: listaPresupuesto,
+  };
 
   const [newName, setNewName] = useState({ nombre: "" });
   function handleInputName(e) {
@@ -293,6 +303,22 @@ export default function Account() {
     });
   }
 
+  function addPresupuesto(e, nombre, nombreModelo, id) {
+    e.preventDefault();
+    setListaPresupuesto([
+      ...listaPresupuesto,
+      { nombre: nombre, modelo: nombreModelo, id: id },
+    ]);
+  }
+
+  function deleteListPresupuesto(e, indexList) {
+    e.preventDefault();
+    const newList = listaPresupuesto.filter(
+      (item, index) => index !== indexList
+    );
+    setListaPresupuesto(newList);
+  }
+
   useEffect(() => {
     async function fetchCount() {
       const response = await fetch("http://localhost:3000/user/email", {
@@ -306,7 +332,6 @@ export default function Account() {
       });
       const data = await response.json();
       setUser(data);
-      console.log(data);
     }
     fetchCount();
   }, [stateChange]);
@@ -344,7 +369,37 @@ export default function Account() {
         document.body.removeChild(link);
       });
   }
-  console.log(imagen);
+
+  function sendPresupuesto(e) {
+    e.preventDefault();
+    presupuesto.descripcion = JSON.stringify(
+      listaPresupuesto.map((item) => item.modelo)
+    );
+    if (listaPresupuesto.length < 1) {
+      return;
+    }
+    fetch(`http://localhost:3000/bungalows/addpresupuesto`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(presupuesto),
+    }).then((response) => {
+      console.log(response.status);
+      if (response.status == 400) {
+        alert("error al recibir el body");
+      } else if (response.status == 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Presupuesto Enviado Correctamente",
+        });
+      }
+    });
+  }
+
+  console.log(listaPresupuesto);
+  console.log(presupuesto);
   return (
     <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h2" fontWeight="bold" component="h1" gutterBottom>
@@ -363,10 +418,10 @@ export default function Account() {
           >
             {user.length > 0 && (
               <Grid container spacing={2}>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={2}>
                   <Typography variant="h5">Detalles del usuario</Typography>
                 </Grid>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} md={10}>
                   <Grid container spacing={2}>
                     <Grid
                       item
@@ -659,96 +714,6 @@ export default function Account() {
               </Grid>
             )}
           </Paper>
-          <Paper
-            sx={{
-              p: 2,
-              my: 4,
-              display: "flex",
-              flexDirection: "column",
-              backgroundColor: "#fafafa",
-            }}
-          >
-            {user.length > 0 && (
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={4}>
-                  <Typography variant="h5">Solicitud de Presupuesto</Typography>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Grid container spacing={2}>
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        gap: "8px",
-                      }}
-                    >
-                      <Box
-                        component="form"
-                        noValidate
-                        //onSubmit={}
-                        sx={{ mt: 3 }}
-                      >
-                        <Grid container spacing={2}>
-                          <Grid item xs={12}>
-                            <TextField
-                              autoComplete="given-name"
-                              name="nombre"
-                              required
-                              fullWidth
-                              id="firstName"
-                              label="Nombre"
-                              autoFocus
-                              //value={newUsuario.nombre}
-                              //onChange={handleInput}
-                            />
-                          </Grid>
-                          <Grid item xs={12}>
-                            <TextField
-                              required
-                              fullWidth
-                              id="email"
-                              label="Email"
-                              name="email"
-                              autoComplete="email"
-                              // value={newUsuario.email}
-                              // onChange={handleInput}
-                            />
-                          </Grid>
-                          <Grid item xs={12}>
-                            <TextField
-                              required
-                              fullWidth
-                              multiline
-                              rows={4}
-                              name="descripcion"
-                              label="Escribe tu Descripcion"
-                              type="text"
-                              id="descripcion"
-                              autoComplete="new-descripcion"
-                              // value={newUsuario.password}
-                              // onChange={handleInput}
-                            />
-                          </Grid>
-                          <Grid item xs={12}></Grid>
-                        </Grid>
-                        <Button
-                          type="submit"
-                          fullWidth
-                          variant="contained"
-                          sx={{ mt: 3, mb: 2 }}
-                        >
-                          Mandar solicitud
-                        </Button>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            )}
-          </Paper>
 
           <Paper
             sx={{
@@ -761,12 +726,10 @@ export default function Account() {
           >
             {user.length > 0 && (
               <Grid container spacing={2}>
-                <Grid item xs={12} md={4}>
-                  <Typography variant="h5">
-                    Modelos del configurador y presupuestos:
-                  </Typography>
+                <Grid item xs={12} md={2}>
+                  <Typography variant="h5">Modelos del configurador</Typography>
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={8}>
                   <Grid container spacing={2}>
                     <Grid
                       item
@@ -808,20 +771,45 @@ export default function Account() {
                                   </StyledTableCell>
                                   <StyledTableCell align="left">
                                     <Grid container wrap="nowrap">
-                                      <IconButton
-                                        onClick={(e) =>
-                                          downloadImg(e, row.planta, row.nombre)
-                                        }
-                                      >
-                                        <DownloadIcon />
-                                      </IconButton>
-                                      <IconButton
-                                        onClick={(e) =>
-                                          handleDeleteBungalow(e, row.id)
-                                        }
-                                      >
-                                        <DeleteIcon />
-                                      </IconButton>
+                                      <Tooltip title="Descargar Modelo">
+                                        <IconButton
+                                          onClick={(e) =>
+                                            downloadImg(
+                                              e,
+                                              row.planta,
+                                              row.nombre
+                                            )
+                                          }
+                                          color="primary"
+                                        >
+                                          <DownloadIcon />
+                                        </IconButton>
+                                      </Tooltip>
+                                      <Tooltip title="Borrar modelo">
+                                        <IconButton
+                                          onClick={(e) =>
+                                            handleDeleteBungalow(e, row.id)
+                                          }
+                                          color="error"
+                                        >
+                                          <DeleteIcon />
+                                        </IconButton>
+                                      </Tooltip>
+                                      <Tooltip title="Añadir a Presupuesto">
+                                        <IconButton
+                                          onClick={(e) =>
+                                            addPresupuesto(
+                                              e,
+                                              row.nombre,
+                                              row.nombrebungalow,
+                                              row.id
+                                            )
+                                          }
+                                          color="success"
+                                        >
+                                          <AddCircleIcon />
+                                        </IconButton>
+                                      </Tooltip>
                                     </Grid>
                                   </StyledTableCell>
                                 </StyledTableRow>
@@ -830,7 +818,7 @@ export default function Account() {
                           </Table>
                         </TableContainer>
                       ) : (
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12} md={10}>
                           <Typography variant="h5">
                             No Hay Modelos Guardados
                           </Typography>
@@ -839,8 +827,93 @@ export default function Account() {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={12} md={4}>
-                  <Typography variant="h5">Presupuestos:</Typography>
+              </Grid>
+            )}
+          </Paper>
+          <Paper
+            sx={{
+              p: 2,
+              my: 4,
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "#fafafa",
+            }}
+          >
+            {user.length > 0 && (
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={2}>
+                  <Typography variant="h5">Solicitud de Presupuesto</Typography>
+                </Grid>
+                <Grid item xs={12} md={10}>
+                  <Grid container spacing={2}>
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <Box
+                        component="form"
+                        noValidate
+                        onSubmit={sendPresupuesto}
+                        sx={{ mt: 3 }}
+                      >
+                        <Grid container spacing={2}>
+                          <Grid item xs={12}>
+                            <Box sx={{ mt: 1 }}>
+                              {listaPresupuesto.length > 0 ? (
+                                <List>
+                                  {listaPresupuesto.map((row, index) => (
+                                    <Grid key={index}>
+                                      <ListItem sx={{ width: "100%" }}>
+                                        <ListItemText primary={row.nombre} />
+                                        <IconButton
+                                          color="error"
+                                          onClick={(e) =>
+                                            deleteListPresupuesto(e, index)
+                                          }
+                                        >
+                                          <DeleteIcon />
+                                        </IconButton>
+                                      </ListItem>
+                                    </Grid>
+                                  ))}
+                                </List>
+                              ) : (
+                                <Typography variant="h5">
+                                  No hay modelos añadidos al presupuesto
+                                </Typography>
+                              )}
+                            </Box>
+                          </Grid>
+                        </Grid>
+                        {listaPresupuesto.length > 0 ? (
+                          <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                          >
+                            Mandar solicitud
+                          </Button>
+                        ) : (
+                          <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            disabled
+                          >
+                            Mandar solicitud
+                          </Button>
+                        )}
+                      </Box>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             )}

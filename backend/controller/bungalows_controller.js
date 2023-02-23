@@ -6,8 +6,8 @@ const __dirname = currentDir().__dirname;
 const controller = {};
 
 controller.addBungalow = async (req, res) => {
-  const { nombre, usuario, planta } = req.body;
-  if (!nombre || !usuario || !planta)
+  const { nombre, usuario, planta, nombrebungalow } = req.body;
+  if (!nombre || !usuario || !planta || !nombrebungalow)
     return res.status(400).send("Error al recibir el body");
 
   try {
@@ -35,6 +35,28 @@ controller.deleteBungalowById = async (req, res) => {
   try {
     const deleteBungalow = await dao.deleteBungalowById(id);
     if (deleteBungalow) return res.send("Modelo borrado");
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+controller.addPresupuesto = async (req, res) => {
+  const { usuario, descripcion } = req.body;
+  if (!usuario || !descripcion)
+    return res.status(400).send("Error al recibir el body");
+
+  try {
+    const addPresupuesto = await dao.addPresupuesto(req.body);
+    if (addPresupuesto) return res.send(`${descripcion} registrado`);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+controller.getAllPresupuesto = async (req, res) => {
+  try {
+    const allPresupuesto = await dao.getAllPresupuesto();
+    if (allPresupuesto) return res.send(allPresupuesto);
   } catch (e) {
     console.log(e.message);
   }

@@ -326,6 +326,7 @@ export default function Configurador() {
         nombre: nombreProyecto,
         usuario: dataToken.id,
         planta: planta[0].planta,
+        nombrebungalow: planta[0].id,
       }),
     }).then((response) => {
       console.log(response.status);
