@@ -550,13 +550,16 @@ export default function Configurador() {
             <Grid item xs={12}>
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                  <InputLabel id="disposicion">Elige tu disposicion</InputLabel>
+                  <InputLabel id="disposicion" color="success">
+                    Elige tu disposicion
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={disposicionValue}
                     label="demo-simple-select-label"
                     onChange={handleChangeDisposicion}
+                    color="success"
                   >
                     {disposicion.map((item) => (
                       <MenuItem key={item.id} value={item.id}>
@@ -571,7 +574,7 @@ export default function Configurador() {
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="orientacion">
+                    <InputLabel id="orientacion" color="success">
                       Elige la orientacion
                     </InputLabel>
                     <Select
@@ -580,6 +583,7 @@ export default function Configurador() {
                       value={orientacionValue}
                       label="demo-simple-select-label"
                       onChange={handleChangeOrientacion}
+                      color="success"
                     >
                       {orientacion.map((item) => (
                         <MenuItem key={item.id} value={item.id}>
@@ -595,13 +599,16 @@ export default function Configurador() {
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="modelo">Elige El Modelo</InputLabel>
+                    <InputLabel id="modelo" color="success">
+                      Elige El Modelo
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={modeloValue}
                       label="demo-simple-select-label"
                       onChange={handleChangeModelo}
+                      color="success"
                     >
                       {modelo.map((item) => (
                         <MenuItem key={item.id} value={item.id}>
@@ -617,13 +624,16 @@ export default function Configurador() {
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="tipo">Elige El Tipo</InputLabel>
+                    <InputLabel id="tipo" color="success">
+                      Elige El Tipo
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={tipoValue}
                       label="demo-simple-select-label"
                       onChange={handleChangeTipo}
+                      color="success"
                     >
                       {tipo.map((item) => (
                         <MenuItem key={item.id} value={item.id}>
@@ -639,13 +649,16 @@ export default function Configurador() {
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="bungalowa">Bungalow-A</InputLabel>
+                    <InputLabel id="bungalowa" color="success">
+                      Bungalow-A
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={bungalowaValue}
                       label="demo-simple-select-label"
                       onChange={handleChangeBungalowa}
+                      color="success"
                     >
                       {bungalowa.map((item) => (
                         <MenuItem key={item.id} value={item.id}>
@@ -661,13 +674,16 @@ export default function Configurador() {
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="bungalowb">Bungalow-B</InputLabel>
+                    <InputLabel id="bungalowb" color="success">
+                      Bungalow-B
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={bungalowbValue}
                       label="demo-simple-select-label"
                       onChange={handleChangeBungalowb}
+                      color="success"
                     >
                       {bungalowb.map((item) => (
                         <MenuItem key={item.id} value={item.id}>
@@ -683,13 +699,16 @@ export default function Configurador() {
               <Grid item xs={12}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="bungalowc">Bungalow-C</InputLabel>
+                    <InputLabel id="bungalowc" color="success">
+                      Bungalow-C
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={bungalowcValue}
                       label="demo-simple-select-label"
                       onChange={handleChangeBungalowc}
+                      color="success"
                     >
                       {bungalowc.map((item) => (
                         <MenuItem key={item.id} value={item.id}>

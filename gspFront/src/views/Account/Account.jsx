@@ -491,6 +491,7 @@ export default function Account() {
                         variant="outlined"
                         value={newName.nombre}
                         onChange={handleInputName}
+                        color="success"
                       />
                       <IconButton color="success" type="submit">
                         <SaveIcon />
@@ -539,6 +540,7 @@ export default function Account() {
                         variant="outlined"
                         value={newApellido.apellidos}
                         onChange={handleInputApellido}
+                        color="success"
                       />
                       <IconButton color="success" type="submit">
                         <SaveIcon />
@@ -587,6 +589,7 @@ export default function Account() {
                         variant="outlined"
                         value={newEmail.email}
                         onChange={handleInputEmail}
+                        color="success"
                       />
                       <IconButton color="success" type="submit">
                         <SaveIcon />
@@ -635,6 +638,7 @@ export default function Account() {
                         variant="outlined"
                         value={newTelefono.telefono}
                         onChange={handleInputTelefono}
+                        color="success"
                       />
                       <IconButton color="success" type="submit">
                         <SaveIcon />
@@ -683,6 +687,7 @@ export default function Account() {
                         variant="outlined"
                         value={newDireccion.direccion}
                         onChange={handleInputDireccion}
+                        color="success"
                       />
                       <IconButton color="success" type="submit">
                         <SaveIcon />
@@ -731,6 +736,7 @@ export default function Account() {
                         variant="outlined"
                         value={newPassword.password}
                         onChange={handleInputPassword}
+                        color="success"
                       />
                       <IconButton color="success" type="submit">
                         <SaveIcon />
