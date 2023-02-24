@@ -13,12 +13,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const initialUserState = {
   nombre: "",
   apellidos: "",
   email: "",
   password: "",
+  direccion: "",
+  telefono: "",
 };
 
 const theme = createTheme();
@@ -45,7 +48,7 @@ export default function FormRegister({ vista, estado }) {
       if (response.status == 400) {
         alert("error al recibir el body");
       } else if (response.status == 200) {
-        alert("usuario registrado correctamente");
+        Swal.fire("Registrado", "Usuario registrado correctamente", "success");
         setNewUsuario(initialUserState);
       } else if (response.status == 409) {
         alert("usuario ya registrado");
@@ -99,6 +102,30 @@ export default function FormRegister({ vista, estado }) {
                   name="apellidos"
                   autoComplete="family-name"
                   value={newUsuario.apellidos}
+                  onChange={handleInput}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="direccion"
+                  label="Direccion"
+                  name="direccion"
+                  autoComplete="direccion"
+                  value={newUsuario.direccion}
+                  onChange={handleInput}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="telefono"
+                  label="Telefono"
+                  name="telefono"
+                  autoComplete="telefono"
+                  value={newUsuario.telefono}
                   onChange={handleInput}
                 />
               </Grid>

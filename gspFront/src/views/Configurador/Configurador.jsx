@@ -23,11 +23,14 @@ import { OrbitControls } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useAuthContext } from "../../contexts/AuthContext";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function Configurador() {
   document.title = "configurador";
 
   const { dataToken } = useAuthContext();
+
+  const navigate = useNavigate();
 
   const [disableButton, setDisableButton] = useState(true);
   const [view3d, setView3d] = useState(false);
@@ -331,7 +334,19 @@ export default function Configurador() {
     }).then((response) => {
       console.log(response.status);
       if (response.status == 400) {
-        alert("error al recibir el body");
+        Swal.fire({
+          title: "¿Estas Registrado?",
+          text: "Registrate o inicia sesion para poder guardar el modelo en tu cuenta",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Ir al login/Register",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login");
+          }
+        });
       } else if (response.status == 200) {
         // alert("Modelo guardado correctamente");
         Swal.fire({

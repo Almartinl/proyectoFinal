@@ -50,7 +50,7 @@ userQueries.addUser = async (userData) => {
       email: userData.email,
       password: md5(userData.password),
       direccion: userData.direccion,
-      // reg_date: moment().format('YYYY-MM-DD HH:mm:ss')
+      telefono: userData.telefono
     };
     return await db.query(
       "INSERT INTO usuarios SET ?",

@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import { Grid } from "@mui/material";
 
 const pages = [
   { nombre: "Inicio", ruta: "/" },
@@ -219,20 +220,22 @@ export default function AppBarMenu() {
               )}
             </Box>
           ) : (
-            <Link to="/login" style={{ textDecoration: "none" }}>
-              <Button
-                key={7}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  my: 2,
-                  display: "block",
-                  border: 1,
-                  color: "green",
-                }}
-              >
-                Login / Register
-              </Button>
-            </Link>
+            <Grid sx={{ display: { xs: "none", md: "inline" } }}>
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <Button
+                  key={7}
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    my: 2,
+                    display: "block",
+                    border: 1,
+                    color: "green",
+                  }}
+                >
+                  Login / Register
+                </Button>
+              </Link>
+            </Grid>
           )}
         </Toolbar>
       </Container>

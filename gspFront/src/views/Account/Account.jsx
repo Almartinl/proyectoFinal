@@ -33,6 +33,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -61,7 +62,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function Account() {
   document.title = "Perfil";
 
-  const { dataToken } = useAuthContext();
+  const { dataToken, logout } = useAuthContext();
 
   const [user, setUser] = useState([]);
   const [stateChange, setStateChange] = useState(false);
@@ -395,6 +396,36 @@ export default function Account() {
           position: "center",
           icon: "success",
           title: "Presupuesto Enviado Correctamente",
+        });
+      }
+    });
+  }
+
+  function deleteAccount() {
+    Swal.fire({
+      title: "¿Seguro que quieres borrar tu cuenta?",
+      text: "Recuerda que luego si quieres volver a ver tu perfil tendras que solicitar al administrador permisos",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Borrame !!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/user/delete/${dataToken.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((response) => {
+          if (response.status == 400) {
+            alert("error al recibir el body");
+          } else if (response.status == 200) {
+            Swal.fire("Borrado!", "Tu cuenta ha sido inabilitada", "success");
+            logout();
+          } else if (response.status == 409) {
+            alert("usuario ya registrado");
+          }
         });
       }
     });
@@ -914,6 +945,46 @@ export default function Account() {
                           </Button>
                         )}
                       </Box>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            )}
+          </Paper>
+          <Paper
+            sx={{
+              p: 2,
+              my: 4,
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "#fafafa",
+            }}
+          >
+            {user.length > 0 && (
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={2}>
+                  <Typography variant="h5">Borrar Cuenta</Typography>
+                </Grid>
+                <Grid item xs={12} md={10}>
+                  <Grid container spacing={2}>
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <Button
+                        variant="contained"
+                        color="error"
+                        onClick={deleteAccount}
+                      >
+                        <HighlightOffIcon />
+                        <Typography variant="h5">Borrar Cuenta</Typography>
+                      </Button>
                     </Grid>
                   </Grid>
                 </Grid>
