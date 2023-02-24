@@ -62,4 +62,17 @@ controller.getAllPresupuesto = async (req, res) => {
   }
 };
 
+controller.deletePresupuestoById = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const presupuesto = await dao.deletePresupuestoById(id);
+
+    if (presupuesto.length <= 0)
+      return res.status(404).send("presupuesto no existe");
+
+    return res.send(`presupuesto ${id} eliminado`).status(200);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
 export default controller;

@@ -8,9 +8,10 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useState } from "react";
 import { useEffect } from "react";
-import { IconButton } from "@mui/material";
+import { Grid, IconButton, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 
@@ -35,6 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function DashboardUsuarios() {
+  document.title = "Dashboard Usuario";
   const [users, setUsers] = useState([]);
   const [stateChange, setStateChange] = useState(false);
 
@@ -66,7 +68,33 @@ export default function DashboardUsuarios() {
           title: "Usuario Borrado Correctamente",
         });
       } else if (response.status == 409) {
-        alert("modelo ya registrado");
+        alert("usuario ya registrado");
+      }
+    });
+  }
+
+  function activeUser(e, idUser) {
+    e.preventDefault();
+    setStateChange(!stateChange);
+    fetch(`http://localhost:3000/user/${idUser}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        activo: "1",
+      }),
+    }).then((response) => {
+      if (response.status == 400) {
+        alert("error al recibir el body");
+      } else if (response.status == 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Usuario Activado Correctamente",
+        });
+      } else if (response.status == 409) {
+        alert("usuario ya registrado");
       }
     });
   }
@@ -102,9 +130,44 @@ export default function DashboardUsuarios() {
                 <StyledTableCell align="center">{row.telefono}</StyledTableCell>
                 <StyledTableCell align="center">{row.activo}</StyledTableCell>
                 <StyledTableCell align="left">
-                  <IconButton onClick={(e) => handleDeleteUser(e, row.id)}>
-                    <DeleteIcon />
-                  </IconButton>
+                  {row.activo == 0 ? (
+                    <Grid container wrap="nowrap">
+                      <IconButton color="error" disabled>
+                        <DeleteIcon />
+                      </IconButton>
+                      <Tooltip title="Activar Cuenta">
+                        <IconButton
+                          onClick={(e) => activeUser(e, row.id)}
+                          color="success"
+                        >
+                          <CheckCircleIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Grid>
+                  ) : row.id == 1 ? (
+                    <Grid container wrap="nowrap">
+                      <IconButton color="error" disabled>
+                        <DeleteIcon />
+                      </IconButton>
+                      <IconButton disabled>
+                        <CheckCircleIcon />
+                      </IconButton>
+                    </Grid>
+                  ) : (
+                    <Grid container wrap="nowrap">
+                      <Tooltip title="Borrar Cuenta">
+                        <IconButton
+                          onClick={(e) => handleDeleteUser(e, row.id)}
+                          color="error"
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <IconButton disabled>
+                        <CheckCircleIcon />
+                      </IconButton>
+                    </Grid>
+                  )}
                 </StyledTableCell>
               </StyledTableRow>
             ))}

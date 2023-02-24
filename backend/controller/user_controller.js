@@ -65,6 +65,9 @@ controller.loginUser = async (req, res) => {
 
     if (newUser.password !== clientPassword)
       return res.status(401).send("Password incorrecta");
+    else if (newUser.activo == 0) {
+      return res.status(403).send("Usuario no activo");
+    }
 
     const jwtConstructor = new SignJWT({
       id: newUser.id,

@@ -59,6 +59,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function Account() {
+  document.title = "Perfil";
+
   const { dataToken } = useAuthContext();
 
   const [user, setUser] = useState([]);

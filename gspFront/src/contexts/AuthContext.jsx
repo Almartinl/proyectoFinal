@@ -45,11 +45,17 @@ export function AuthContextProvider({ children }) {
           alert("error al recibir el body");
         } else if (response.status == 200) {
           return response.json();
-        } else if (response.status != 200) {
+        } else if (response.status == 404 || response.status == 401) {
           Swal.fire({
             position: "center",
             icon: "error",
             title: "Usuario o contraseña erronea",
+          });
+        } else if (response.status == 403) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Usuario Inactivo, Por favor contacte con el administrador",
           });
         }
       })

@@ -11,5 +11,9 @@ bungalowsRouter.get(
   "/getallpresupuesto",
   bungalowsController.getAllPresupuesto
 );
+bungalowsRouter.delete(
+  "/deletepresupuesto",
+  bungalowsController.deletePresupuestoById
+);
 
 export default bungalowsRouter;

@@ -9,6 +9,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 export default function DashboardInicio() {
+  document.title = "Dashboard Inicio";
+
   const [countUser, setCountUser] = useState([]);
   const [countModels, setCountModels] = useState([]);
 

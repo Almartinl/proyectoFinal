@@ -10,7 +10,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useState } from "react";
 import { useEffect } from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, List, ListItem, ListItemText } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 
@@ -35,6 +35,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function DashboardPresupuestos() {
+  document.title = "Dashboard Presupuestos";
+
   const [presupuestos, setPresupuestos] = useState([]);
   const [stateChange, setStateChange] = useState(false);
 
@@ -50,28 +52,32 @@ export default function DashboardPresupuestos() {
     fetchPresupuesto();
   }, [stateChange]);
 
-  //   function handleDeleteUser(e, id) {
-  //     e.preventDefault();
-  //     setStateChange(!stateChange);
-  //     fetch(`http://localhost:3000/user/delete/${id}`, {
-  //       method: "PATCH",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }).then((response) => {
-  //       if (response.status == 400) {
-  //         alert("error al recibir el body");
-  //       } else if (response.status == 200) {
-  //         Swal.fire({
-  //           position: "center",
-  //           icon: "success",
-  //           title: "Usuario Borrado Correctamente",
-  //         });
-  //       } else if (response.status == 409) {
-  //         alert("modelo ya registrado");
-  //       }
-  //     });
-  //   }
+  function deletePresupuesto(e, idPresupuesto) {
+    e.preventDefault();
+    const newList = presupuestos.filter(
+      (item, index) => item.id !== idPresupuesto
+    );
+    setPresupuestos(newList);
+    fetch("http://localhost:3000/bungalows/deletepresupuesto", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: idPresupuesto,
+      }),
+    }).then((response) => {
+      if (response.status == 400) {
+        alert("error al recibir el body");
+      } else if (response.status == 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Presupuesto Borrado Correctamente",
+        });
+      }
+    });
+  }
 
   return (
     <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
@@ -92,15 +98,23 @@ export default function DashboardPresupuestos() {
                   {row.nombre}
                 </StyledTableCell>
                 <StyledTableCell align="center">{row.email}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <ul>
+                <StyledTableCell
+                  align="center"
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
+                  <List dense>
                     {JSON.parse(row.descripcion).map((modelo, index) => (
-                      <li key={index}>{modelo}</li>
+                      <ListItem key={index}>
+                        <ListItemText primary={modelo} />
+                      </ListItem>
                     ))}
-                  </ul>
+                  </List>
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  <IconButton>
+                  <IconButton
+                    color="error"
+                    onClick={(e) => deletePresupuesto(e, row.id)}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </StyledTableCell>

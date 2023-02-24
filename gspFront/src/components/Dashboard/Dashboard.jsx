@@ -13,6 +13,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import TableViewIcon from "@mui/icons-material/TableView";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -153,6 +154,17 @@ function DashboardContent() {
               >
                 <PeopleIcon />
               </Button>
+              <Button
+                color="primary"
+                sx={{
+                  py: "16px",
+                }}
+                onClick={() => {
+                  Linkto("/dashboard/presupuestos", "Presupuestos");
+                }}
+              >
+                <TableViewIcon />
+              </Button>
 
               <Button
                 color="error"
@@ -200,6 +212,22 @@ function DashboardContent() {
               >
                 <PeopleIcon />
                 Usuarios
+              </Button>
+              <Button
+                color="primary"
+                size="large"
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  gap: "20%",
+                  py: "16px",
+                }}
+                onClick={() => {
+                  Linkto("/dashboard/presupuestos", "Presupuestos");
+                }}
+              >
+                <TableViewIcon />
+                Presupuestos
               </Button>
 
               <Button

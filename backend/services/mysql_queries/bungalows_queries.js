@@ -99,4 +99,21 @@ bungalowsQueries.getAllPresupuesto = async () => {
   }
 };
 
+bungalowsQueries.deletePresupuestoById = async (id) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "DELETE FROM presupuestos WHERE id =?",
+      [id],
+      "delete",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
 export default bungalowsQueries;
