@@ -493,15 +493,19 @@ export default function Account() {
                         onChange={handleInputName}
                         color="success"
                       />
-                      <IconButton color="success" type="submit">
-                        <SaveIcon />
-                      </IconButton>
-                      <IconButton
-                        color="error"
-                        onClick={() => setNewName({ nombre: "" })}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <Tooltip title="Guardar">
+                        <IconButton color="success" type="submit">
+                          <SaveIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Borrar campo">
+                        <IconButton
+                          color="error"
+                          onClick={() => setNewName({ nombre: "" })}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </Box>
                   )}
                   <Grid container spacing={2}>
@@ -542,15 +546,19 @@ export default function Account() {
                         onChange={handleInputApellido}
                         color="success"
                       />
-                      <IconButton color="success" type="submit">
-                        <SaveIcon />
-                      </IconButton>
-                      <IconButton
-                        color="error"
-                        onClick={() => setNewApellido({ apellido: "" })}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <Tooltip title="Guardar">
+                        <IconButton color="success" type="submit">
+                          <SaveIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Borrar campo">
+                        <IconButton
+                          color="error"
+                          onClick={() => setNewApellido({ apellido: "" })}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </Box>
                   )}
                   <Grid container spacing={2}>
@@ -591,15 +599,19 @@ export default function Account() {
                         onChange={handleInputEmail}
                         color="success"
                       />
-                      <IconButton color="success" type="submit">
-                        <SaveIcon />
-                      </IconButton>
-                      <IconButton
-                        color="error"
-                        onClick={() => setNewEmail({ email: "" })}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <Tooltip title="Guardar">
+                        <IconButton color="success" type="submit">
+                          <SaveIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Borrar campo">
+                        <IconButton
+                          color="error"
+                          onClick={() => setNewEmail({ email: "" })}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </Box>
                   )}
                   <Grid container spacing={2}>
@@ -640,15 +652,19 @@ export default function Account() {
                         onChange={handleInputTelefono}
                         color="success"
                       />
-                      <IconButton color="success" type="submit">
-                        <SaveIcon />
-                      </IconButton>
-                      <IconButton
-                        color="error"
-                        onClick={() => setNewTelefono({ telefono: "" })}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <Tooltip title="Guardar">
+                        <IconButton color="success" type="submit">
+                          <SaveIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Borrar campo">
+                        <IconButton
+                          color="error"
+                          onClick={() => setNewTelefono({ telefono: "" })}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </Box>
                   )}
                   <Grid container spacing={2}>
@@ -689,15 +705,19 @@ export default function Account() {
                         onChange={handleInputDireccion}
                         color="success"
                       />
-                      <IconButton color="success" type="submit">
-                        <SaveIcon />
-                      </IconButton>
-                      <IconButton
-                        color="error"
-                        onClick={() => setNewDireccion({ direccion: "" })}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <Tooltip title="Guardar">
+                        <IconButton color="success" type="submit">
+                          <SaveIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Borrar campo">
+                        <IconButton
+                          color="error"
+                          onClick={() => setNewDireccion({ direccion: "" })}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </Box>
                   )}
                   <Grid container spacing={2}>
@@ -738,15 +758,19 @@ export default function Account() {
                         onChange={handleInputPassword}
                         color="success"
                       />
-                      <IconButton color="success" type="submit">
-                        <SaveIcon />
-                      </IconButton>
-                      <IconButton
-                        color="error"
-                        onClick={() => setNewPassword({ password: "" })}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <Tooltip title="Guardar">
+                        <IconButton color="success" type="submit">
+                          <SaveIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Borrar campo">
+                        <IconButton
+                          color="error"
+                          onClick={() => setNewPassword({ password: "" })}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </Box>
                   )}
                 </Grid>

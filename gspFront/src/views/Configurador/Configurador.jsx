@@ -15,7 +15,9 @@ import {
   DialogContentText,
   TextField,
   DialogActions,
+  IconButton,
 } from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useEffect, useState, Suspense } from "react";
 import { Canvas, render, useThree } from "@react-three/fiber";
 import { useLoader } from "@react-three/fiber";
@@ -53,6 +55,7 @@ export default function Configurador() {
   const [planta, setPlanta] = useState([]);
   const [modelo3d, setModelo3d] = useState([]);
   const [open, setOpen] = useState(false);
+  const [open3d, setOpen3d] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,6 +63,14 @@ export default function Configurador() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClickOpenView3d = () => {
+    setOpen3d(true);
+  };
+
+  const handleCloseView3d = () => {
+    setOpen3d(false);
   };
 
   useEffect(() => {
@@ -480,7 +491,7 @@ export default function Configurador() {
       const gltf = useLoader(GLTFLoader, `http://localhost:3000/${modelo3d}`);
       return (
         <>
-          <primitive object={gltf.scene} scale={3.5} />
+          <primitive object={gltf.scene} scale={4} />
         </>
       );
     };
@@ -756,7 +767,7 @@ export default function Configurador() {
                 <Button onClick={handleSubmitGuardar}>Guardar</Button>
               </DialogActions>
             </Dialog>
-            <Button
+            {/* <Button
               variant="contained"
               color="success"
               sx={{ backgroundColor: "darkgreen" }}
@@ -764,6 +775,18 @@ export default function Configurador() {
               onClick={handleView3d}
             >
               vista 3d
+            </Button> */}
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ backgroundColor: "darkgreen" }}
+              disabled={disableButton}
+              onClick={handleClickOpenView3d}
+            >
+              vista 3d
+            </Button>
+            <Button variant="contained">
+              <InfoOutlinedIcon />
             </Button>
           </Grid>
           {planta.length > 0 ? (
@@ -805,20 +828,34 @@ export default function Configurador() {
               />
             </Grid>
           )}
-          {view3d && (
-            <Grid item xs={12} width="100%" height="80vh" marginTop="24px">
-              <Typography
-                variant="h2"
-                fontWeight="bold"
-                sx={{ textAlign: "center", color: "darkgreen" }}
-              >
-                Vista 3d
-              </Typography>
-              <Grid item xs={12} width="100%" height="80vh" marginTop="24px">
+          <Dialog
+            maxWidth="lg"
+            fullWidth
+            open={open3d}
+            onClose={handleCloseView3d}
+          >
+            <DialogTitle>Vista 3d</DialogTitle>
+            <DialogContent>
+              {/* <Grid item xs={12} width="100%" height="100%" marginTop="24px">
+                <Typography
+                  variant="h2"
+                  fontWeight="bold"
+                  sx={{ textAlign: "center", color: "darkgreen" }}
+                >
+                  Vista 3d
+                </Typography> */}
+              <Grid item xs={12} width="100%" height="70vh" marginTop="24px">
                 <View3d />
               </Grid>
-            </Grid>
-          )}
+              {/* </Grid> */}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseView3d}>Cerrar</Button>
+            </DialogActions>
+          </Dialog>
+          {/* {view3d && (
+           
+          )} */}
         </Grid>
       </Grid>
     </Container>
