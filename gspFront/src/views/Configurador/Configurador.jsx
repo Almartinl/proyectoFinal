@@ -725,54 +725,38 @@ export default function Configurador() {
                 </Box>
               </Grid>
             )}
+            <Grid container item xs={12} justifyContent="space-between">
+              <Button onClick={reset} variant="contained" color="error">
+                Reset
+              </Button>
 
-            <Button onClick={reset} variant="contained" color="error">
-              Reset
-            </Button>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ backgroundColor: "darkgreen" }}
-              disabled={disableButton}
-              onClick={handleClickOpen}
-            >
-              Guardar
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Guardar Modelo</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Escribe el Nombre para guardar el modelo
-                </DialogContentText>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  label="Nombre"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  value={nombreProyecto}
-                  onChange={(e) => setNombreProyecto(e.target.value)}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleSubmitGuardar}>Guardar</Button>
-              </DialogActions>
-            </Dialog>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ backgroundColor: "darkgreen" }}
-              disabled={disableButton}
-              onClick={handleClickOpenView3d}
-            >
-              vista 3d
-            </Button>
-            <Button variant="contained" onClick={handleClickOpenInfo}>
-              <InfoOutlinedIcon />
-            </Button>
+              <Button
+                variant="contained"
+                color="success"
+                sx={{ backgroundColor: "darkgreen" }}
+                disabled={disableButton}
+                onClick={handleClickOpen}
+              >
+                Guardar
+              </Button>
+
+              <Button
+                variant="contained"
+                color="success"
+                sx={{ backgroundColor: "darkgreen" }}
+                disabled={disableButton}
+                onClick={handleClickOpenView3d}
+              >
+                vista 3d
+              </Button>
+              <Button
+                variant="contained"
+                color="info"
+                onClick={handleClickOpenInfo}
+              >
+                <InfoOutlinedIcon />
+              </Button>
+            </Grid>
           </Grid>
           {planta.length > 0 ? (
             <Grid
@@ -855,6 +839,29 @@ export default function Configurador() {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleCloseInfo}>Cerrar</Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Guardar Modelo</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Escribe el Nombre para guardar el modelo
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Nombre"
+                type="text"
+                fullWidth
+                variant="standard"
+                value={nombreProyecto}
+                onChange={(e) => setNombreProyecto(e.target.value)}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={handleSubmitGuardar}>Guardar</Button>
             </DialogActions>
           </Dialog>
         </Grid>

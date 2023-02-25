@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { Grid } from "@mui/material";
+import { deepOrange, yellow } from "@mui/material/colors";
 
 const pages = [
   { nombre: "Inicio", ruta: "/" },
@@ -24,10 +25,7 @@ const pages = [
   { nombre: "Contacto", ruta: "/contacto" },
 ];
 const settings = [{ nombre: "Perfil", ruta: "/account" }];
-const settingsAdmin = [
-  { nombre: "Perfil", ruta: "/account" },
-  { nombre: "Dashboard", ruta: "/dashboard" },
-];
+const settingsAdmin = [{ nombre: "Dashboard", ruta: "/dashboard" }];
 
 export default function AppBarMenu() {
   const { authorization, dataToken, logout } = useAuthContext();
@@ -100,7 +98,7 @@ export default function AppBarMenu() {
                   style={{ textDecoration: "none" }}
                 >
                   <MenuItem key={index} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center" color="green">
+                    <Typography textAlign="center" color="darkgreen">
                       {page.nombre}
                     </Typography>
                   </MenuItem>
@@ -131,12 +129,15 @@ export default function AppBarMenu() {
                 style={{ textDecoration: "none" }}
               >
                 <Button
-                  variant="text"
                   key={index}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "green", display: "block" }}
+                  sx={{
+                    my: 2,
+                    color: "darkgreen",
+                    display: "block",
+                  }}
                 >
-                  {page.nombre}
+                  <Typography fontWeight="bold">{page.nombre}</Typography>
                 </Button>
               </Link>
             ))}
@@ -146,7 +147,11 @@ export default function AppBarMenu() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Abrir Opciones">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={dataToken.email.toUpperCase()} src={"/"} />
+                  <Avatar
+                    alt={dataToken.email.toUpperCase()}
+                    src={"/"}
+                    sx={{ bgcolor: "#d3b72a" }}
+                  />
                 </IconButton>
               </Tooltip>
               {dataToken.role == 1 ? (

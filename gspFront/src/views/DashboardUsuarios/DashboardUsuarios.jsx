@@ -44,7 +44,7 @@ export default function DashboardUsuarios() {
     async function fetchCount() {
       const response = await fetch("http://localhost:3000/user/users");
       const data = await response.json();
-      setUsers(data);
+      setUsers(data.slice(1));
       console.log(data);
     }
     fetchCount();

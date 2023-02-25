@@ -21,6 +21,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Chip,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -397,6 +398,7 @@ export default function Account() {
           icon: "success",
           title: "Presupuesto Enviado Correctamente",
         });
+        setListaPresupuesto([]);
       }
     });
   }
@@ -407,8 +409,8 @@ export default function Account() {
       text: "Recuerda que luego si quieres volver a ver tu perfil tendras que solicitar al administrador permisos",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
       confirmButtonText: "Si, Borrame !!",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -777,7 +779,6 @@ export default function Account() {
               </Grid>
             )}
           </Paper>
-
           <Paper
             sx={{
               p: 2,
@@ -933,7 +934,20 @@ export default function Account() {
                                   {listaPresupuesto.map((row, index) => (
                                     <Grid key={index}>
                                       <ListItem sx={{ width: "100%" }}>
-                                        <ListItemText primary={row.nombre} />
+                                        <Chip
+                                          variant="outlined"
+                                          label={row.nombre}
+                                          color="error"
+                                          deleteIcon={
+                                            <Tooltip title="Borrar modelo">
+                                              <DeleteIcon />
+                                            </Tooltip>
+                                          }
+                                          onDelete={(e) =>
+                                            deleteListPresupuesto(e, index)
+                                          }
+                                        />
+                                        {/* <ListItemText primary={row.nombre} />
                                         <IconButton
                                           color="error"
                                           onClick={(e) =>
@@ -941,7 +955,7 @@ export default function Account() {
                                           }
                                         >
                                           <DeleteIcon />
-                                        </IconButton>
+                                        </IconButton> */}
                                       </ListItem>
                                     </Grid>
                                   ))}

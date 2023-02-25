@@ -2,7 +2,9 @@ import * as React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import { Grid } from "@mui/material";
+import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { Grid, IconButton, SvgIcon } from "@mui/material";
 
 export default function Footer() {
   function Copyright(props) {
@@ -14,8 +16,8 @@ export default function Footer() {
         {...props}
       >
         {"Copyright © "}
-        <Link color="inherit" href="##">
-          Global Solutions Prefabrquee
+        <Link color="inherit" href="#">
+          Global Solutions Prefabriquee
         </Link>{" "}
         {new Date().getFullYear()}
         {"."}
@@ -23,46 +25,32 @@ export default function Footer() {
     );
   }
 
-  const footers = [
-    {
-      title: "Company",
-      description: ["Team", "History", "Contact us", "Locations"],
-    },
-    {
-      title: "Legal",
-      description: ["Privacy policy", "Terms of use"],
-    },
-  ];
-
   return (
     <Container
       maxWidth="xl"
       component="footer"
       sx={{
         borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-        mt: 8,
-        py: [3, 6],
+        mt: 10,
+        py: 5,
       }}
     >
-      <Grid container spacing={2} justifyContent="space-evenly">
-        {/* {footers.map((footer) => (
-          <Grid item xs={6} sm={3} key={footer.title}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
-              {footer.title}
-            </Typography>
-            <ul>
-              {footer.description.map((item) => (
-                <li key={item}>
-                  <Link href="#" variant="subtitle1" color="text.secondary">
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Grid>
-        ))} */}
+      <Grid
+        container
+        spacing={2}
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Copyright />
+        <Grid>
+          <IconButton href="https://www.facebook.com/Global-Solutions-Pr%C3%A9fabriqu%C3%A9es-115355516956606">
+            <FacebookOutlinedIcon color="success" />
+          </IconButton>
+          <IconButton href="https://www.linkedin.com/company/global-solutions-pr%C3%A9fabriqu%C3%A9es/">
+            <LinkedInIcon color="success" />
+          </IconButton>
+        </Grid>
       </Grid>
-      <Copyright sx={{ mt: 5 }} />
     </Container>
   );
 }
