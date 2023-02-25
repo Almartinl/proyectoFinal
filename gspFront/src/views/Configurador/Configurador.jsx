@@ -35,7 +35,6 @@ export default function Configurador() {
   const navigate = useNavigate();
 
   const [disableButton, setDisableButton] = useState(true);
-  const [view3d, setView3d] = useState(false);
   const [disposicion, setDisposicion] = useState([]);
   const [disposicionValue, setDisposicionValue] = useState("");
   const [orientacion, setOrientacion] = useState([]);
@@ -56,21 +55,25 @@ export default function Configurador() {
   const [modelo3d, setModelo3d] = useState([]);
   const [open, setOpen] = useState(false);
   const [open3d, setOpen3d] = useState(false);
+  const [openInfo, setOpenInfo] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleClickOpenView3d = () => {
     setOpen3d(true);
   };
-
   const handleCloseView3d = () => {
     setOpen3d(false);
+  };
+  const handleClickOpenInfo = () => {
+    setOpenInfo(true);
+  };
+  const handleCloseInfo = () => {
+    setOpenInfo(false);
   };
 
   useEffect(() => {
@@ -350,8 +353,8 @@ export default function Configurador() {
           text: "Registrate o inicia sesion para poder guardar el modelo en tu cuenta",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#3085d6",
           confirmButtonText: "Ir al login/Register",
         }).then((result) => {
           if (result.isConfirmed) {
@@ -387,7 +390,6 @@ export default function Configurador() {
     setBungalowbValue("");
     setBungalowc([]);
     setBungalowcValue("");
-    setView3d(false);
     setDisableButton(true);
     setPlanta([]);
     setModelo3d([]);
@@ -405,7 +407,6 @@ export default function Configurador() {
       setBungalowbValue("");
       setBungalowc([]);
       setBungalowcValue("");
-      setView3d(false);
       setDisableButton(true);
       setPlanta([]);
       setModelo3d([]);
@@ -422,7 +423,6 @@ export default function Configurador() {
       setBungalowbValue("");
       setBungalowc([]);
       setBungalowcValue("");
-      setView3d(false);
       setDisableButton(true);
       setPlanta([]);
       setModelo3d([]);
@@ -437,7 +437,6 @@ export default function Configurador() {
       setBungalowbValue("");
       setBungalowc([]);
       setBungalowcValue("");
-      setView3d(false);
       setDisableButton(true);
       setPlanta([]);
       setModelo3d([]);
@@ -449,7 +448,6 @@ export default function Configurador() {
     setBungalowbValue("");
     setBungalowc([]);
     setBungalowcValue("");
-    setView3d(false);
     setDisableButton(true);
     setPlanta([]);
     setModelo3d([]);
@@ -458,7 +456,6 @@ export default function Configurador() {
   useEffect(() => {
     setBungalowc([]);
     setBungalowcValue("");
-    setView3d(false);
     setDisableButton(true);
     setPlanta([]);
     setModelo3d([]);
@@ -480,12 +477,9 @@ export default function Configurador() {
     setBungalowcValue("");
     setPlanta([]);
     setDisableButton(true);
-    setView3d(false);
     setModelo3d([]);
   }
-  function handleView3d() {
-    setView3d(true);
-  }
+
   function View3d() {
     const Model = () => {
       const gltf = useLoader(GLTFLoader, `http://localhost:3000/${modelo3d}`);
@@ -767,15 +761,6 @@ export default function Configurador() {
                 <Button onClick={handleSubmitGuardar}>Guardar</Button>
               </DialogActions>
             </Dialog>
-            {/* <Button
-              variant="contained"
-              color="success"
-              sx={{ backgroundColor: "darkgreen" }}
-              disabled={disableButton}
-              onClick={handleView3d}
-            >
-              vista 3d
-            </Button> */}
             <Button
               variant="contained"
               color="success"
@@ -785,7 +770,7 @@ export default function Configurador() {
             >
               vista 3d
             </Button>
-            <Button variant="contained">
+            <Button variant="contained" onClick={handleClickOpenInfo}>
               <InfoOutlinedIcon />
             </Button>
           </Grid>
@@ -836,26 +821,42 @@ export default function Configurador() {
           >
             <DialogTitle>Vista 3d</DialogTitle>
             <DialogContent>
-              {/* <Grid item xs={12} width="100%" height="100%" marginTop="24px">
-                <Typography
-                  variant="h2"
-                  fontWeight="bold"
-                  sx={{ textAlign: "center", color: "darkgreen" }}
-                >
-                  Vista 3d
-                </Typography> */}
               <Grid item xs={12} width="100%" height="70vh" marginTop="24px">
                 <View3d />
               </Grid>
-              {/* </Grid> */}
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleCloseView3d}>Cerrar</Button>
+              <Button onClick={handleCloseView3d} variant="contained">
+                Cerrar
+              </Button>
             </DialogActions>
           </Dialog>
-          {/* {view3d && (
-           
-          )} */}
+          <Dialog
+            maxWidth="sm"
+            fullWidth
+            open={openInfo}
+            onClose={handleCloseInfo}
+          >
+            <DialogTitle>Info</DialogTitle>
+            <DialogContent
+              sx={{
+                display: "flex",
+                alignItems: "stretch",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                src="../../INFO-WEB.jpg"
+                style={{
+                  maxWidth: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseInfo}>Cerrar</Button>
+            </DialogActions>
+          </Dialog>
         </Grid>
       </Grid>
     </Container>

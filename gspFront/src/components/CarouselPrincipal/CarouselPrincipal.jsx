@@ -5,7 +5,8 @@ export default function CarouselPrincipal() {
     <div
       id="carouselExampleCaptions"
       className="carousel slide"
-      data-bs-ride="false"
+      data-bs-ride="carousel"
+      data-bs-interval="6000"
     >
       <div className="carousel-indicators">
         <button
