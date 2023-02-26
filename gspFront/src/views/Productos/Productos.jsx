@@ -182,7 +182,7 @@ export default function Productos() {
   }
 
   return (
-    <Container maxWidth="xl" sx={{ my: 15 }}>
+    <Container maxWidth="xl" sx={{ my: 4 }}>
       <Grid container>
         {vistaBungalowAlmacen ||
         vistaBungalowCaseta ||
