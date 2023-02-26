@@ -17,6 +17,7 @@ import PrivateRoute from "./components/routes/PrivatRoute/PrivateRoute";
 import Unauthorized from "./views/unauthorized/Unauthorized";
 import DashboardPresupuestos from "./views/DashboardPresupuestos/DashboardPresupuestos";
 import Contact from "./views/Contact/Contact";
+import Productos from "./views/Productos/Productos";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="configurador" element={<Configurador />} />
             <Route path="unauthorized" element={<Unauthorized />} />
             <Route path="contacto" element={<Contact />} />
+            <Route path="productos" element={<Productos />} />
           </Route>
           <Route element={<PrivateRoute allowedRoles={[ROLES.User]} />}>
             <Route path="/account" element={<Account />} />
