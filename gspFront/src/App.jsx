@@ -18,6 +18,7 @@ import Unauthorized from "./views/unauthorized/Unauthorized";
 import DashboardPresupuestos from "./views/DashboardPresupuestos/DashboardPresupuestos";
 import Contact from "./views/Contact/Contact";
 import Productos from "./views/Productos/Productos";
+import DashboardContacto from "./views/DashboardContacto/DashboardContacto";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
               path="/dashboard/presupuestos"
               element={<DashboardPresupuestos />}
             />
+            <Route path="/dashboard/contacto" element={<DashboardContacto />} />
           </Route>
           <Route path="/login" element={<Layout />}>
             <Route index element={<Login />} />

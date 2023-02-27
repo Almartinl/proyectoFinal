@@ -75,4 +75,13 @@ controller.deletePresupuestoById = async (req, res) => {
     console.log(e.message);
   }
 };
+
+controller.getCountPresupuesto = async (req, res) => {
+  try {
+    const allPresupuesto = await dao.getCountPresupuesto();
+    if (allPresupuesto) return res.send(allPresupuesto);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
 export default controller;

@@ -128,4 +128,16 @@ dao.getAllPresupuesto = async () => await bungalowsQueries.getAllPresupuesto();
 dao.deletePresupuestoById = async (id) =>
   await bungalowsQueries.deletePresupuestoById(id);
 
+dao.addContact = async (contactData) =>
+  await userQueries.addContact(contactData);
+
+dao.getCountContact = async () => await userQueries.getCountContact();
+
+dao.getCountPresupuesto = async () =>
+  await bungalowsQueries.getCountPresupuesto();
+
+dao.getAllContact = async () => await userQueries.getAllContact();
+
+dao.deleteContactById = async (id) => await userQueries.deleteContactById(id);
+
 export default dao;

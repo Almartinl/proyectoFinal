@@ -22,7 +22,7 @@ import {
   TableFooter,
 } from "@mui/material";
 import { CardActionArea } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
 import CarouselProductos from "../../components/CarouselProductos/CarouselProductos";
@@ -180,6 +180,22 @@ export default function Productos() {
     setVistaEdificios(false);
     setVistaNaves(true);
   }
+
+  useEffect(() => {
+    setExpanded(false);
+    setExpandedCard(false);
+  }, [
+    vistaInicio,
+    vistaBungalowsObras,
+    vistaBungalowAlmacen,
+    vistaBungalowCaseta,
+    vistaBungalowDiafano,
+    vistaBungalowVestuario,
+    vistaBungalowWc,
+    vistaEdificios,
+    vistaEstructuras,
+    vistaNaves,
+  ]);
 
   return (
     <Container maxWidth="xl" sx={{ my: 4 }}>

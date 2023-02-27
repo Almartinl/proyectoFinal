@@ -9,18 +9,13 @@ userQueries.getUsers = async () => {
   let conn = null;
   try {
     conn = await db.createConnection();
-    return await db.query(
-      "SELECT * FROM usuarios",
-      [],
-      "select",
-      conn
-    );
+    return await db.query("SELECT * FROM usuarios", [], "select", conn);
   } catch (e) {
     throw new Error(e);
   } finally {
     conn && (await conn.end());
   }
-}
+};
 
 userQueries.getUserByEmail = async (email) => {
   let conn = null;
@@ -50,7 +45,7 @@ userQueries.addUser = async (userData) => {
       email: userData.email,
       password: md5(userData.password),
       direccion: userData.direccion,
-      telefono: userData.telefono
+      telefono: userData.telefono,
     };
     return await db.query(
       "INSERT INTO usuarios SET ?",
@@ -142,6 +137,80 @@ userQueries.getCountUser = async () => {
       "SELECT COUNT(*) as usuarios FROM usuarios",
       [],
       "select",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+userQueries.addContact = async (contactData) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    console.log(contactData);
+    let userObj = {
+      nombre: contactData.nombre,
+      apellidos: contactData.apellidos,
+      email: contactData.email,
+      direccion: contactData.direccion,
+      telefono: contactData.telefono,
+      descripcion: contactData.descripcion,
+      pais: contactData.pais,
+      ciudad: contactData.ciudad,
+    };
+    return await db.query(
+      "INSERT INTO contacto SET ?",
+      userObj,
+      "insert",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+userQueries.getCountContact = async () => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "SELECT COUNT(*) as contactos FROM contacto",
+      [],
+      "select",
+      conn
+    );
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+userQueries.getAllContact = async () => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query("SELECT * FROM contacto", [], "select", conn);
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    conn && (await conn.end());
+  }
+};
+
+userQueries.deleteContactById = async (id) => {
+  let conn = null;
+  try {
+    conn = await db.createConnection();
+    return await db.query(
+      "DELETE FROM contacto WHERE id =?",
+      [id],
+      "delete",
       conn
     );
   } catch (e) {

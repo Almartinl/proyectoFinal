@@ -16,9 +16,64 @@ import EmailIcon from "@mui/icons-material/Email";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { useState } from "react";
+import Swal from "sweetalert2";
+
+const initialContactState = {
+  nombre: "",
+  apellidos: "",
+  email: "",
+  pais: "",
+  direccion: "",
+  telefono: "",
+  ciudad: "",
+  descripcion: "",
+};
 
 export default function Contact() {
   document.title = "Contacto";
+
+  const [newContact, setNewContact] = useState(initialContactState);
+
+  function handleInput(e) {
+    const newRegistro = {
+      ...newContact,
+      [e.target.name]: e.target.value,
+    };
+    setNewContact(newRegistro);
+  }
+
+  function registrar(e) {
+    e.preventDefault();
+
+    fetch("http://localhost:3000/user/contact", {
+      method: "POST",
+      headers: { "content-Type": "application/json" },
+      body: JSON.stringify(newContact),
+    }).then((response) => {
+      console.log(response.status);
+      if (response.status == 400) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Rellena todos los campos",
+        });
+      } else if (response.status == 200) {
+        Swal.fire(
+          "Registrado",
+          "Formulario registrado correctamente",
+          "success"
+        );
+        setNewContact(initialContactState);
+      } else if (response.status == 409) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Formulario ya registrado",
+        });
+      }
+    });
+  }
   return (
     <Container maxWidth="xl">
       <Grid
@@ -138,7 +193,7 @@ export default function Contact() {
             <Box
               component="form"
               noValidate
-              //onSubmit={""}
+              onSubmit={registrar}
               sx={{ mt: 3 }}
               px={6}
               paddingTop={5}
@@ -153,9 +208,9 @@ export default function Contact() {
                     id="firstName"
                     label="Nombre"
                     autoFocus
-
-                    //   value={newUsuario.nombre}
-                    //   onChange={handleInput}
+                    value={newContact.nombre}
+                    onChange={handleInput}
+                    color="success"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -166,8 +221,9 @@ export default function Contact() {
                     label="Apellidos"
                     name="apellidos"
                     autoComplete="family-name"
-                    //   value={newUsuario.apellidos}
-                    //   onChange={handleInput}
+                    value={newContact.apellidos}
+                    onChange={handleInput}
+                    color="success"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -178,8 +234,9 @@ export default function Contact() {
                     label="Direccion"
                     name="direccion"
                     autoComplete="direccion"
-                    //   value={newUsuario.direccion}
-                    //   onChange={handleInput}
+                    value={newContact.direccion}
+                    onChange={handleInput}
+                    color="success"
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
@@ -190,8 +247,9 @@ export default function Contact() {
                     label="Pais"
                     name="pais"
                     autoComplete="new-pais"
-                    //   value={newUsuario.apellidos}
-                    //   onChange={handleInput}
+                    value={newContact.pais}
+                    onChange={handleInput}
+                    color="success"
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
@@ -202,8 +260,9 @@ export default function Contact() {
                     label="Ciudad"
                     name="ciudad"
                     autoComplete="new-ciudad"
-                    //   value={newUsuario.apellidos}
-                    //   onChange={handleInput}
+                    value={newContact.ciudad}
+                    onChange={handleInput}
+                    color="success"
                   />
                 </Grid>
                 <Grid item xs={12} sm={8}>
@@ -214,8 +273,9 @@ export default function Contact() {
                     label="Email"
                     name="email"
                     autoComplete="email"
-                    //   value={newUsuario.email}
-                    //   onChange={handleInput}
+                    value={newContact.email}
+                    onChange={handleInput}
+                    color="success"
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
@@ -226,8 +286,9 @@ export default function Contact() {
                     label="Telefono"
                     name="telefono"
                     autoComplete="telefono"
-                    //   value={newUsuario.telefono}
-                    //   onChange={handleInput}
+                    value={newContact.telefono}
+                    onChange={handleInput}
+                    color="success"
                   />
                 </Grid>
 
@@ -242,8 +303,9 @@ export default function Contact() {
                     autoComplete="new-descripcion"
                     multiline
                     rows={4}
-                    //   value={newUsuario.password}
-                    //   onChange={handleInput}
+                    value={newContact.descripcion}
+                    onChange={handleInput}
+                    color="success"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -256,7 +318,7 @@ export default function Contact() {
                 </Grid>
               </Grid>
               <Button
-                //type="submit"
+                type="submit"
                 fullWidth
                 variant="contained"
                 color="success"

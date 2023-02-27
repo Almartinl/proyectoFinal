@@ -152,4 +152,61 @@ controller.getCountUser = async (req, res) => {
   }
 };
 
+controller.addContact = async (req, res) => {
+  const { nombre, email, descripcion } = req.body;
+  if (!nombre || !email || !descripcion)
+    return res.status(400).send("Error al recibir el body");
+
+  try {
+    const addContact = await dao.addContact(req.body);
+    if (addContact) return res.send(`Formulario Registrado`);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+controller.getCountContact = async (req, res) => {
+  const {} = req.body;
+  try {
+    const formContact = await dao.getCountContact();
+
+    if (formContact.length <= 0)
+      return res.status(404).send("Formularios no existe");
+
+    return res.send(formContact);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message);
+  }
+};
+
+controller.getAllContact = async (req, res) => {
+  const {} = req.body;
+  try {
+    const formContact = await dao.getAllContact();
+
+    if (formContact.length <= 0)
+      return res.status(404).send("Formularios no existe");
+
+    return res.send(formContact);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).send(e.message);
+  }
+};
+
+controller.deleteContactById = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const formulario = await dao.deleteContactById(id);
+
+    if (formulario.length <= 0)
+      return res.status(404).send("presupuesto no existe");
+
+    return res.send(`formulario ${id} eliminado`).status(200);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 export default controller;

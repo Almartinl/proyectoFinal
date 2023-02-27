@@ -19,4 +19,12 @@ userRouter.patch("/:id", userController.updateUser);
 
 userRouter.get("/count", userController.getCountUser);
 
+userRouter.post("/contact", userController.addContact);
+
+userRouter.get("/count/contact", userController.getCountContact);
+
+userRouter.get("/contact/all", userController.getAllContact);
+
+userRouter.delete("/delete/contact", userController.deleteContactById);
+
 export default userRouter;

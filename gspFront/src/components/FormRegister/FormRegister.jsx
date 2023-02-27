@@ -46,12 +46,20 @@ export default function FormRegister({ vista, estado }) {
     }).then((response) => {
       console.log(response.status);
       if (response.status == 400) {
-        alert("error al recibir el body");
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Rellena todos los campos",
+        });
       } else if (response.status == 200) {
         Swal.fire("Registrado", "Usuario registrado correctamente", "success");
         setNewUsuario(initialUserState);
       } else if (response.status == 409) {
-        alert("usuario ya registrado");
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Usuario ya registrado",
+        });
       }
     });
   }
@@ -62,7 +70,7 @@ export default function FormRegister({ vista, estado }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="sm">
         <CssBaseline />
         <Box
           sx={{
@@ -70,9 +78,11 @@ export default function FormRegister({ vista, estado }) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            p: 7,
+            border: "1px solid darkgreen",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "darkgreen" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -91,6 +101,7 @@ export default function FormRegister({ vista, estado }) {
                   autoFocus
                   value={newUsuario.nombre}
                   onChange={handleInput}
+                  color="success"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -103,6 +114,7 @@ export default function FormRegister({ vista, estado }) {
                   autoComplete="family-name"
                   value={newUsuario.apellidos}
                   onChange={handleInput}
+                  color="success"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -115,6 +127,7 @@ export default function FormRegister({ vista, estado }) {
                   autoComplete="direccion"
                   value={newUsuario.direccion}
                   onChange={handleInput}
+                  color="success"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -127,6 +140,7 @@ export default function FormRegister({ vista, estado }) {
                   autoComplete="telefono"
                   value={newUsuario.telefono}
                   onChange={handleInput}
+                  color="success"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -139,6 +153,7 @@ export default function FormRegister({ vista, estado }) {
                   autoComplete="email"
                   value={newUsuario.email}
                   onChange={handleInput}
+                  color="success"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -152,12 +167,13 @@ export default function FormRegister({ vista, estado }) {
                   autoComplete="new-password"
                   value={newUsuario.password}
                   onChange={handleInput}
+                  color="success"
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
+                    <Checkbox value="allowExtraEmails" color="success" />
                   }
                   label="Quiero recibir inspiración, promociones de marketing y actualizaciones por Email."
                 />
@@ -167,7 +183,7 @@ export default function FormRegister({ vista, estado }) {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, backgroundColor: "darkgreen" }}
             >
               Registrate
             </Button>

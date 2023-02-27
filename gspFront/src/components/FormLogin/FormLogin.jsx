@@ -43,7 +43,7 @@ export default function FormLogin({ estado, vista }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="sm">
         <CssBaseline />
         <Box
           sx={{
@@ -51,9 +51,11 @@ export default function FormLogin({ estado, vista }) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            p: 7,
+            border: "1px solid darkgreen",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "darkgreen" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -76,6 +78,7 @@ export default function FormLogin({ estado, vista }) {
               autoFocus
               onChange={handleInput}
               value={user.email}
+              color="success"
             />
             <TextField
               margin="normal"
@@ -88,16 +91,18 @@ export default function FormLogin({ estado, vista }) {
               autoComplete="current-password"
               onChange={handleInput}
               value={user.password}
+              color="success"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" color="success" />}
               label="Recuerdame"
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, backgroundColor: "darkgreen" }}
+              color="success"
             >
               Iniciar Sesion
             </Button>

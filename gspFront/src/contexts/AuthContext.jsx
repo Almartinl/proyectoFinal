@@ -42,7 +42,11 @@ export function AuthContextProvider({ children }) {
       .then((response) => {
         console.log(response.status);
         if (response.status == 400) {
-          alert("error al recibir el body");
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Introduce un Email correcto",
+          });
         } else if (response.status == 200) {
           return response.json();
         } else if (response.status == 404 || response.status == 401) {
