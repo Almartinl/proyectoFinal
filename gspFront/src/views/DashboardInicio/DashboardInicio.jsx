@@ -6,6 +6,8 @@ import Paper from "@mui/material/Paper";
 import PeopleIcon from "@mui/icons-material/People";
 import ViewInArOutlinedIcon from "@mui/icons-material/ViewInArOutlined";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import CategoryIcon from "@mui/icons-material/Category";
+import ConstructionIcon from "@mui/icons-material/Construction";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -237,7 +239,7 @@ export default function DashboardInicio() {
                   gap: "5%",
                 }}
               >
-                <ViewInArOutlinedIcon />
+                <CategoryIcon />
                 {countModels.length > 0 && countModels[0].modelos}
               </Typography>
             </Grid>
@@ -273,7 +275,7 @@ export default function DashboardInicio() {
                   gap: "5%",
                 }}
               >
-                <ViewInArOutlinedIcon />
+                <ConstructionIcon />
                 {countModels.length > 0 && countModels[0].modelos}
               </Typography>
             </Grid>

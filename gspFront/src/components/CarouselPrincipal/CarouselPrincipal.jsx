@@ -35,42 +35,25 @@ export default function CarouselPrincipal() {
           <img src="../../22.jpg" className="d-block w-100" alt="carrusel" />
           <div className="carousel-caption carousel-text">
             <h3 className="shadow-text display-2 fw-bold">BIENVENIDO</h3>
-            <h4 className="shadow-text fw-bold">Tu Bungalow a Medida</h4>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ backgroundColor: "green" }}
-            >
-              Ver
-            </Button>
+            <h4 className="shadow-text fw-bold">
+              Bungalows y Edificios prefabricados
+            </h4>
           </div>
         </div>
         <div className="carousel-item">
           <img src="../../44.jpg" className="d-block w-100 " alt="carrusel" />
           <div className="carousel-caption carousel-text">
-            <h3 className="shadow-text display-2 fw-bold">BIENVENIDO</h3>
-            <h4 className="shadow-text fw-bold">Tu Bungalow a Medida</h4>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ backgroundColor: "green" }}
-            >
-              Ver
-            </Button>
+            <h4 className="shadow-text display-4 fw-bold">
+              Bungalows a Medida
+            </h4>
           </div>
         </div>
         <div className="carousel-item">
           <img src="../../16box.jpg" className="d-block w-100" alt="carrusel" />
           <div className="carousel-caption carousel-text">
-            <h3 className="shadow-text display-2 fw-bold">BIENVENIDO</h3>
-            <h4 className="shadow-text fw-bold">Tu Bungalow a Medida</h4>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ backgroundColor: "green" }}
-            >
-              Ver
-            </Button>
+            <h4 className="shadow-text display-4 fw-bold">
+              Estructuras Metálicas
+            </h4>
           </div>
         </div>
       </div>

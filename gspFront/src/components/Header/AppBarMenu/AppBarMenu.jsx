@@ -108,7 +108,7 @@ export default function AppBarMenu() {
                 <Link to="/login" style={{ textDecoration: "none" }}>
                   <MenuItem key={7} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center" color="green">
-                      Login
+                      Login / Register
                     </Typography>
                   </MenuItem>
                 </Link>
@@ -234,7 +234,8 @@ export default function AppBarMenu() {
                     my: 2,
                     display: "block",
                     border: 1,
-                    color: "green",
+                    color: "darkgreen",
+                    fontWeight: "bold",
                   }}
                 >
                   Login / Register
