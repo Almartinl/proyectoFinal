@@ -79,6 +79,36 @@ export default function Account() {
     usuario: dataToken.id,
     descripcion: listaPresupuesto,
   };
+  const [disableButton, setDisableButton] = useState([]);
+  const [counters, setCounters] = useState({});
+  function updateCounter(index, value) {
+    setCounters((prevCounters) => ({
+      ...prevCounters,
+      [index]: value,
+    }));
+  }
+
+  function Counter({ index, value, updateCounter }) {
+    function incrementCounter() {
+      updateCounter(index, value + 1);
+    }
+
+    function decrementCounter() {
+      updateCounter(index, value - 1);
+    }
+
+    return (
+      <Grid container justifyContent="center" alignItems="center">
+        <Button onClick={decrementCounter} color="success">
+          -
+        </Button>
+        <Typography>{`${value}`}</Typography>
+        <Button onClick={incrementCounter} color="success">
+          +
+        </Button>
+      </Grid>
+    );
+  }
 
   const [newName, setNewName] = useState({ nombre: "" });
   function handleInputName(e) {
@@ -306,21 +336,31 @@ export default function Account() {
       }
     });
   }
-
+  // const compareList = bungalow
+  //   .map((item1) => {
+  //     return listaPresupuesto
+  //       .map((item2) => {
+  //         return item1.id === item2.id;
+  //       })
+  //       .includes(true);
+  //   })
+  //   .includes(true);
   function addPresupuesto(e, nombre, nombreModelo, id) {
     e.preventDefault();
     setListaPresupuesto([
       ...listaPresupuesto,
       { nombre: nombre, modelo: nombreModelo, id: id },
     ]);
+    setDisableButton([...disableButton, id]);
   }
 
   function deleteListPresupuesto(e, indexList) {
     e.preventDefault();
     const newList = listaPresupuesto.filter(
-      (item, index) => index !== indexList
+      (item, index) => item.id !== indexList
     );
     setListaPresupuesto(newList);
+    setDisableButton(disableButton.filter((number) => number != indexList));
   }
 
   useEffect(() => {
@@ -377,7 +417,13 @@ export default function Account() {
   function sendPresupuesto(e) {
     e.preventDefault();
     presupuesto.descripcion = JSON.stringify(
-      listaPresupuesto.map((item) => item.modelo)
+      listaPresupuesto.map((item, index) =>
+        item.modelo.concat(
+          " ",
+          "x",
+          counters[index] == undefined ? 1 : counters[index]
+        )
+      )
     );
     if (listaPresupuesto.length < 1) {
       return;
@@ -435,6 +481,7 @@ export default function Account() {
 
   console.log(listaPresupuesto);
   console.log(presupuesto);
+  console.log(bungalow);
   return (
     <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h2" fontWeight="bold" component="h1" gutterBottom>
@@ -825,7 +872,7 @@ export default function Account() {
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              {bungalow.map((row) => (
+                              {bungalow.map((row, index) => (
                                 <StyledTableRow key={row.id}>
                                   <StyledTableCell component="th" scope="row">
                                     {row.nombre}
@@ -870,6 +917,9 @@ export default function Account() {
                                             )
                                           }
                                           color="success"
+                                          disabled={disableButton.includes(
+                                            row.id
+                                          )}
                                         >
                                           <AddCircleIcon />
                                         </IconButton>
@@ -934,28 +984,20 @@ export default function Account() {
                                   {listaPresupuesto.map((row, index) => (
                                     <Grid key={index}>
                                       <ListItem sx={{ width: "100%" }}>
-                                        <Chip
-                                          variant="outlined"
-                                          label={row.nombre}
-                                          color="error"
-                                          deleteIcon={
-                                            <Tooltip title="Borrar modelo">
-                                              <DeleteIcon />
-                                            </Tooltip>
-                                          }
-                                          onDelete={(e) =>
-                                            deleteListPresupuesto(e, index)
-                                          }
+                                        <ListItemText primary={row.nombre} />
+                                        <Counter
+                                          index={index}
+                                          value={counters[index] || 1}
+                                          updateCounter={updateCounter}
                                         />
-                                        {/* <ListItemText primary={row.nombre} />
                                         <IconButton
                                           color="error"
                                           onClick={(e) =>
-                                            deleteListPresupuesto(e, index)
+                                            deleteListPresupuesto(e, row.id)
                                           }
                                         >
                                           <DeleteIcon />
-                                        </IconButton> */}
+                                        </IconButton>
                                       </ListItem>
                                     </Grid>
                                   ))}
