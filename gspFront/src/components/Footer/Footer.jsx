@@ -9,12 +9,7 @@ import { Grid, IconButton, SvgIcon } from "@mui/material";
 export default function Footer() {
   function Copyright(props) {
     return (
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        align="center"
-        {...props}
-      >
+      <Typography variant="body2" color="white" align="center" {...props}>
         {"Copyright © "}
         <Link color="inherit" href="#">
           Global Solutions Prefabriquee
@@ -26,31 +21,33 @@ export default function Footer() {
   }
 
   return (
-    <Container
-      maxWidth="xl"
-      component="footer"
-      sx={{
-        borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-        mt: 10,
-        py: 5,
-      }}
-    >
-      <Grid
-        container
-        spacing={2}
-        justifyContent="space-between"
-        alignItems="center"
+    <Grid bgcolor="darkgreen">
+      <Container
+        maxWidth="xl"
+        component="footer"
+        sx={{
+          borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+          mt: 10,
+          py: 5,
+        }}
       >
-        <Copyright />
-        <Grid>
-          <IconButton href="https://www.facebook.com/Global-Solutions-Pr%C3%A9fabriqu%C3%A9es-115355516956606">
-            <FacebookOutlinedIcon color="success" />
-          </IconButton>
-          <IconButton href="https://www.linkedin.com/company/global-solutions-pr%C3%A9fabriqu%C3%A9es/">
-            <LinkedInIcon color="success" />
-          </IconButton>
+        <Grid
+          container
+          spacing={2}
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Copyright />
+          <Grid>
+            <IconButton href="https://www.facebook.com/Global-Solutions-Pr%C3%A9fabriqu%C3%A9es-115355516956606">
+              <FacebookOutlinedIcon sx={{ color: "white" }} />
+            </IconButton>
+            <IconButton href="https://www.linkedin.com/company/global-solutions-pr%C3%A9fabriqu%C3%A9es/">
+              <LinkedInIcon sx={{ color: "white" }} />
+            </IconButton>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </Grid>
   );
 }
