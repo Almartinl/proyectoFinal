@@ -19,6 +19,7 @@ import DashboardPresupuestos from "./views/DashboardPresupuestos/DashboardPresup
 import Contact from "./views/Contact/Contact";
 import Productos from "./views/Productos/Productos";
 import DashboardContacto from "./views/DashboardContacto/DashboardContacto";
+import Proyectos from "./views/Proyectos/Proyectos";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="unauthorized" element={<Unauthorized />} />
             <Route path="contacto" element={<Contact />} />
             <Route path="productos" element={<Productos />} />
+            <Route path="proyectos" element={<Proyectos />} />
           </Route>
           <Route element={<PrivateRoute allowedRoles={[ROLES.User]} />}>
             <Route path="/account" element={<Account />} />
