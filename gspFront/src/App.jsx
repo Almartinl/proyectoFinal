@@ -20,6 +20,7 @@ import Contact from "./views/Contact/Contact";
 import Productos from "./views/Productos/Productos";
 import DashboardContacto from "./views/DashboardContacto/DashboardContacto";
 import Proyectos from "./views/Proyectos/Proyectos";
+import Nosotros from "./views/Nosotros/Nosotros";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="contacto" element={<Contact />} />
             <Route path="productos" element={<Productos />} />
             <Route path="proyectos" element={<Proyectos />} />
+            <Route path="nosotros" element={<Nosotros />} />
           </Route>
           <Route element={<PrivateRoute allowedRoles={[ROLES.User]} />}>
             <Route path="/account" element={<Account />} />

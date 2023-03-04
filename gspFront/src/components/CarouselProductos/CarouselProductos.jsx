@@ -36,7 +36,7 @@ export default function CarouselProductos() {
           aria-label="Slide 4"
         ></button>
       </div>
-      <div className="carousel-inner">
+      <div className="carousel-inner con">
         <div className="carousel-item active">
           <img
             src="../../bungalowobra.jpg"

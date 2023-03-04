@@ -30,7 +30,7 @@ export default function CarouselPrincipal() {
           aria-label="Slide 3"
         ></button>
       </div>
-      <div className="carousel-inner">
+      <div className="carousel-inner con">
         <div className="carousel-item active">
           <img src="../../22.jpg" className="d-block w-100" alt="carrusel" />
           <div className="carousel-caption carousel-text">

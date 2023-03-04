@@ -4,7 +4,7 @@
 }
 
 @media (max-width: 576px) {
-  .carousel-inner .carousel-item img {
+  .carousel-inner.con .carousel-item img {
     filter: brightness(45%);
     height: 250px;
     object-fit: cover;
@@ -12,7 +12,7 @@
 }
 
 @media (min-width: 576px) {
-  .carousel-inner .carousel-item img {
+  .carousel-inner.con .carousel-item img {
     filter: brightness(45%);
     max-height: 300px;
     object-fit: cover;
@@ -20,8 +20,29 @@
 }
 
 @media (min-width: 992px) {
-  .carousel-inner .carousel-item img {
+  .carousel-inner.con .carousel-item img {
     filter: brightness(45%);
+    max-height: 550px;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-inner.sin .carousel-item img {
+    height: 250px;
+    object-fit: cover;
+  }
+}
+
+@media (min-width: 576px) {
+  .carousel-inner.sin .carousel-item img {
+    max-height: 300px;
+    object-fit: cover;
+  }
+}
+
+@media (min-width: 992px) {
+  .carousel-inner.sin .carousel-item img {
     max-height: 550px;
     object-fit: cover;
   }

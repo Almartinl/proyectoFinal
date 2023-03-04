@@ -13,7 +13,14 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import CarouselProductos from "../../components/CarouselProductos/CarouselProductos";
+import CarouselProyectos from "../../components/CarouselProyectos/CarouselProyectos";
+
+const arrayCanal = [
+  "http://localhost:3000/images/products/canal+4.jpeg",
+  "http://localhost:3000/images/products/canal+1.jpeg",
+  "http://localhost:3000/images/products/canal+2.jpeg",
+  "http://localhost:3000/images/products/canal+3.jpeg",
+];
 
 export default function Proyectos() {
   const [openCanal, setOpenCanal] = useState(false);
@@ -36,9 +43,9 @@ export default function Proyectos() {
   return (
     <Grid marginY={10}>
       <Container maxWidth="xl">
-        <Grid item xs={12} textAlign="center" my={5} p={2}>
+        <Grid item xs={12} my={5} p={2}>
           <Typography variant="h2" fontWeight="bold" color="darkgreen">
-            Proyectos
+            Nuestros Proyectos
           </Typography>
         </Grid>
         <Grid container spacing={2}>
@@ -153,7 +160,7 @@ export default function Proyectos() {
             <DialogTitle>Cafeteria Canal+</DialogTitle>
             <DialogContent>
               <Grid item xs={12} width="100%" height="70vh" marginTop="24px">
-                <CarouselProductos />
+                <CarouselProyectos fotos={arrayCanal} />
               </Grid>
             </DialogContent>
             <DialogActions>
@@ -171,7 +178,7 @@ export default function Proyectos() {
             <DialogTitle>Cafeteria Canal+</DialogTitle>
             <DialogContent>
               <Grid item xs={12} width="100%" height="70vh" marginTop="24px">
-                <CarouselProductos />
+                <CarouselProyectos fotos={arrayCanal} />
               </Grid>
             </DialogContent>
             <DialogActions>
