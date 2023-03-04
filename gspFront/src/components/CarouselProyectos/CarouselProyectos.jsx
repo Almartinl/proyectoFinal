@@ -1,27 +1,28 @@
 import { Button } from "@mui/material";
 
 export default function CarouselProyectos({ fotos }) {
+  console.log(fotos);
   const [firstImage, ...rest] = fotos;
+
   return (
     <div
       id="carouselExampleCaptions"
       className="carousel slide"
       data-bs-ride="carousel"
-      data-bs-interval="6000"
     >
       <div className="carousel-inner sin">
         <div className="carousel-item active">
           <img
-            src={firstImage}
+            src={`http://localhost:3000/${firstImage}`}
             className="d-block w-100"
             alt="carrusel"
             height="550px"
           />
         </div>
-        {rest.map((item) => (
-          <div className="carousel-item">
+        {rest.map((item, index) => (
+          <div key={index} className="carousel-item">
             <img
-              src={item}
+              src={`http://localhost:3000/${item}`}
               className="d-block w-100 "
               alt="carrusel"
               height="550px"

@@ -15,32 +15,23 @@ import {
 import { useEffect, useState } from "react";
 import CarouselProyectos from "../../components/CarouselProyectos/CarouselProyectos";
 
-const arrayCanal = [
-  "http://localhost:3000/images/products/canal+4.jpeg",
-  "http://localhost:3000/images/products/canal+1.jpeg",
-  "http://localhost:3000/images/products/canal+2.jpeg",
-  "http://localhost:3000/images/products/canal+3.jpeg",
-];
-
 export default function Proyectos() {
   const [obras, setObras] = useState([]);
-  const [openCanal, setOpenCanal] = useState(false);
-  const [openOfcinaBesix, setOpenOficinaBesix] = useState(false);
+  const [arrayCarousel, setArrayCarousel] = useState([]);
+  const [nombreObra, setNombreObra] = useState("");
+  const [openCarousel, setOpenCarousel] = useState(false);
 
-  function handleCloseCanal() {
-    setOpenCanal(false);
+  function handleCloseCarousel() {
+    setOpenCarousel(false);
+    setArrayCarousel([]);
+    setNombreObra("");
   }
-  function handleOpenCanal() {
-    setOpenCanal(true);
+  function handleOpenCarousel(nombre, imagenes) {
+    setOpenCarousel(true);
+    setArrayCarousel(imagenes);
+    setNombreObra(nombre);
+    console.log(imagenes);
   }
-
-  function handleCloseOficinaBesix() {
-    setOpenOficinaBesix(false);
-  }
-  function handleOpenOficinaBesix() {
-    setOpenOficinaBesix(true);
-  }
-
   useEffect(() => {
     async function fetchObras() {
       const response = await fetch(`http://localhost:3000/obras`);
@@ -50,6 +41,7 @@ export default function Proyectos() {
     fetchObras();
   }, []);
   console.log(obras);
+  console.log(arrayCarousel);
   return (
     <Grid marginY={10}>
       <Container maxWidth="xl">
@@ -63,7 +55,11 @@ export default function Proyectos() {
             {obras.map((obra) => (
               <Grid key={obra.id} item xs={12} md={4}>
                 <Card sx={{ maxWidth: 500 }}>
-                  <CardActionArea onClick={handleOpenCanal}>
+                  <CardActionArea
+                    onClick={() =>
+                      handleOpenCarousel(obra.nombre, obra.imagenes)
+                    }
+                  >
                     <CardMedia
                       component="img"
                       height="400"
@@ -79,128 +75,32 @@ export default function Proyectos() {
                 </Card>
               </Grid>
             ))}
-
-            {/* <Grid item xs={12} md={4}>
-              <Card sx={{ maxWidth: 500 }}>
-                <CardActionArea onClick={handleOpenOficinaBesix}>
-                  <CardMedia
-                    component="img"
-                    height="400"
-                    image="../../besix-abobo.jpeg"
-                    alt="img"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Oficinas Besix Abobo
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Card sx={{ maxWidth: 500 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="400"
-                    image="../../edificio.jpeg"
-                    alt="img"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Escuela Francesa Sevigne
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Card sx={{ maxWidth: 500 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="400"
-                    image="../../22.jpg"
-                    alt="img"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Salon de Actos Escuela Abobo
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Card sx={{ maxWidth: 500 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="400"
-                    image="../../PROJETR+1BUREAUXVALLON2PLATEAUX.jpeg"
-                    alt="img"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Oficinas Vallon
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Card sx={{ maxWidth: 500 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="400"
-                    image="../../16box.jpg"
-                    alt="img"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Oficinas Cafe Cacao
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Dialog
-              maxWidth="lg"
-              fullWidth
-              open={openCanal}
-              onClose={handleCloseCanal}
-            >
-              <DialogTitle>Cafeteria Canal+</DialogTitle>
-              <DialogContent>
-                <Grid item xs={12} width="100%" height="70vh" marginTop="24px">
-                  <CarouselProyectos fotos={arrayCanal} />
-                </Grid>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleCloseCanal} variant="contained">
-                  Cerrar
-                </Button>
-              </DialogActions>
-            </Dialog>
-            <Dialog
-              maxWidth="lg"
-              fullWidth
-              open={openOfcinaBesix}
-              onClose={handleCloseOficinaBesix}
-            >
-              <DialogTitle>Cafeteria Canal+</DialogTitle>
-              <DialogContent>
-                <Grid item xs={12} width="100%" height="70vh" marginTop="24px">
-                  <CarouselProyectos fotos={arrayCanal} />
-                </Grid>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleCloseOficinaBesix} variant="contained">
-                  Cerrar
-                </Button>
-              </DialogActions>
-            </Dialog> */}
+            {arrayCarousel.length > 0 && (
+              <Dialog
+                maxWidth="lg"
+                fullWidth
+                open={openCarousel}
+                onClose={handleCloseCarousel}
+              >
+                <DialogTitle>{nombreObra}</DialogTitle>
+                <DialogContent>
+                  <Grid
+                    item
+                    xs={12}
+                    width="100%"
+                    height="70vh"
+                    marginTop="24px"
+                  >
+                    <CarouselProyectos fotos={arrayCarousel} />
+                  </Grid>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleCloseCarousel} variant="contained">
+                    Cerrar
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            )}
           </Grid>
         )}
       </Container>
