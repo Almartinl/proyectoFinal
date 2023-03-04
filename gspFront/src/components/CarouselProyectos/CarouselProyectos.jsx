@@ -1,8 +1,8 @@
 export default function CarouselProyectos({ fotos }) {
   console.log(fotos);
-  if (Array.isArray(!fotos)) {
-    fotos = JSON.parse(fotos);
+  if (Array.isArray(fotos)) {
   } else {
+    fotos = JSON.parse(fotos);
   }
 
   const [firstImage, ...rest] = fotos;
