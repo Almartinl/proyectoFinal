@@ -60,8 +60,8 @@ export default function Proyectos() {
         </Grid>
         {obras.length > 0 && (
           <Grid container spacing={2}>
-            {obras.map((obra) => {
-              <Grid item xs={12} md={4}>
+            {obras.map((obra) => (
+              <Grid key={obra.id} item xs={12} md={4}>
                 <Card sx={{ maxWidth: 500 }}>
                   <CardActionArea onClick={handleOpenCanal}>
                     <CardMedia
@@ -77,10 +77,10 @@ export default function Proyectos() {
                     </CardContent>
                   </CardActionArea>
                 </Card>
-              </Grid>;
-            })}
+              </Grid>
+            ))}
 
-            <Grid item xs={12} md={4}>
+            {/* <Grid item xs={12} md={4}>
               <Card sx={{ maxWidth: 500 }}>
                 <CardActionArea onClick={handleOpenOficinaBesix}>
                   <CardMedia
@@ -200,7 +200,7 @@ export default function Proyectos() {
                   Cerrar
                 </Button>
               </DialogActions>
-            </Dialog>
+            </Dialog> */}
           </Grid>
         )}
       </Container>
