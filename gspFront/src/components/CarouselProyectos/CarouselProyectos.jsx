@@ -2,6 +2,8 @@ import { Button } from "@mui/material";
 
 export default function CarouselProyectos({ fotos }) {
   console.log(fotos);
+  fotos = JSON.parse(fotos);
+
   const [firstImage, ...rest] = fotos;
 
   return (
