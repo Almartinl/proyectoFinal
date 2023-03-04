@@ -1,5 +1,6 @@
 import bungalowsQueries from "./mysql_queries/bungalows_queries.js";
 import configQueries from "./mysql_queries/config_queries.js";
+import obrasQueries from "./mysql_queries/obras_queries.js";
 import productQueries from "./mysql_queries/product_queries.js";
 import userQueries from "./mysql_queries/user_queries.js";
 
@@ -139,5 +140,7 @@ dao.getCountPresupuesto = async () =>
 dao.getAllContact = async () => await userQueries.getAllContact();
 
 dao.deleteContactById = async (id) => await userQueries.deleteContactById(id);
+
+dao.getAllObras = async () => await obrasQueries.getAllObras()
 
 export default dao;
