@@ -551,7 +551,14 @@ export default function Configurador() {
           </Typography>
         </Grid>
         <Grid container item xs={12}>
-          <Grid container item alignContent="flex-start" gap="24px" xs={4}>
+          <Grid
+            container
+            item
+            alignContent="flex-start"
+            gap="24px"
+            xs={12}
+            md={4}
+          >
             <Grid item xs={12}>
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
@@ -726,14 +733,22 @@ export default function Configurador() {
               </Grid>
             )}
             <Grid container item xs={12} justifyContent="space-between">
-              <Button onClick={reset} variant="contained" color="error">
+              <Button
+                onClick={reset}
+                variant="contained"
+                color="error"
+                sx={{ fontSize: { xs: "small", md: "large" } }}
+              >
                 Reset
               </Button>
 
               <Button
                 variant="contained"
                 color="success"
-                sx={{ backgroundColor: "darkgreen" }}
+                sx={{
+                  backgroundColor: "darkgreen",
+                  fontSize: { xs: "small", md: "large" },
+                }}
                 disabled={disableButton}
                 onClick={handleClickOpen}
               >
@@ -743,7 +758,10 @@ export default function Configurador() {
               <Button
                 variant="contained"
                 color="success"
-                sx={{ backgroundColor: "darkgreen" }}
+                sx={{
+                  backgroundColor: "darkgreen",
+                  fontSize: { xs: "small", md: "large" },
+                }}
                 disabled={disableButton}
                 onClick={handleClickOpenView3d}
               >
@@ -753,6 +771,7 @@ export default function Configurador() {
                 variant="contained"
                 color="info"
                 onClick={handleClickOpenInfo}
+                sx={{ fontSize: { xs: "small", md: "large" } }}
               >
                 <InfoOutlinedIcon />
               </Button>
@@ -761,7 +780,8 @@ export default function Configurador() {
           {planta.length > 0 ? (
             <Grid
               item
-              xs={8}
+              xs={12}
+              md={8}
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -780,7 +800,8 @@ export default function Configurador() {
           ) : (
             <Grid
               item
-              xs={8}
+              xs={12}
+              md={8}
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -838,7 +859,9 @@ export default function Configurador() {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleCloseInfo}>Cerrar</Button>
+              <Button onClick={handleCloseInfo} variant="contained">
+                Cerrar
+              </Button>
             </DialogActions>
           </Dialog>
           <Dialog open={open} onClose={handleClose}>
