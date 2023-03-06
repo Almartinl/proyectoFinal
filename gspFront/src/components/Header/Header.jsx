@@ -1,6 +1,7 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import AppBarMenu from "./AppBarMenu/AppBarMenu";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -12,7 +13,9 @@ export default function Header() {
             position: { xs: "absolute", md: "relative" },
           }}
         >
-          <img src="../../logonuevo.png" alt="foto" />
+          <Link to="/">
+            <img src="../../logonuevo.png" alt="foto" />
+          </Link>
         </Grid>
         <Grid
           sx={{
@@ -20,7 +23,9 @@ export default function Header() {
             position: { xs: "absolute", md: "relative" },
           }}
         >
-          <img src="../../logonuevo.png" width="200px" alt="foto" />
+          <Link to="/">
+            <img src="../../logonuevo.png" width="200px" alt="foto" />
+          </Link>
         </Grid>
       </Grid>
       <AppBarMenu />

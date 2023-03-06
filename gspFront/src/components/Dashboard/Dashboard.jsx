@@ -254,7 +254,7 @@ function DashboardContent() {
                   Linkto("/dashboard/contacto", "Formularios");
                 }}
               >
-                <TableViewIcon />
+                <ReceiptLongIcon />
                 Formularios
               </Button>
 

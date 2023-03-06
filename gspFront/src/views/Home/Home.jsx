@@ -9,12 +9,11 @@ import {
 } from "@mui/material";
 import CarouselPrincipal from "../../components/CarouselPrincipal/CarouselPrincipal";
 import { Link } from "react-router-dom";
-import { height } from "@mui/system";
 
 export default function Home() {
   document.title = "Inicio";
   return (
-    <>
+    <Grid marginTop={4}>
       <CarouselPrincipal />
       <Container
         maxWidth="xl"
@@ -101,7 +100,11 @@ export default function Home() {
           >
             <Link
               to="/productos"
-              style={{ textDecoration: "none", height: "100%", width: "100%" }}
+              style={{
+                textDecoration: "none",
+                height: "100%",
+                width: "100%",
+              }}
             >
               <Button
                 fullWidth
@@ -203,6 +206,6 @@ export default function Home() {
           </Grid>
         </Container>
       </Container>
-    </>
+    </Grid>
   );
 }

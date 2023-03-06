@@ -141,6 +141,8 @@ dao.getAllContact = async () => await userQueries.getAllContact();
 
 dao.deleteContactById = async (id) => await userQueries.deleteContactById(id);
 
-dao.getAllObras = async () => await obrasQueries.getAllObras()
+dao.getAllObras = async () => await obrasQueries.getAllObras();
+
+dao.getCountObras = async () => await obrasQueries.getCountObras();
 
 export default dao;

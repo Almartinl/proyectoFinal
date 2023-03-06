@@ -336,15 +336,7 @@ export default function Account() {
       }
     });
   }
-  // const compareList = bungalow
-  //   .map((item1) => {
-  //     return listaPresupuesto
-  //       .map((item2) => {
-  //         return item1.id === item2.id;
-  //       })
-  //       .includes(true);
-  //   })
-  //   .includes(true);
+
   function addPresupuesto(e, nombre, nombreModelo, id) {
     e.preventDefault();
     setListaPresupuesto([
@@ -447,6 +439,7 @@ export default function Account() {
         setListaPresupuesto([]);
       }
     });
+    setDisableButton([]);
   }
 
   function deleteAccount() {

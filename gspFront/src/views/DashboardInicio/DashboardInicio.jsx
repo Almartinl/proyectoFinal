@@ -18,6 +18,7 @@ export default function DashboardInicio() {
   const [countModels, setCountModels] = useState([]);
   const [countPresupuestos, setCountPresupuestos] = useState([]);
   const [countFormContact, setCountFormContact] = useState([]);
+  const [countObras, setCountObras] = useState([]);
 
   useEffect(() => {
     async function fetchCount() {
@@ -57,6 +58,15 @@ export default function DashboardInicio() {
       const data = await response.json();
       setCountPresupuestos(data);
       console.log(data);
+    }
+    fetchCount();
+  }, []);
+
+  useEffect(() => {
+    async function fetchCount() {
+      const response = await fetch("http://localhost:3000/obras/count");
+      const data = await response.json();
+      setCountObras(data);
     }
     fetchCount();
   }, []);
@@ -276,7 +286,7 @@ export default function DashboardInicio() {
                 }}
               >
                 <ConstructionIcon />
-                {countModels.length > 0 && countModels[0].modelos}
+                {countObras.length > 0 && countObras[0].obras}
               </Typography>
             </Grid>
           </Paper>
