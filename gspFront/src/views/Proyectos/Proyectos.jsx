@@ -88,7 +88,7 @@ export default function Proyectos() {
                     item
                     xs={12}
                     width="100%"
-                    height="70vh"
+                    height="100%"
                     marginTop="24px"
                   >
                     <CarouselProyectos fotos={arrayCarousel} />

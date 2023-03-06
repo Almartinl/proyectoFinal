@@ -97,7 +97,11 @@ export default function AppBarMenu() {
                   to={page.ruta}
                   style={{ textDecoration: "none" }}
                 >
-                  <MenuItem key={index} onClick={handleCloseNavMenu}>
+                  <MenuItem
+                    key={index}
+                    onClick={handleCloseNavMenu}
+                    sx={{ ":hover": { bgcolor: "darkgreen", color: "white" } }}
+                  >
                     <Typography textAlign="center" color="darkgreen">
                       {page.nombre}
                     </Typography>
@@ -135,6 +139,7 @@ export default function AppBarMenu() {
                     my: 2,
                     color: "darkgreen",
                     display: "block",
+                    ":hover": { bgcolor: "darkgreen", color: "white" },
                   }}
                 >
                   <Typography fontWeight="bold">{page.nombre}</Typography>

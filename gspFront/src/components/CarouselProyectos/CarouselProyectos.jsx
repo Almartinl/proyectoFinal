@@ -20,6 +20,7 @@ export default function CarouselProyectos({ fotos }) {
             className="d-block w-100"
             alt="carrusel"
             height="550px"
+            style={{ objectFit: "cover" }}
           />
         </div>
         {rest.map((item, index) => (
@@ -29,6 +30,7 @@ export default function CarouselProyectos({ fotos }) {
               className="d-block w-100 "
               alt="carrusel"
               height="550px"
+              style={{ objectFit: "cover" }}
             />
           </div>
         ))}

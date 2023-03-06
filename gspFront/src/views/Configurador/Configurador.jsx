@@ -8,14 +8,12 @@ import {
   FormControl,
   Select,
   Button,
-  tableFooterClasses,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   TextField,
   DialogActions,
-  IconButton,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useEffect, useState, Suspense } from "react";
@@ -531,7 +529,7 @@ export default function Configurador() {
             color="darkgreen"
             sx={{ my: "48px", fontWeight: "bold" }}
           >
-            Crea tu Bungalow en un Click
+            Crea tu Bungalow en unos Clicks
           </Typography>
         </Grid>
         <Grid
@@ -547,7 +545,7 @@ export default function Configurador() {
             color="darkgreen"
             sx={{ my: "48px", fontWeight: "bold" }}
           >
-            Crea tu Bungalow en un Click
+            Crea tu Bungalow en unos Clicks
           </Typography>
         </Grid>
         <Grid container item xs={12}>
@@ -558,6 +556,7 @@ export default function Configurador() {
             gap="24px"
             xs={12}
             md={4}
+            sx={{ pr: { sx: 0, md: 4 } }}
           >
             <Grid item xs={12}>
               <Box sx={{ minWidth: 120 }}>
@@ -785,17 +784,22 @@ export default function Configurador() {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                height: "50vh",
+                height: "70vh",
+                objectFit: "cover",
+                backgroundImage: `url(${`http://localhost:3000/${planta[0].planta}`})`,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: { xs: "center center", md: "top center" },
+                backgroundSize: "contain",
               }}
             >
-              <img
+              {/* <img
                 src={`http://localhost:3000/${planta[0].planta}`}
                 alt="foto"
                 style={{
                   maxWidth: "100%",
-                  objectFit: "cover",
+                  // objectFit: "cover",
                 }}
-              />
+              /> */}
             </Grid>
           ) : (
             <Grid
@@ -805,17 +809,22 @@ export default function Configurador() {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                height: "50vh",
+                height: "60vh",
+                objectFit: "cover",
+                backgroundImage: `url(../../intro.png)`,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "top center",
+                backgroundSize: "contain",
               }}
             >
-              <img
+              {/* <img
                 src="../../intro.png"
                 alt="foto"
                 style={{
                   maxWidth: "100%",
-                  objectFit: "cover",
+                  // objectFit: "cover",
                 }}
-              />
+              /> */}
             </Grid>
           )}
           <Dialog

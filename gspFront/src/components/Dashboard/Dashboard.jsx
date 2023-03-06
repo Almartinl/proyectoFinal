@@ -123,7 +123,7 @@ function DashboardContent() {
               px: [1],
             }}
           >
-            <Typography variant="h5" textAlign="center">
+            <Typography variant="h5" textAlign="center" color="darkgreen">
               Menu
             </Typography>
             <IconButton onClick={toggleDrawer}>
@@ -137,6 +137,8 @@ function DashboardContent() {
                 color="primary"
                 sx={{
                   py: "16px",
+                  color: "darkgreen",
+                  ":hover": { bgcolor: "darkgreen", color: "white" },
                 }}
                 onClick={() => {
                   Linkto("/dashboard", "Panel");
@@ -148,6 +150,8 @@ function DashboardContent() {
                 color="primary"
                 sx={{
                   py: "16px",
+                  color: "darkgreen",
+                  ":hover": { bgcolor: "darkgreen", color: "white" },
                 }}
                 onClick={() => {
                   Linkto("/dashboard/usuarios", "Usuarios");
@@ -159,6 +163,8 @@ function DashboardContent() {
                 color="primary"
                 sx={{
                   py: "16px",
+                  color: "darkgreen",
+                  ":hover": { bgcolor: "darkgreen", color: "white" },
                 }}
                 onClick={() => {
                   Linkto("/dashboard/presupuestos", "Presupuestos");
@@ -170,6 +176,8 @@ function DashboardContent() {
                 color="primary"
                 sx={{
                   py: "16px",
+                  color: "darkgreen",
+                  ":hover": { bgcolor: "darkgreen", color: "white" },
                 }}
                 onClick={() => {
                   Linkto("/dashboard/contacto", "Formulario");
@@ -182,6 +190,7 @@ function DashboardContent() {
                 color="error"
                 sx={{
                   py: "16px",
+                  ":hover": { bgcolor: "#d32f2f", color: "white" },
                 }}
                 onClick={() => {
                   Linkto("/", "Panel");
@@ -200,6 +209,8 @@ function DashboardContent() {
                   justifyContent: "flex-start",
                   gap: "20%",
                   py: "16px",
+                  color: "darkgreen",
+                  ":hover": { bgcolor: "darkgreen", color: "white" },
                 }}
                 onClick={() => {
                   Linkto("/dashboard", "Panel");
@@ -217,6 +228,8 @@ function DashboardContent() {
                   justifyContent: "flex-start",
                   gap: "20%",
                   py: "16px",
+                  color: "darkgreen",
+                  ":hover": { bgcolor: "darkgreen", color: "white" },
                 }}
                 onClick={() => {
                   Linkto("/dashboard/usuarios", "Usuarios");
@@ -233,6 +246,8 @@ function DashboardContent() {
                   justifyContent: "flex-start",
                   gap: "20%",
                   py: "16px",
+                  color: "darkgreen",
+                  ":hover": { bgcolor: "darkgreen", color: "white" },
                 }}
                 onClick={() => {
                   Linkto("/dashboard/presupuestos", "Presupuestos");
@@ -242,13 +257,15 @@ function DashboardContent() {
                 Presupuestos
               </Button>
               <Button
-                color="primary"
+                color="success"
                 size="large"
                 sx={{
                   display: "flex",
                   justifyContent: "flex-start",
                   gap: "20%",
                   py: "16px",
+                  color: "darkgreen",
+                  ":hover": { bgcolor: "darkgreen", color: "white" },
                 }}
                 onClick={() => {
                   Linkto("/dashboard/contacto", "Formularios");
@@ -266,6 +283,7 @@ function DashboardContent() {
                   justifyContent: "flex-start",
                   gap: "20%",
                   py: "16px",
+                  ":hover": { bgcolor: "#d32f2f", color: "white" },
                 }}
                 onClick={() => {
                   Linkto("/", "Panel");

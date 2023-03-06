@@ -2,7 +2,7 @@ import { Container, Grid, Typography } from "@mui/material";
 
 export default function Nosotros() {
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="md">
       <Grid>
         <Typography
           variant="h2"
@@ -13,9 +13,8 @@ export default function Nosotros() {
           Sobre Nosotros
         </Typography>
         <Grid container spacing={2}>
-          <Grid item md></Grid>
-          <Grid item md={8}>
-            <Typography textAlign="left" variant="h6">
+          <Grid container gap={2} item md={12}>
+            <Typography textAlign="left" variant="h5">
               Global Solutions Prefabriquees es una empresa líder en el mercado
               de construcción modular y prefabricada a nivel global. Con más de
               10 años de experiencia, nuestro equipo de expertos en diseño y
@@ -46,13 +45,12 @@ export default function Nosotros() {
               visión de manera eficiente y rentable.
             </Typography>
           </Grid>
-          <Grid item md></Grid>
         </Grid>
         <Grid container justifyContent="center" my={5}>
           <img
             src="http://localhost:3000/images/products/nosotros.jpeg"
             alt="imagen"
-            width="66%"
+            width="100%"
           />
         </Grid>
       </Grid>

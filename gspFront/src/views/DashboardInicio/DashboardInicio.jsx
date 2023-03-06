@@ -89,7 +89,7 @@ export default function DashboardInicio() {
               flexDirection="column"
               gap="56px"
             >
-              <Typography variant="h4" color="primary">
+              <Typography variant="h4" color="darkgreen">
                 Usuarios
               </Typography>
 
@@ -97,6 +97,7 @@ export default function DashboardInicio() {
                 variant="h5"
                 color="text.secondary"
                 gutterBottom
+                fontWeight="bold"
                 sx={{
                   display: "flex",
                   justifyContent: "center",
@@ -125,7 +126,7 @@ export default function DashboardInicio() {
               flexDirection="column"
               gap="56px"
             >
-              <Typography variant="h4" color="primary">
+              <Typography variant="h4" color="darkgreen">
                 Modelos del Configurador
               </Typography>
 
@@ -133,6 +134,7 @@ export default function DashboardInicio() {
                 variant="h5"
                 color="text.secondary"
                 gutterBottom
+                fontWeight="bold"
                 sx={{
                   display: "flex",
                   justifyContent: "center",
@@ -161,7 +163,7 @@ export default function DashboardInicio() {
               flexDirection="column"
               gap="56px"
             >
-              <Typography variant="h4" color="primary">
+              <Typography variant="h4" color="darkgreen">
                 Presupuestos Pendientes
               </Typography>
 
@@ -169,6 +171,7 @@ export default function DashboardInicio() {
                 variant="h5"
                 color="text.secondary"
                 gutterBottom
+                fontWeight="bold"
                 sx={{
                   display: "flex",
                   justifyContent: "center",
@@ -198,14 +201,15 @@ export default function DashboardInicio() {
               flexDirection="column"
               gap="56px"
             >
-              <Typography variant="h4" color="primary">
-                Correos de Informacion Pendientes
+              <Typography variant="h4" color="darkgreen">
+                Formularios Pendientes
               </Typography>
 
               <Typography
                 variant="h5"
                 color="text.secondary"
                 gutterBottom
+                fontWeight="bold"
                 sx={{
                   display: "flex",
                   justifyContent: "center",
@@ -234,7 +238,7 @@ export default function DashboardInicio() {
               flexDirection="column"
               gap="56px"
             >
-              <Typography variant="h4" color="primary">
+              <Typography variant="h4" color="darkgreen">
                 Productos
               </Typography>
 
@@ -242,6 +246,7 @@ export default function DashboardInicio() {
                 variant="h5"
                 color="text.secondary"
                 gutterBottom
+                fontWeight="bold"
                 sx={{
                   display: "flex",
                   justifyContent: "center",
@@ -270,7 +275,7 @@ export default function DashboardInicio() {
               flexDirection="column"
               gap="56px"
             >
-              <Typography variant="h4" color="primary">
+              <Typography variant="h4" color="darkgreen">
                 Nuestras Obras
               </Typography>
 
@@ -278,6 +283,7 @@ export default function DashboardInicio() {
                 variant="h5"
                 color="text.secondary"
                 gutterBottom
+                fontWeight="bold"
                 sx={{
                   display: "flex",
                   justifyContent: "center",
