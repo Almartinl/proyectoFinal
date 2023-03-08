@@ -14,12 +14,14 @@ import {
   DialogContentText,
   TextField,
   DialogActions,
+  CircularProgress,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useEffect, useState, Suspense } from "react";
 import { Canvas, render, useThree } from "@react-three/fiber";
 import { useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { Html, useProgress } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useAuthContext } from "../../contexts/AuthContext";
 import Swal from "sweetalert2";
@@ -478,6 +480,17 @@ export default function Configurador() {
     setModelo3d([]);
   }
 
+  function Loader() {
+    const { progress } = useProgress();
+    return (
+      <Html center>
+        <Typography variant="h3" textAlign="center" color="darkgreen">
+          {Math.floor(progress * 1)} % loaded
+        </Typography>
+      </Html>
+    );
+  }
+
   function View3d() {
     const Model = () => {
       const gltf = useLoader(GLTFLoader, `http://localhost:3000/${modelo3d}`);
@@ -492,7 +505,7 @@ export default function Configurador() {
       <Canvas camera={{ position: [-1.8, 1.5, 2.5], fov: 60 }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={0.4} />
-        <Suspense fallback={null}>
+        <Suspense fallback={<Loader />}>
           <Model />
           <OrbitControls />
         </Suspense>
