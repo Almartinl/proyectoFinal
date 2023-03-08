@@ -483,10 +483,12 @@ export default function Configurador() {
   function Loader() {
     const { progress } = useProgress();
     return (
-      <Html center>
-        <Typography variant="h3" textAlign="center" color="darkgreen">
-          {Math.floor(progress * 1)} % loaded
-        </Typography>
+      <Html center scale={5}>
+        <Grid width="100%">
+          <Typography variant="h4" textAlign="center" color="darkgreen">
+            {Math.floor(progress * 1)} % Cargado
+          </Typography>
+        </Grid>
       </Html>
     );
   }

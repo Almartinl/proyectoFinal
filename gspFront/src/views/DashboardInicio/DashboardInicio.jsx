@@ -8,6 +8,7 @@ import ViewInArOutlinedIcon from "@mui/icons-material/ViewInArOutlined";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import CategoryIcon from "@mui/icons-material/Category";
 import ConstructionIcon from "@mui/icons-material/Construction";
+import TableViewIcon from "@mui/icons-material/TableView";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -94,7 +95,7 @@ export default function DashboardInicio() {
               </Typography>
 
               <Typography
-                variant="h5"
+                variant="h4"
                 color="text.secondary"
                 gutterBottom
                 fontWeight="bold"
@@ -105,7 +106,7 @@ export default function DashboardInicio() {
                   gap: "5%",
                 }}
               >
-                <PeopleIcon />
+                <PeopleIcon fontSize="large" />
                 {countUser.length > 0 && countUser[0].usuarios}
               </Typography>
             </Grid>
@@ -131,7 +132,7 @@ export default function DashboardInicio() {
               </Typography>
 
               <Typography
-                variant="h5"
+                variant="h4"
                 color="text.secondary"
                 gutterBottom
                 fontWeight="bold"
@@ -142,7 +143,7 @@ export default function DashboardInicio() {
                   gap: "5%",
                 }}
               >
-                <ViewInArOutlinedIcon />
+                <ViewInArOutlinedIcon fontSize="large" />
                 {countModels.length > 0 && countModels[0].modelos}
               </Typography>
             </Grid>
@@ -168,7 +169,7 @@ export default function DashboardInicio() {
               </Typography>
 
               <Typography
-                variant="h5"
+                variant="h4"
                 color="text.secondary"
                 gutterBottom
                 fontWeight="bold"
@@ -179,7 +180,7 @@ export default function DashboardInicio() {
                   gap: "5%",
                 }}
               >
-                <ReceiptLongIcon />
+                <TableViewIcon fontSize="large" />
                 {countPresupuestos.length > 0 &&
                   countPresupuestos[0].presupuesto}
               </Typography>
@@ -206,7 +207,7 @@ export default function DashboardInicio() {
               </Typography>
 
               <Typography
-                variant="h5"
+                variant="h4"
                 color="text.secondary"
                 gutterBottom
                 fontWeight="bold"
@@ -217,7 +218,7 @@ export default function DashboardInicio() {
                   gap: "5%",
                 }}
               >
-                <ReceiptLongIcon />
+                <ReceiptLongIcon fontSize="large" />
                 {countFormContact.length > 0 && countFormContact[0].contactos}
               </Typography>
             </Grid>
@@ -243,7 +244,7 @@ export default function DashboardInicio() {
               </Typography>
 
               <Typography
-                variant="h5"
+                variant="h4"
                 color="text.secondary"
                 gutterBottom
                 fontWeight="bold"
@@ -254,8 +255,7 @@ export default function DashboardInicio() {
                   gap: "5%",
                 }}
               >
-                <CategoryIcon />
-                {countModels.length > 0 && countModels[0].modelos}
+                <CategoryIcon fontSize="large" />8
               </Typography>
             </Grid>
           </Paper>
@@ -280,7 +280,7 @@ export default function DashboardInicio() {
               </Typography>
 
               <Typography
-                variant="h5"
+                variant="h4"
                 color="text.secondary"
                 gutterBottom
                 fontWeight="bold"
@@ -291,7 +291,7 @@ export default function DashboardInicio() {
                   gap: "5%",
                 }}
               >
-                <ConstructionIcon />
+                <ConstructionIcon fontSize="large" />
                 {countObras.length > 0 && countObras[0].obras}
               </Typography>
             </Grid>

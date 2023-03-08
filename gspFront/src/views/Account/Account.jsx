@@ -857,7 +857,7 @@ export default function Account() {
                                   Nombre del modelo
                                 </StyledTableCell>
                                 <StyledTableCell align="left">
-                                  vista en planta
+                                  Nombre del Bungalow
                                 </StyledTableCell>
                                 <StyledTableCell align="left">
                                   Acciones
@@ -871,7 +871,7 @@ export default function Account() {
                                     {row.nombre}
                                   </StyledTableCell>
                                   <StyledTableCell align="left">
-                                    {row.planta}
+                                    {row.nombrebungalow}
                                   </StyledTableCell>
                                   <StyledTableCell align="left">
                                     <Grid container wrap="nowrap">
