@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext";
-import Layout from "../../Layout/Layout.jsx";
+import Layout from "../../Layout/Layout";
 
 export default function PrivateRoute({ allowedRoles }) {
   const { dataToken } = useAuthContext();
